@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>회원탈퇴</h2>
+    <p>탈퇴하시려면 비밀번호를 입력해 주십시오.</p>
+    <div class="attr-wrap">
+        <label>비밀번호</label><br>
+        <input id="pw" type="password" placeholder="비밀번호를 입력해 주세요.">
+    </div>
+    <div>
+        <button id="cancel_m-btn" type="button" name="button">탈퇴하기</button>
+        <button id="cancel-btn" type="button" name="button">취소</button>
+    </div>
+{% endblock content%}

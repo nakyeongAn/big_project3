@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>회원가입</title>
+        <link rel="stylesheet" href="{% static 'css/signup.css' %}"/>
+    </head>
+    <body>
+        <div class = "wrap">
+            <header>
+                <div class="title">
+                    <a href="{% url 'chat:list' %}">서비스명</a>
+                </div>
+            </header>
+            <form>
+                <label for = "id">ID : </label>
+                <input type = "text" id = "ID" name = "ID"><br><br>
+        
+                <label for="password">새 비밀번호 : </label>
+                <input type="password" id="password" name="password" placeholder="새 비밀번호"><br><br>
+        
+                <label for="password">새 비밀번호 확인 : </label>
+                <input type="password" id="password2" name="password2" placeholder="새 비밀번호 재확인"><br><br>
+        
+                <label for="email">이메일 : </label>
+                <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+        
+                <label for="name">이름 : </label>
+                <input type="text" id="name" name="name"><br><br>
+        
+                <label for="age">나이 : </label>
+                <select id="gender" name="gender">
+                    <option value="10대">10대</option>
+                    <option value="20대">20대</option>
+                    <option value="20대">30대</option>
+                    <option value="20대">40대</option>
+                    <option value="20대">50대</option>
+                    <option value="20대">60대 이상</option>
+                </select><br><br>
+        
+                <label for="gender">성별 : </label>
+                <select id="gender" name="gender">
+                    <option value="male">남자</option>
+                    <option value="female">여자</option>
+                </select><br><br>
+        
+                <label for="birthdate">생일</label>
+                <input type="date" id="birthdate" name="birthdate"><br><br>
+        
+                <input type="submit" value="본인인증">
+            </form>
+        </div>
+    </body>
+</html>

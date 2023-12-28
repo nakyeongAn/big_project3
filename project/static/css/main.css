@@ -1,0 +1,50 @@
+/* main.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /* 또는 선호하는 글꼴 */
+  }
+  
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f8f8; /* 예시 배경색 */
+  }
+  
+.leftbar,
+.rightbar {
+    display: flex;
+    align-items: center;
+  }
+  
+.name, .list, .account {
+    margin-right: 15px; /* 요소들 사이의 공간 */
+  }
+  
+.list ul, .account ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* 목록 항목을 수평으로 정렬 */
+  }
+  
+.list li, .account li {
+    margin-right: 10px; /* 목록 항목 사이의 공간 */
+  }
+  
+a {
+    text-decoration: none;
+    color: #333; /* 예시 텍스트 색상 */
+  }
+  
+a:hover {
+    text-decoration: underline;
+  }
+  
+.container {
+    padding: 20px;
+  }
+
+.introduce{
+    padding: 20px;
+}

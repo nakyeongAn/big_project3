@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+</head>
+<body>
+    <header>
+        <div class="title">
+            <a href="{% url 'chat:list' %}">서비스명</a>
+        </div>
+    </header>
+    <main class="contents">
+        <section class="wrap">
+            <div class="login-wrap">
+                <div class="attr-wrap">
+                    <label>아이디</label><br>
+                    <input id="email" type="text" placeholder="아이디를 입력해 주세요.">
+                </div><hr>
+                <div class="attr-wrap">
+                    <label>비밀번호</label><br>
+                    <input id="pw" type="password" placeholder="비밀번호를 입력해 주세요.">
+                </div><hr>
+                <small class="msg"></small>
+            </div>
+            <button id="login-btn" type="button" name="button">로그인</button>
+            <div class = 'find-wrap'>
+                <ul>
+                    <li><a href="#">비밀번호 찾기</a></li>
+                    <li>|</li>
+                    <li><a href="#">아이디 찾기</a></li>
+                    <li>|</li>
+                    <li><a href="{% url 'signup' %}">회원가입</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
