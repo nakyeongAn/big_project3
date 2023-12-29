@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>당선</title>
+    <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/main_after_login.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg py-3">
+        <div class="container px-5">
+          <a class="navbar-brand" href="{% url 'chat:chat' %}">
+            <img
+              class="logo"
+              src="{% static 'assets/main_img.png' %}"
+              alt="Logo"
+              style="height: 50px; margin-right: 10px; vertical-align: middle"
+            />
+            <span class="d-inline-block">
+              <span
+                class="fw-bolder text-primary"
+                style="font-size: 35px; line-height: 1; display: block"
+                >당
+                <span
+                  class="fw-bolder text-primary"
+                  style="font-size: 20px; line-height: 1"
+                  >신을 위한</span
+                ></span
+              >
+
+              <span
+                class="fw-bolder text-primary"
+                style="font-size: 35px; line-height: 1; display: block"
+                >선
+                <span
+                  class="fw-bolder text-primary"
+                  style="font-size: 20px; line-height: 1"
+                  >물 추천 서비스</span
+                ></span
+              >
+            </span>
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">대화방</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="resume.html">커뮤니티</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownProfile"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="{% static 'assets\profile.jpg' %}"
+                    alt="Profile"
+                    class="profile-image"
+                  />
+                  <!-- Replace with the path to the user's profile image -->
+                </a>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownProfile"
+                >
+                  <li>
+                    <a class="dropdown-item" href="{% url 'chat:profile' %}">프로필</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'chat:account_settings' %}"
+                      >계정관리</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="logout.html">로그아웃</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>{% block content%} {% endblock %}</main>
+    <footer class="bg-white py-4 mt-auto">
+      <div class="container px-5">
+        <div
+          class="row align-items-center justify-content-between flex-column flex-sm-row"
+        >
+          <div class="col-auto">
+            <div class="small m-0">Copyright &copy; Your Website 2023</div>
+          </div>
+          <div class="col-auto">
+            <a class="small" href="#!">Privacy</a>
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="#!">Terms</a>
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="#!">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
