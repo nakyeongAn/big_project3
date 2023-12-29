@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,6 +36,10 @@
                     <li><a href="{% url 'signup' %}">회원가입</a></li>
                 </ul>
             </div>
+            {% comment %} <button id="login-btn2" type="button" onclick="location.href = '{% provider_login_url 'kakao' %}'">카카오톡 로그인</button> {% endcomment %}
+            <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+                카카오톡 회원가입
+                </a>
         </section>
     </main>
 </body>
