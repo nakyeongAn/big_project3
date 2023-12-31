@@ -1,33 +1,35 @@
-document.querySelectorAll('.nav-tabs .nav-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
+document.querySelectorAll(".nav-tabs .nav-link").forEach(function(link) {
+    link.addEventListener("click", function(e) {
         e.preventDefault();
-        document.querySelectorAll('.nav-tabs .nav-link').forEach(function(navLink) {
-            navLink.classList.remove('active');
-        });
-        this.classList.add('active');
+        document
+            .querySelectorAll(".nav-tabs .nav-link")
+            .forEach(function(navLink) {
+                navLink.classList.remove("active");
+            });
+        this.classList.add("active");
 
-        let activeTab = this.getAttribute('href');
-        document.querySelectorAll('.tab-content .tab-pane').forEach(function(tabPane) {
-            tabPane.classList.remove('show', 'active');
-        });
-        document.querySelector(activeTab).classList.add('show', 'active');
+        let activeTab = this.getAttribute("href");
+        document
+            .querySelectorAll(".tab-content .tab-pane")
+            .forEach(function(tabPane) {
+                tabPane.classList.remove("show", "active");
+            });
+        document.querySelector(activeTab).classList.add("show", "active");
     });
 });
 
-document.getElementById('profilePictureInput').addEventListener('change', function(event) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(e) {
-        document.querySelector('.profile-img img').src = e.target.result;
-    };
-    fileReader.readAsDataURL(event.target.files[0]);
-});
-
+document
+    .getElementById("profilePictureInput")
+    .addEventListener("change", function(event) {
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            document.querySelector(".profile-img img").src = e.target.result;
+        };
+        fileReader.readAsDataURL(event.target.files[0]);
+    });
 
 $(".nav ul li").click(function() {
-    $(this)
-        .addClass("active")
-        .siblings()
-        .removeClass("active");
+    $(this).addClass("active").siblings().removeClass("active");
 });
 
 const tabBtn = document.querySelectorAll(".nav ul li");
@@ -42,6 +44,8 @@ function tabs(panelIndex) {
 tabs(0);
 
 let bio = document.querySelector(".bio");
+// ... rest of the code ...
+
 const bioMore = document.querySelector("#see-more-bio");
 const bioLength = bio.innerText.length;
 
