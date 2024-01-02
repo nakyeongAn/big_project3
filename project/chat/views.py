@@ -12,3 +12,6 @@ def profile(request):
 
 def wishlist(request):
     return render(request, 'chat/wishlist.html')
+
+def detail(request):
+    return render(request, 'chat/detail.html')

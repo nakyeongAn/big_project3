@@ -44,12 +44,12 @@ class AccountUserManager(BaseUserManager):
 #회원가입 모델 BaseUser 상속
 class AccountUser(AbstractBaseUser, PermissionsMixin):
     id = models.BigAutoField(primary_key=True)
-    email = models.EmailField(unique=True, max_length=255)
+    email = models.EmailField(max_length=255)
     organization = models.CharField(max_length=30)
     member_id = models.CharField(unique=True, max_length=100)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-
+    username = models.CharField(max_length=20)
     
     objects = AccountUserManager()
 
