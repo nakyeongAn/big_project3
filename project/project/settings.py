@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "accounts",
     "chat",
     "forum",
+    "friends",
 ]
 
 MIDDLEWARE = [
@@ -93,11 +94,12 @@ AUTH_USER_MODEL = "accounts.AccountUser"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "mydatabase",
+        "NAME": "testing",
         "USER":"admin",
         "PASSWORD": secrets['rds_pass'],
         "HOST": secrets['rds_host'],
         "PORT":"3306",
+
     }
 }
 

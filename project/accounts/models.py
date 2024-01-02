@@ -7,26 +7,41 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Group, Permission
+from django.conf import settings
 
+
+#test modeling
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+#회원가입 모델 정의
 class AccountUserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, organization, password=None):
-        if not email:
-            raise ValueError('The Email must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, organization=organization)
+
+    def create_user(self, member_id, organization, password=None):
+
+        user = self.model(member_id=member_id, organization=organization)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, organization, password=None):
-        user = self.create_user(email, organization, password)
+
+    def create_superuser(self, member_id, organization, password=None):
+        user = self.create_user(
+            member_id=member_id,
+            organization=organization,
+            password=password
+        )
         user.is_admin = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
+
+#회원가입 모델 BaseUser 상속
 class AccountUser(AbstractBaseUser, PermissionsMixin):
     id = models.BigAutoField(primary_key=True)
     email = models.EmailField(unique=True, max_length=255)
@@ -35,6 +50,7 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    
     objects = AccountUserManager()
 
     groups = models.ManyToManyField(
@@ -60,6 +76,26 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
+# # 친구 목록 모델
+# class FriendRequest(models.Model):
+#     use_in_migrations = True
+#     STATUS_CHOICES = [
+#         ('requested', 'Requested'),
+#         ('accepted', 'Accepted'),
+#         ('declined', 'Declined'),
+#     ]
+
+#     requester = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friend_requests_sent')
+#     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friend_requests_received')
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='requested')
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     class Meta:
+#         unique_together = ('requester', 'receiver')
+#         db_table = 'friendrequest'
+    
+
+# 기타 기본 django db 데이터
 class AccountUserGroups(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(AccountUser, models.DO_NOTHING)
@@ -155,3 +191,5 @@ class DjangoSession(models.Model):
     class Meta:
         managed = False
         db_table = 'django_session'
+
+
