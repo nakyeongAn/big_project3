@@ -23,9 +23,13 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     #path('', include('chat.urls')),
     path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
     path('forum/', include('forum.urls')),
     path('chat/', include('chat.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL , document_root = settings.STATIC_ROOT)
+    
+    
+    

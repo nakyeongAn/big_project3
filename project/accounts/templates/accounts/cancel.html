@@ -7,7 +7,23 @@
         <input id="pw" type="password" placeholder="비밀번호를 입력해 주세요.">
     </div>
     <div>
-        <button id="cancel_m-btn" type="button" name="button">탈퇴하기</button>
+        <button id="cancel_m-btn" type="button" name="button" onclick="confirmCancellation()">탈퇴하기</button>
+
+        <script>
+            function confirmCancellation() {
+                var userConfirmation = confirm('정말 탈퇴하시겠습니까?');
+                if (userConfirmation) {
+                    // If the user clicks "OK", you can handle the logic for account deletion here.
+                    // For example, sending an AJAX request or submitting a form.
+                    console.log('User confirmed cancellation.');
+                } else {
+                    // If the user clicks "Cancel", you might not need to do anything,
+                    // or you can handle the logic to abort the account deletion.
+                    console.log('User cancelled the action.');
+                }
+            }
+        </script>
+
         <button id="cancel-btn" type="button" name="button">취소</button>
     </div>
 {% endblock content%}
