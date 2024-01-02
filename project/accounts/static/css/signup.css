@@ -1,70 +1,66 @@
-body, html {
-    height: 100%;
+/* signup.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #FBF6EC;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Arial', sans-serif;
-    background-color: #e9ecef;
+    height: 100vh;
 }
 
 .wrap {
-    width: 50%; /* 폼의 너비를 50%로 설정 */
-    max-width: 800px; /* 폼의 최대 너비를 800px로 설정 */
     background: #fff;
-    padding: 2em;
-    margin: 2em;
-    border-radius: 10px; /* 모서리를 둥글게 */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
 }
 
-header .title, form {
-    margin-bottom: 1em; /* 제목과 폼 사이, 그리고 폼 아래에 여백을 줌 */
+header .title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
 }
 
-.title a {
+header .title a {
     text-decoration: none;
-    color: #333;
-    font-size: 24px;
-    display: block; /* 제목을 블록 요소로 만들어 줄 바꿈 */
-    margin-bottom: 0.5em; /* 제목 아래 여백 */
+    color: #FE8947; /* 로고 색상 */
 }
 
-form label, form input, form select {
-    display: block; /* 라벨과 인풋을 블록 요소로 만들어 줄 바꿈 */
-    width: 100%; /* 너비를 100%로 설정하여 부모 요소인 .wrap에 꽉 차게 */
-    margin: 0.5em 0; /* 위아래 여백 설정 */
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-form input[type="text"],
-form input[type="password"],
-form input[type="email"],
-form input[type="date"],
-form select {
-    padding: 0.5em;
-    border: 1px solid #ced4da;
-    border-radius: 4px; /* 인풋 필드 모서리 둥글게 */
+label {
+    margin-bottom: 5px;
+    color: #666;
 }
 
-form input[type="submit"] {
-    padding: 0.5em;
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+select {
+    padding: 8px; /* 패딩 유지 */
+    margin-bottom: -15px; /* 입력 필드 간 마진 감소 */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    padding: 10px;
+    color: white;
+    background: #FE8947; /* 버튼 배경 색상 */
     border: none;
     border-radius: 4px;
-    background-color: #17a2b8;
-    color: white;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 1em; /* 제출 버튼 위에 여백 추가 */
+    font-size: 1em;
 }
 
-form input[type="submit"]:hover {
-    background-color: #138496;
-}
-
-/* 반응형 디자인: 화면 크기가 작을 때 폼의 너비를 조정 */
-@media (max-width: 768px) {
-    .wrap {
-        width: 90%;
-    }
+input[type="submit"]:hover {
+    background: darkgreen; /* 버튼 호버 색상 */
 }
