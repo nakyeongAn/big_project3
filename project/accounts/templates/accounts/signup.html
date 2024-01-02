@@ -17,7 +17,13 @@
 
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% for field in form %}
+                <div class="form-group">
+                    <label class = {{field.id_for_label}}>{{field.label}}</label>
+                    <input type="{{field.field.widget.input_type}}" class = "form-control" id="{{field.id_for_label}}"
+                    placeholder="{{field.label}}를 입력해주세요." name="{{field.name}}">
+                </div><hr>
+                {% endfor %}
                 <button type="submit">회원가입</button>
             </form>            
         </div>
