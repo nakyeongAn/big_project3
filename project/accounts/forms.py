@@ -3,7 +3,7 @@ from .models import AccountUser
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-
+from phonenumber_field.modelfields import PhoneNumberField
 # 회원가입 form
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -11,8 +11,10 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = AccountUser
-        fields = ['member_id', 'email', 'organization', 'password']
-
+        fields = ['member_id', 'username','password', 'password_confirm', 'email','gender', 'birthdate','phone_number']
+        widgets={
+            'birthdate':forms.DateInput(attrs={'type':'date', 'placeholder':'yyyy-mm-dd (DOB)', 'class':'form-control'}),
+        }
     def clean_password(self):
         # 비밀번호 유효성 검사
         password = self.cleaned_data.get('password')

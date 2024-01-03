@@ -8,8 +8,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Group, Permission
 from django.conf import settings
-
-
+import datetime
+from phonenumber_field.modelfields import PhoneNumberField
 #test modeling
 class Item(models.Model):
     name = models.CharField(max_length=100)
@@ -43,6 +43,20 @@ class AccountUserManager(BaseUserManager):
 
 #회원가입 모델 BaseUser 상속
 class AccountUser(AbstractBaseUser, PermissionsMixin):
+#이름
+#아이디 
+#비번
+#비번확인
+#메일   
+#성별?  
+#나이?  생일에서 현재 년도 빼버림 
+#생일   
+#전화번호   
+#주소검색 내꺼 도로명 1
+    GENDER_CHOICHES = {
+        ('남자' , '남자'),
+        ('여자','여자')
+    }
     id = models.BigAutoField(primary_key=True)
     email = models.EmailField(max_length=255)
     organization = models.CharField(max_length=30)
@@ -50,6 +64,10 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     username = models.CharField(max_length=20)
+    gender = models.CharField(max_length=3, choices = GENDER_CHOICHES, default = '남자')
+    birthdate = models.DateField(default= datetime.date.today)
+    phone_number = PhoneNumberField(default = None,region='KR') # unique=True 추가해라 나중에 
+    agearound = models.IntegerField(default = 1)
     
     objects = AccountUserManager()
 
@@ -62,7 +80,10 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
         Permission,
         related_name="accountuser_permissions",
     )
+    
     USERNAME_FIELD = 'member_id'
+    
+    #superuser 용
     REQUIRED_FIELDS = ['organization']
 
     class Meta:

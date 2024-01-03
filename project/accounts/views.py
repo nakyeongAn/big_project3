@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm
-
+from datetime import date
 
 def cancel(request):
     return render(request, 'accounts/cancel.html')
@@ -17,12 +17,17 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
+            birth_date = form.cleaned_data['birthdate']
+            current_year = date.today().year
+            age_around = current_year - birth_date.year
+            user.agearound = age_around
             user.save()
             # 로그인 처리나 리디렉션 추가
             return redirect('login')  # 예: 홈페이지로 리디렉션
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
+
 
 # 메인페이지로 돌아가버림
 def index_home(request):
@@ -40,12 +45,9 @@ def user_login(request):
             user = authenticate(username=member_id, password=password)  # member_id 사용
             if user is not None:
                 login(request, user)
-                print('1')
                 return redirect('chat:chat')  # 로그인 후 리디렉션할 페이지
             else:
-                print('2')
                 messages.error(request, '아이디 또는 비밀번호가 잘못되었습니다.')
     else:
-        print('3')
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
