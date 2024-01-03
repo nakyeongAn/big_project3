@@ -7,6 +7,7 @@
 
 body, html {
     height: 100%; /* 전체 높이 설정 */
+    width: 100%;
     margin: 0;
     padding: 0;
     display: flex; /* Flex 컨테이너 설정 */
@@ -32,7 +33,7 @@ body, html {
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 400px; /* 필요에 따라 조정 */
+    width: 30%; /* 필요에 따라 조정 */
     /* 추가된 부분: 중앙 정렬을 유지하기 위해 margin 제거 */
 }
 

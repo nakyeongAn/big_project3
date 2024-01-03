@@ -4,6 +4,11 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm
 
+def forgotID(request):
+    return render(request, 'accounts/forgotID.html')
+
+def forgotpw(request):
+    return render(request, 'accounts/forgotpw.html')
 
 def cancel(request):
     return render(request, 'accounts/cancel.html')

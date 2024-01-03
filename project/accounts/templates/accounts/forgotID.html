@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="{% static 'css/forgotID.css' %}">
+</head>
+<body>
+    <main class="contents">
+        <div class=head-wrap>
+            <div class="title">
+                <h3>아이디 찾기</h3>
+            </div>
+            <div class = "description">
+                <p>회원정보에 등록한 이메일 주소를 입력해주세요.</p>
+            </div>
+        </div>
+        <section class="wrap">
+            <div class="-wrap">
+                <div class="attr-wrap">
+                    <label>Email</label><br>
+                    <input id="email" type="text" placeholder="Email를 입력해 주세요.">
+                    <button id="auth-btn" type="button" name="button">인증번호 받기</button>
+                    <!-- Email 입력 필드 아래에 나타날 메시지 -->
+                    <div id="email-error" style="color: red;"></div>
+                    <input id="auth" type="text" placeholder="인증번호를 입력해 주세요.">
+                    <div id="success-message" style="color: green;"></div> <!-- 성공 메시지 추가 -->
+                </div>
+                <hr>
+            </div>
+            <button id="IDsearch-btn" type="button" name="button">아이디 찾기</button>
+
+            <!-- 모달 팝업 구조 -->
+            <div id="myModal" class="modal">
+                <!-- 모달 컨텐츠 -->
+                <div class="modal-wrap">
+                    <span class="close">&times;</span>
+                    <div class="modal-content">
+                        <p>귀하의 아이디는 asdfjkl 입니다.</p>
+                        <ul>
+                            <li><a href="{% url 'forgotpw' %}">비밀번호 찾기</a></li>
+                            <li>|</li>
+                            <li><a href="{% url 'login' %}">로그인</a></li>
+                            <li>|</li>
+                            <li><a href="{% url 'chat:detail' %}">HOME</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="find-wrap">
+                <ul>
+                    <li><a href="#">비밀번호 찾기</a></li>
+                    <li>|</li>
+                    <li><a href="{% url 'signup' %}">회원가입</a></li>
+                    <li>|</li>
+                    <li><a href="{% url 'chat:detail' %}">HOME</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // auth-btn 버튼 클릭 이벤트 처리
+        const authButton = document.getElementById('auth-btn');
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('email-error');
+        const successMessage = document.getElementById('success-message'); // 성공 메시지 요소
+
+        authButton.addEventListener('click', function() {
+            const enteredEmail = emailInput.value;
+
+            if (!enteredEmail) {
+                // 이메일 입력란이 비어 있을 때 메시지 표시
+                emailError.textContent = 'Email을 입력해 주세요.';
+                successMessage.textContent = ''; // 성공 메시지 초기화
+            } else {
+                // 이메일 입력이 유효한 경우 메시지 삭제
+                emailError.textContent = '';
+                // 이메일이 회원 DB에 있는지 확인하는 비동기 요청을 추가하세요.
+                // 이 예제에서는 간단히 성공 메시지로 표시합니다.
+                successMessage.textContent = '인증번호를 발송하였습니다.';
+            }
+        });
+
+        // 모달을 가져옵니다
+        var modal = document.getElementById("myModal");
+
+        // 버튼을 가져와 클릭 이벤트에 모달을 띄우는 기능을 연결합니다
+        var btn = document.getElementById("IDsearch-btn");
+
+        // 닫기 버튼을 가져옵니다
+        var span = document.getElementsByClassName("close")[0];
+
+        // 사용자가 버튼을 클릭하면 모달을 표시합니다
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // 사용자가 닫기 버튼을 클릭하면 모달을 닫습니다
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        // 새로운 '닫기' 버튼을 클릭하면 모달을 닫습니다
+        closeButton.onclick = function() {
+            modal.style.display = "none";
+        }
+
+    </script>
+</body>
+</html>
