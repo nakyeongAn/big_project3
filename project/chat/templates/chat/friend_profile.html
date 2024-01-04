@@ -15,7 +15,7 @@
 {% endblock extrahead %} 
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'chat/profile.css' %}" />
+<link rel="stylesheet" href="{% static 'chat/friend_profile.css' %}" />
 
 <!-- Modal Structure -->
 <div id="giftModal" class="modal">
@@ -66,12 +66,14 @@
 <div class="container">
   <div class="profile">
     <div class="profile-image">
-      <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image" id="profileImage" style="cursor:pointer;">
-      <input type="file" name="profile_picture" id="profilePictureInput" style="display: none;" onchange="uploadImage()">
+      <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image">
     </div>
     <h1 class="profile-title">Emiya Mulzomdao</h1>
     <div class="profile-user-settings">
-      <a href="{% url 'chat:account_settings' %}" class="btn">프로필 수정</a>
+      <button class="btn" id="followBtn" onclick="sendFriendRequest()">팔로우</button>
+      <!-- Hidden buttons, to be displayed after follow -->
+      <button class="btn hidden" id="findGiftBtn">선물 알아내기</button>
+      <button class="btn hidden" id="unfollowBtn">팔로우 취소</button>
     </div>
     <div class="profile-bio">
       <wishlist-title">여기에는 자기소개를 넣습니다...<//p>
