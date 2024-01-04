@@ -8,6 +8,7 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('account_settings/', views.account_settings, name='account_settings'),
     path('profile/', views.profile, name='profile'),
+    path('friend_profile/', views.friend_profile, name='friend_profile'),
     path('wishlist/', views.wishlist, name='wishlist'),
     path('', views.detail, name='detail'),
     

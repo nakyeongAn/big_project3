@@ -1,68 +1,53 @@
-document.querySelectorAll('.nav-tabs .nav-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.nav-tabs .nav-link').forEach(function(navLink) {
-            navLink.classList.remove('active');
+document.getElementById('profileImage').addEventListener('click', function() {
+    document.getElementById('profilePictureInput').click();
+});
+
+document
+    .getElementById("profilePictureInput")
+    .addEventListener("change", function(event) {
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            document.querySelector(".profile-img img").src = e.target.result;
+        };
+        fileReader.readAsDataURL(event.target.files[0]);
+    });
+
+document.getElementById('profilePictureInput').addEventListener('change', function() {
+    var form_data = new FormData();
+    form_data.append('profile_picture', this.files[0]);
+
+    fetch("{% url 'your_django_upload_view_url_name' %}", {
+            method: 'POST',
+            body: form_data,
+            credentials: 'include', // For CSRF token
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'), // CSRF token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the profile image if upload is successful
+            if (data.success) {
+                document.getElementById('profileImage').src = data.image_url;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-        this.classList.add('active');
-
-        let activeTab = this.getAttribute('href');
-        document.querySelectorAll('.tab-content .tab-pane').forEach(function(tabPane) {
-            tabPane.classList.remove('show', 'active');
-        });
-        document.querySelector(activeTab).classList.add('show', 'active');
-    });
 });
 
-document.getElementById('profilePictureInput').addEventListener('change', function(event) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(e) {
-        document.querySelector('.profile-img img').src = e.target.result;
-    };
-    fileReader.readAsDataURL(event.target.files[0]);
-});
-
-
-$(".nav ul li").click(function() {
-    $(this)
-        .addClass("active")
-        .siblings()
-        .removeClass("active");
-});
-
-const tabBtn = document.querySelectorAll(".nav ul li");
-const tab = document.querySelectorAll(".tab");
-
-function tabs(panelIndex) {
-    tab.forEach(function(node) {
-        node.style.display = "none";
-    });
-    tab[panelIndex].style.display = "block";
-}
-tabs(0);
-
-let bio = document.querySelector(".bio");
-const bioMore = document.querySelector("#see-more-bio");
-const bioLength = bio.innerText.length;
-
-function bioText() {
-    bio.oldText = bio.innerText;
-
-    bio.innerText = bio.innerText.substring(0, 100) + "...";
-    bio.innerHTML += `<span onclick='addLength()' id='see-more-bio'>See More</span>`;
-}
-//        console.log(bio.innerText)
-
-bioText();
-
-function addLength() {
-    bio.innerText = bio.oldText;
-    bio.innerHTML +=
-        "&nbsp;" + `<span onclick='bioText()' id='see-less-bio'>See Less</span>`;
-    document.getElementById("see-less-bio").addEventListener("click", () => {
-        document.getElementById("see-less-bio").style.display = "none";
-    });
-}
-if (document.querySelector(".alert-message").innerText > 9) {
-    document.querySelector(".alert-message").style.fontSize = ".7rem";
+// Helper function to get the value of a cookie by name
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

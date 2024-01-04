@@ -35,7 +35,7 @@
     <div class="container">
       <div class="left">
         <div class="top">
-          <input type="text" placeholder="Search" id="searchInput" />
+          <input class='search' type="text" id="searchInput" placeholder="친구 검색" onkeyup="searchFriends()">
           <a href="javascript:;" class="search"></a>
         </div>
         <ul class="people">
@@ -43,6 +43,7 @@
             <img
               src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg"
               alt=""
+              onclick="goToProfile(this)"
             />
             <span class="name">Thomas Bangalter</span>
             <span class="time">2:09 PM</span>
@@ -95,13 +96,16 @@
             />
             <span class="name">Drake</span>
             <span class="time">2:09 PM</span>
-            <span class="preview">howdoyoudoaspace</span>
+            <span class="preview">hey boy</span>
           </li>
         </ul>
       </div>
       <div class="right">
         <div class="top">
-          <span>To: <span class="name">Dog Woofson</span></span>
+          <span><span class="name"></span></span>
+        </div>
+        <div class="chat" id="defaultMessage">
+          <p>채팅을 시작해보세요!</p>
         </div>
         <div class="chat" data-chat="person1">
           <div class="conversation-start">

@@ -7,6 +7,10 @@ def chat(request):
 def account_settings(request):
     return render(request, 'chat/account_settings.html')
 
+def account_settings(request):
+    # ... 프로필 수정 로직
+    return render(request, 'chat/account_settings.html')
+
 def profile(request):
     return render(request, 'chat/profile.html')
 
@@ -15,3 +19,6 @@ def wishlist(request):
 
 def detail(request):
     return render(request, 'chat/detail.html')
+
+def friend_profile(request):
+    return render(request, 'chat/friend_profile.html')
