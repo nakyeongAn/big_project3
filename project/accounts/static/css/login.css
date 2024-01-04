@@ -14,7 +14,7 @@ body, html {
     justify-content: center; /* 수직 정렬 */
     align-items: center; /* 수평 정렬 */
     font-family: 'Arial', sans-serif; /* 필요한 폰트로 변경 가능 */
-    background-color: #f5f5f5; /* 배경색 */
+    background-color: #FBF6EC; /* 배경색 */
 }
 
 .title {
@@ -81,11 +81,24 @@ hr {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #DBEEF1;
+    background-color: #FE8947;
     color: white;
     font-size: 18px;
     cursor: pointer;
 }
+
+#login-btn2 {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FEE500;
+    color: black;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px; /* 여백 추가 */
+}
+
 
 #login-btn:hover {
     background-color: #0056b3;
