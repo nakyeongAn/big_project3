@@ -11,7 +11,7 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = AccountUser
-        fields = ['member_id', 'username','password', 'password_confirm', 'email','gender', 'birthdate','phone_number']
+        fields = ['member_id', 'username','password', 'password_confirm', 'email','gender', 'birthdate','phone_number','address']
         widgets={
             'birthdate':forms.DateInput(attrs={'type':'date', 'placeholder':'yyyy-mm-dd (DOB)', 'class':'form-control'}),
         }

@@ -68,7 +68,7 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     birthdate = models.DateField(default= datetime.date.today)
     phone_number = PhoneNumberField(default = None,region='KR') # unique=True 추가해라 나중에 
     agearound = models.IntegerField(default = 1)
-    
+    address = models.CharField(default = 'None', max_length = 100)
     objects = AccountUserManager()
 
     groups = models.ManyToManyField(

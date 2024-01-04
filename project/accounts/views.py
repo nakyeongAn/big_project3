@@ -21,6 +21,11 @@ def signup(request):
             current_year = date.today().year
             age_around = current_year - birth_date.year
             user.agearound = age_around
+            address = form.cleaned_data['address']
+            address_detail = request.POST.get('address_detail', '')
+            full_address = f"{address} {address_detail}"
+            user.address = full_address
+            
             user.save()
             # 로그인 처리나 리디렉션 추가
             return redirect('login')  # 예: 홈페이지로 리디렉션
