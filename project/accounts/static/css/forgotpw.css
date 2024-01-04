@@ -7,7 +7,7 @@
 
 body, html {
     height: 100%; /* 전체 높이 설정 */
-    width: 100%;
+    width : 100%;
     margin: 0;
     padding: 0;
     display: flex; /* Flex 컨테이너 설정 */
@@ -18,28 +18,36 @@ body, html {
     background-color: #FBF6EC; /* 배경색 */
 }
 
-.title {
-    margin-bottom: 20px; /* title과 contents 사이의 간격 */
-}
-
-.title a {
-    text-decoration: none;
-    color: #333; /* 링크 색상 */
-    font-size: 24px; /* 서비스명 폰트 크기 */
-}
-
 .contents {
     background: #fff;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 30%; /* 필요에 따라 조정 */
+    width: 100%;
+    max-width: 600px; /* 최대 넓이 설정을 추가하여 너무 넓어지지 않도록 함 */
     /* 추가된 부분: 중앙 정렬을 유지하기 위해 margin 제거 */
+    margin: auto; /* 자동 마진으로 상하좌우 중앙 정렬 */
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    align-items: center; /* 수평 정렬 */
+}
+
+.head-wrap {
+    text-align: center; /* 내부 텍스트 중앙 정렬 */
+    width: 100%; /* 부모 컨테이너의 전체 너비 사용 */
+    margin-bottom: 20px; /* 하단 여백 설정 */
+}
+
+.head-wrap h3, p{
+    margin-bottom: 5%;
 }
 
 .wrap {
     position: relative;
+    width: 80%; /* 넓이를 부모 요소의 100%로 설정 */
+    margin: auto; /* 중앙 정렬 */
 }
+
 
 /* 폼 필드 스타일링 */
 .form-group {
@@ -48,7 +56,7 @@ body, html {
 
 .form-group input[type="text"],
 .form-group input[type="password"] {
-    width: calc(100% -20px); /* 전체 너비 */
+    width: calc(100%-20px); /* 전체 너비 */
     padding: 10px; /* 편안한 타이핑을 위한 패딩 */
     border: 1px solid white; /* 경계선 스타일 */
     border-radius: 5px; /* 모서리 둥글게 */
@@ -71,7 +79,7 @@ hr {
     margin: 20px 0;
 }
 
-#login-btn {
+#IDsearch-btn {
     width: 100%;
     padding: 10px;
     border: none;
@@ -83,20 +91,8 @@ hr {
     margin-top: 15px; /* 버튼 위 여백 */
 }
 
-#login-btn2 {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #FEE500;
-    color: black;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 20px; /* 여백 추가 */
-}
 
-
-#login-btn:hover {
+#IDsearch:hover {
     background-color: #fcb388;
 }
 

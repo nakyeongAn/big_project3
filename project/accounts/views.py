@@ -5,6 +5,12 @@ from django.contrib import messages
 from .forms import SignUpForm, LoginForm
 from datetime import date
 
+def forgotID(request):
+    return render(request, 'accounts/forgotID.html')
+
+def forgotpw(request):
+    return render(request, 'accounts/forgotpw.html')
+
 def cancel(request):
     return render(request, 'accounts/cancel.html')
 
