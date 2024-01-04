@@ -68,13 +68,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'phonenumber_field',
  
-]
+]   
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
@@ -118,7 +115,7 @@ AUTH_USER_MODEL = "accounts.AccountUser"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "testing",
+        "NAME": "icis",
         "USER":"admin",
         "PASSWORD": secrets['rds_pass'],
         "HOST": secrets['rds_host'],
@@ -152,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 

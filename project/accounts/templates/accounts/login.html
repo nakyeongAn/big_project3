@@ -42,7 +42,7 @@
                 </ul>
             </div>
             {% load socialaccount %}
-            <a href="{% provider_login_url 'kakao' %}">
+            <a href="{% provider_login_url 'kakao' method='oauth2' %}">
                 카카오톡 회원가입
             </a>
         </section>
