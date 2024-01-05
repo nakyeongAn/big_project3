@@ -3,28 +3,29 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #FBF6EC;
+  background-color: #FFF8EE;
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #FBF6EC;
+  padding: 30px 60px;
+  background-color: #FFF8EE;
 }
 
 .leftbar img {
-  width: 50px; /* 로고 이미지 크기 조정 */
+  width: 40px; /* 로고 이미지 크기 조정 */
   height: auto; /* 이미지의 원래 비율을 유지 */
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
-.leftbar .name p {
+.leftbar .name a {
   margin: 0;
   padding: 0;
-  color: #FE8947; /* 텍스트 색상 조정 */
+  color: #593D3B; /* 텍스트 색상 조정 */
   font-size: 1.2em; /* 텍스트 크기 조정 */
+  font-weight: bold;
 }
 
 .leftbar .name,
@@ -47,83 +48,95 @@ header {
 
 .list li, .account li {
   margin-right: 30px;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 a {
   text-decoration: none;
-  color: #FE8947;
+  color: #593D3B;
   font-weight: bold;
 }
 
 a:hover {
-  color: #da4453;
+  color: #FF832A;
   text-decoration: none;
 }
 
 footer {
+  position: relative; /* 화면 하단에 고정하지 않음 */
   text-align: center;
   padding: 10px;
-  background-color: #FBF6EC;
-  color: white;
+  background-color: white;
+  color: black;
+  width: 100%;
 }
 
 .container {
   display: flex; /* Flexbox를 사용하여 내부 요소들을 수평 정렬 */
   justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
   align-items: flex-start;
-  padding: 20px; /* 적절한 패딩을 추가하여 여백을 설정 */
+  padding: 20px 60px; /* 적절한 패딩을 추가하여 여백을 설정 */
 }
 
 .main-content {
   flex: 1; /* Flexbox의 flex-grow 속성을 사용하여 남는 공간을 채움 */
   padding-right: 20px; /* 텍스트와 이미지 사이에 여백을 추가 */
+  margin-top: 40px; /* main-content를 20px 아래로 내립니다. */
 }
 
 .img_area {
   flex: 1; /* 이 또한 남는 공간을 채움 */
   display: flex; /* 이미지를 정렬하기 위해 flexbox 적용 */
-  justify-content: center; /* 이미지를 가운데 정렬 */
+  justify-content: right; /* 이미지를 오른쪽 정렬 */
   align-items: center; /* 이미지를 수직 방향으로 중앙 정렬 */
 }
 
 .img_area img {
-  max-width: 80%; /* 이미지의 최대 너비를 80%로 설정 */
+  max-width: 85%; /* 이미지의 최대 너비를 80%로 설정 */
   height: auto; /* 이미지의 높이를 자동으로 설정하여 비율 유지 */
 }
 
 .main-content h2 {
-  font-size: 2em; /* 예를 들어 h2의 글자 크기를 2em으로 설정 */
-}
-
-.main-content h4 {
-  font-size: 1.5em; /* h4의 글자 크기를 1.5em으로 설정 */
+  font-size: 2.1vw; /* vw 단위를 사용하여 글자 크기 조절 */
+  color: #593D3B;
+  margin-bottom: 20px;
+  line-height: 1.2; /* 줄간격을 1.2로 조절 (기본값은 1) */
 }
 
 .main-content p {
-  font-size: 1.2em; /* p 태그의 글자 크기를 1.2em으로 설정 */
+  font-size: 1.6vw; /* vw 단위를 사용하여 글자 크기 조절 */
+  margin-bottom: 20px;
+  color: #FF832A;
+  font-weight: bold;
+  line-height: 1.2; /* 줄간격을 1.2로 조절 (기본값은 1) */
 }
 
 .main-content .btn {
-  font-size: 1em; /* 버튼의 글자 크기를 기본 크기로 설정 */
-  padding: 10px 20px; /* 버튼 내부의 여백을 조정하여 글자가 더 큰 버튼에 맞게 조정 */
+  color : white;
+  background-color: #FF832A;
+  padding: 0.5vw 2.5vw; /* 버튼 내부의 여백을 vw 단위로 설정 */
+  font-size: 1.1vw; /* 글자 크기를 vw 단위로 설정 */
+  width: 15vw; /* 가로 너비를 200px로 설정 */ 
+  height: 3vw; /* 세로 높이를 60px로 설정 */ 
 }
+
+.main-content .btn:hover {
+  background-color: #FF6A00; /* 호버 상태에서의 배경색 변경 */
+}
+
 
 /* cancel page css */
 
 /* Basic reset for styling */
 
-body {
-  padding: 20px; /* Padding around the entire content */
-}
-
 h2 {
-  color: black;
+  color: #593D3B;
   margin-bottom: 20px;
 }
 
 p {
   margin-bottom: 20px;
+  color: #FF832A;
 }
 
 .attr-wrap {
@@ -191,8 +204,139 @@ button:focus {
     width: 100%;
     margin-bottom: 10px;
 }
-
   #cancel-btn {
       margin-right: 0;
+  }
+
+  
+}
+
+
+/* forum */
+
+/* board css */
+
+.borad_section {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 보드 섹션 스타일링 */
+.board_section2 {
+  padding: 20px 80px 0px 80px;
+}
+
+.notice_h2 {
+  color: #593D3B;
+  text-align: center;
+  margin: 0px 20px 30px 60px;
+  text-align: left; /* 텍스트를 왼쪽으로 정렬합니다. */
+}
+
+/* 검색 상자 스타일링 */
+#search-box {
+  margin-bottom: 20px;
+}
+
+.search-box_in {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+#search-query {
+  flex: 1;
+  padding: 10px;
+  margin-right: 60px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+/* 검색 버튼 스타일링 */
+#search-box button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-right : 20px;
+  border-radius: 0;
+}
+
+#search-box button:hover {
+  background: #555;
+}
+
+/* 테이블 스타일링 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* 테이블 헤더에 마우스 호버 효과 추가 */
+th:hover {
+  background-color: #555;
+}
+
+/* 페이지 네비게이션 스타일링 */
+#pagination {
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+#pagination a {
+  padding: 5px 10px;
+  margin: 0 5px;
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+}
+
+#pagination a:hover {
+  background: #555;
+}
+
+/* 페이지 네비게이션에서 현재 페이지 강조 */
+#pagination a.active {
+  background: #e8491d;
+  color: #fff;
+}
+
+/* 반응형 디자인: 태블릿과 모바일 화면 크기에 대한 스타일링 */
+@media (max-width: 768px) {
+  .container {
+      width: 95%;
+  }
+
+  .search-box_in {
+      flex-direction: column;
+      align-items: stretch;
+  }
+
+  #search-query {
+      margin-bottom: 10px;
+  }
+
+  #search-box button {
+      width: 100%;
   }
 }

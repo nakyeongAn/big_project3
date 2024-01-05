@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
-{% block title %}질문게시판{% endblock %}
+{% block title %}공지사항{% endblock %}
 {% comment %} {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/board.css' %}"/>
 {% endblock extra_css %} {% endcomment %}
 {% block content %}
-<h2 class='notice_h2'>질문게시판</h2>
+<h2 class='notice_h2'>공지사항</h2>
 <div class = 'borad_section'>
     <div class= 'board_section2'>
             <section id="search-box">
                 <div class = 'search-box_in'>
                     <input type="text" id="search-query" placeholder="검색어 입력">
                     <button class = "search-query-btn1" type="submit">검색</button>
-                    <button class = "search-query-btn2" type="button">내가 쓴 글</button>
-                    <button class = "search-query-btn3" type="button">글 작성</button>
+                    <button class = "search-query-btn2" type="button">글작성</button>
+                    <button class = "search-query-btn3" type="button">글삭제</button>
                 </div>
             </section>
             <section id="notice-board">

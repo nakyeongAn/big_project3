@@ -4,21 +4,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>당선</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    {% block extra_css %}
+    {% endblock extra_css %}
   </head>
   <body>
     <header>
         <div class="leftbar">
-            <img src="static\img\MicrosoftTeams-image (1).png" alt="img2">
+            <img src='static\img\스크린샷 2024-01-04 101730 1 (1).png' alt="img2">
             <div class="name">
-                <p>당신을 위한 <br>선물추천 서비스</p>
-            </div>
-            <div class="list">
-                <ul>
-                    <li><a href="#">대화방</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                </ul>
+                <a href="{% url 'chat:detail' %}">당선</a>
             </div>
         </div>
         <div class = "rightbar">
@@ -26,7 +22,7 @@
                 <ul>
                     <li><a href="{% url 'login' %}">로그인</a></li>
                     <li><a href="{% url 'signup' %}">회원가입</a></li>
-                    <li><a href="{% url 'cancel' %}">회원탈퇴</a></li>
+                    <li><a href="#">커뮤니티</a></li>
                 </ul>
             </div>
         </div>
