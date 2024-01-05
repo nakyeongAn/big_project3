@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'phonenumber_field',
  
-]
+]   
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
