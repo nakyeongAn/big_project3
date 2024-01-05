@@ -39,7 +39,7 @@
           <input class='search' type="text" id="searchInput" placeholder="친구 검색" onkeyup="searchFriends()">
         </div>
         <ul class="people">
-          <!-- 챗봇 테스트용 계정 고정시켰음-->
+          <!-- 챗봇 테스트용 계정들-->
           {% for user in users %}
           <li class="person" data-chat-id= "{{user.id}}" >
             <img

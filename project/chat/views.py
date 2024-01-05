@@ -27,7 +27,7 @@ def detail(request):
 # 특정 유저 프로필 확인하기 
 def friend_profile(request, id):
     user = get_object_or_404(AccountUser, pk=id)
-    return render(request, 'chat/test.html', {'user':user})
+    return render(request, 'chat/friend_profile.html', {'user':user})
 
 
 
