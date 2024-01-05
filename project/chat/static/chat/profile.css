@@ -348,10 +348,12 @@ Remove or comment-out the code block below to see how the browser will fall-back
 @supports (display: grid) {
     .profile {
         display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-template-rows: repeat(3, auto);
-        grid-column-gap: 10rem;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1.7fr 1fr 2fr;
         align-items: center;
+        justify-items: center;
+        height: 400px;
+        margin-bottom: 100px;
     }
     .profile-image {
         grid-row: 1 / -1;

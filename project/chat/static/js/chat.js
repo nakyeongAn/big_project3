@@ -212,13 +212,13 @@ function initEmojiPicker() {
     });
 }
 
-// 친구 프로필 페이지 및 친구 요청 기능:
+// 친구 프로필 페이지 이동
 function goToProfile(elem) {
-    var userID = elem.getAttribute("data-chat"); // 사용자 식별 정보
-    // 페이지 이동 또는 모달 띄우기
+    var personElement = elem.closest('.person');
+    var userID = personElement.getAttribute('data-userid'); // 사용자 고유 ID 가져오기
     window.location.href = "/friend_profile?user=" + userID; // 사용자 프로필 페이지로 이동
-    // 또는 프로필 정보를 모달로 띄우는 등의 동작을 구현할 수 있습니다.
 }
+
 
 // 모든 .person 요소에 클릭 이벤트 리스너 추가
 document.querySelectorAll(".person").forEach(function(person) {

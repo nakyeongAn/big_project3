@@ -94,9 +94,9 @@
       <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image" id="profileImage" style="cursor:pointer;">
       <input type="file" name="profile_picture" id="profilePictureInput" style="display: none;" onchange="uploadImage()">
     </div>
-    <h1 class="profile-title">Emiya Mulzomdao</h1>
+    <h1 class="profile-title m-auto">{{ username}} </h1>
     <div class="profile-user-settings">
-      <a href="{% url 'chat:account_settings' %}" class="btn">프로필 수정</a>
+      <a href="{% url 'chat:account_settings' %}" class="btn m-auto">프로필 수정</a>
     </div>
     <div class="profile-bio">
       <wishlist-title">여기에는 자기소개를 넣습니다...<//p>

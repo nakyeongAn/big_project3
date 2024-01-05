@@ -69,6 +69,7 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     phone_number = PhoneNumberField(default = '0',region='KR') # unique=True 추가해라 나중에 
     agearound = models.IntegerField(default = 1)
     address = models.CharField(default = 'None', max_length = 100)
+    # profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True, default='static\assets\profile.jpg')
     objects = AccountUserManager()
 
     groups = models.ManyToManyField(

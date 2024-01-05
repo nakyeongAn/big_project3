@@ -1,5 +1,8 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 def chat(request):
     return render(request, 'chat/chat.html')
@@ -11,8 +14,33 @@ def account_settings(request):
     # ... 프로필 수정 로직
     return render(request, 'chat/account_settings.html')
 
+# def profile(request):
+#     return render(request, 'chat/profile.html')
+
+#프로필 페이지를 위해 수정
+@login_required
 def profile(request):
-    return render(request, 'chat/profile.html')
+    user = request.user
+    context = {
+        'user': user,
+        'username': user.username,
+        'user_id': user.member_id,
+        'email': user.email,
+        # 'profile_image': user.profile_image,  # profile_image 필드가 모델에 존재한다고 가정
+    }
+    return render(request, 'chat/profile.html', context)
+
+
+@require_POST
+@login_required
+def upload_profile_image(request):
+    user = request.user
+    profile_image = request.FILES.get('profile_picture')
+    if profile_image:
+        user.profile_image = profile_image  # profile_image 필드 업데이트
+        user.save()
+        return JsonResponse({'success': True, 'image_url': user.profile_image.url})
+    return JsonResponse({'success': False})
 
 def wishlist(request):
     return render(request, 'chat/wishlist.html')
