@@ -13,10 +13,27 @@ function initSearchFilter() {
     });
 }
 
+// 원본 채팅 데이터를 저장할 변수를 선언합니다.
+var originalPeopleList = [];
+
+// 페이지 로드 시 원본 채팅 목록을 저장합니다.
+document.addEventListener("DOMContentLoaded", function() {
+    // 다른 초기화 함수들...
+    storeOriginalPeopleList();
+});
+
+// 원본 채팅 목록을 저장하는 함수
+function storeOriginalPeopleList() {
+    originalPeopleList = Array.from(document.querySelectorAll('.people .person')).map(function(node) {
+        return node.outerHTML; // or any other data you need
+    });
+}
+
+
 function searchFriends() {
     var query = document.getElementById("searchInput").value;
     if (query.trim().length > 0) {
-        fetch(`/search-friends/?term=${encodeURIComponent(query)}`, {
+        fetch(`/search_user/?term=${encodeURIComponent(query)}`, {
                 method: "GET",
                 headers: {
                     "X-Requested-With": "XMLHttpRequest", // Django가 AJAX 요청으로 인식하도록 설정
@@ -29,8 +46,21 @@ function searchFriends() {
             .catch((error) => {
                 console.error("Error:", error);
             });
+    } else {
+        // 검색창이 비었을 때 원본 채팅 목록을 표시합니다.
+        updatePeopleListWithOriginal();
     }
 }
+
+// 원본 채팅 목록을 표시하는 함수
+function updatePeopleListWithOriginal() {
+    var peopleList = document.querySelector(".people");
+    peopleList.innerHTML = ""; // 기존 목록을 비웁니다.
+    originalPeopleList.forEach(function(personHTML) {
+        peopleList.innerHTML += personHTML; // 원본 목록을 추가합니다.
+    });
+}
+
 
 function updatePeopleList(data) {
     var peopleList = document.querySelector(".people");

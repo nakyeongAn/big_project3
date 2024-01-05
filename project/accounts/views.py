@@ -21,6 +21,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            user.username = form.cleaned_data['username']
             user.set_password(form.cleaned_data['password'])
             birth_date = form.cleaned_data['birthdate']
             current_year = date.today().year
@@ -62,16 +63,12 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
 
-# 사용자 이름으로 친구 목록을 검색하여 데이터베이스에서 조회
-from .models import AccountUser
-# 사용자 검색 뷰
-def search_user(request):
-    if request.method == "GET":
-        username = request.GET.get('username', None)
-        if username:
-            users = AccountUser.objects.filter(username__icontains=username)
-            return render(request, 'accounts/user_search_results.html', {'users': users})
-        else:
-            return HttpResponse("검색어를 입력해주세요.")
-    else:
-        return HttpResponse("잘못된 요청입니다.")
+
+# from django.http import JsonResponse
+# from .models import AccountUser
+# def search_user(request):
+#     query = request.GET.get('term', '')  # 쿼리 파라미터에서 검색어 가져오기
+#     users = AccountUser.objects.filter(username__icontains=query)  # 사용자 이름으로 검색
+#     results = [{'username': user.username} for user in users]  # 결과 포맷팅
+#     # results = [{'id': user.id, 'username': user.username, 'image_url': user.profile_image_url} for user in users]  # 결과 포맷팅
+#     return JsonResponse(results, safe=False)  # JSON 형식으로 반환
