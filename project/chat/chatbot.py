@@ -5,7 +5,7 @@ from openai import OpenAI
 # secrets.json 파일에서 API 키 읽어오기
 with open('secrets.json', 'r') as secrets_file:
     secrets = json.load(secrets_file)
-openai_key = secrets["openai_api_key"]
+openai_key = secrets["openai_key"]
 
 # OpenAI 클라이언트 설정
 client = OpenAI(api_key=openai_key)

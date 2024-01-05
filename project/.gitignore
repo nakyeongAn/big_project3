@@ -57,3 +57,5 @@ docs/_build/
 target/
 
 secrets.json
+media
+db.sqlite3

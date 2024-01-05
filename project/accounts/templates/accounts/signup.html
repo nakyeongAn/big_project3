@@ -15,7 +15,7 @@
         </div>
       </header>
 
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="form-group">
@@ -27,13 +27,13 @@
                                     {{ value }}
                                 </option>
                             {% endfor %}
-                        </select>
+                        </select>    
                     {% else %}
                         <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}를 입력해주세요." name="{{ field.name }}" >
                     {% endif %}
                 </div>
                 <hr>
-            {% endfor %}
+                {% endfor %}
             
                 <!-- 주소  api -->
 

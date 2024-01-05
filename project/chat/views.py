@@ -1,8 +1,11 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse
+from accounts.models import AccountUser
+
 
 def chat(request):
-    return render(request, 'chat/chat.html')
+    users = AccountUser.objects.filter(is_admin=0)
+    return render(request, 'chat/chat.html', {'users':users})
 
 def account_settings(request):
     return render(request, 'chat/account_settings.html')
@@ -20,8 +23,11 @@ def wishlist(request):
 def detail(request):
     return render(request, 'chat/detail.html')
 
-def friend_profile(request):
-    return render(request, 'chat/friend_profile.html')
+
+# 특정 유저 프로필 확인하기 
+def friend_profile(request, id):
+    user = get_object_or_404(AccountUser, pk=id)
+    return render(request, 'chat/test.html', {'user':user})
 
 
 

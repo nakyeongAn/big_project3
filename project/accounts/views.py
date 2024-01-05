@@ -18,7 +18,7 @@ def cancel(request):
 #회원가입 폼
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
@@ -30,7 +30,7 @@ def signup(request):
             address_detail = request.POST.get('address_detail', '')
             full_address = f"{address} {address_detail}"
             user.address = full_address
-            
+
             user.save()
             # 로그인 처리나 리디렉션 추가
             return redirect('login')  # 예: 홈페이지로 리디렉션

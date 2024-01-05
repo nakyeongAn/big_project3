@@ -33,11 +33,26 @@
 <body class="d-flex flex-column h-100">
   <div class="wrapper">
     <div class="container">
+      <!-- 친구 목록 및 대화기록이 살짝 나오고 검색기능이 있다 -->
       <div class="left">
         <div class="top">
           <input class='search' type="text" id="searchInput" placeholder="친구 검색" onkeyup="searchFriends()">
         </div>
         <ul class="people">
+          <!-- 챗봇 테스트용 계정 고정시켰음-->
+          {% for user in users %}
+          <li class="person" data-chat-id= "{{user.id}}" >
+            <img
+              src="https://img.hankyung.com/photo/201904/01.19372617.1.jpg"
+              alt=""
+              onclick="goToProfile(this)"
+            />
+            <span class="name">{{ user.username }}</span>
+            <span class="time">2:09 PM</span>
+            <span class="preview">I was wondering...</span>
+          </li>
+          {% endfor %}
+
           <li class="person" data-chat="person1">
             <img
               src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg"

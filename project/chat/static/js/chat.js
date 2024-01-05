@@ -159,11 +159,12 @@ function initEmojiPicker() {
     });
 }
 
-// 친구 프로필 페이지 및 친구 요청 기능:
+// 친구목록 이미지 클릭하면  프로필 페이지 및 친구 요청 기능:
 function goToProfile(elem) {
-    var userID = elem.getAttribute("data-chat"); // 사용자 식별 정보
+    var parentLi = elem.closest('.person');
+    var userID = parentLi.getAttribute("data-chat-id"); // 사용자 식별 정보
     // 페이지 이동 또는 모달 띄우기
-    window.location.href = "/friend_profile?user=" + userID; // 사용자 프로필 페이지로 이동
+    window.location.href = "/friend_profile/" + userID; // 사용자 프로필 페이지로 이동
     // 또는 프로필 정보를 모달로 띄우는 등의 동작을 구현할 수 있습니다.
 }
 
