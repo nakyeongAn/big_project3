@@ -115,7 +115,7 @@ AUTH_USER_MODEL = "accounts.AccountUser"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "testing",
+        "NAME": "icis",
         "USER":"admin",
         "PASSWORD": secrets['rds_pass'],
         "HOST": secrets['rds_host'],
@@ -168,7 +168,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # for deployment
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-SITE_ID = 1
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = 'chat:chat'    
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'

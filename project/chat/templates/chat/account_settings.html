@@ -1,19 +1,28 @@
-{% extends "layout_after_login.html" %}
-{% load static %}
+{% extends "layout_after_login.html" %} {% load static %} 
+
 {% block extrahead %}
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
 
   <!-- Custom Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet"
+  />
   <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-  <!-- Core theme CSS (includes Bootstrap) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-{% endblock extrahead %}
+{% endblock extrahead %} 
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'chat/account_settings.css' %}" />
@@ -23,7 +32,9 @@
       <!-- Breadcrumb -->
       <nav aria-label="breadcrumb" class="main-breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'chat:chat' %}">Home</a></li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'chat:chat' %}">Home</a>
+          </li>
           <li class="breadcrumb-item">
             <a href="{% url 'chat:profile' %}">User</a>
           </li>
@@ -54,11 +65,11 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-user mr-2"
+                    class="feather feather-user m-1"
                   >
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle></svg
-                  >Profile Information
+                  >  Profile Information
                 </a>
                 <a
                   href="#account"
@@ -75,13 +86,13 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-settings mr-2"
+                    class="feather feather-settings m-1"
                   >
                     <circle cx="12" cy="12" r="3"></circle>
                     <path
                       d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
                     ></path></svg
-                  >Account Settings
+                  >  Account Settings
                 </a>
                 <a
                   href="#security"
@@ -98,12 +109,12 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-shield mr-2"
+                    class="feather feather-shield m-1"
                   >
                     <path
                       d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
                     ></path></svg
-                  >Security
+                  >  Security
                 </a>
                 <a
                   href="#notification"
@@ -120,13 +131,13 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-bell mr-2"
+                    class="feather feather-bell m-1"
                   >
                     <path
                       d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
                     ></path>
                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg
-                  >Notification
+                  >  Notification
                 </a>
               </nav>
             </div>
@@ -140,10 +151,7 @@
                 role="tablist"
               >
                 <li class="nav-item">
-                  <a
-                    href="#profile"
-                    data-toggle="tab"
-                    class="nav-link has-icon active"
+                  <a href="#profile" data-toggle="tab" class="nav-link has-icon"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -254,13 +262,13 @@
                 </li>
               </ul>
             </div>
-            <div class="card-body tab-content">
+            <div class="card-body tab-content m-4">
               <div class="tab-pane active" id="profile">
                 <h6>YOUR PROFILE INFORMATION</h6>
                 <hr />
                 <form>
                   <div class="form-group">
-                    <label for="fullName">Full Name</label>
+                    <label for="fullName">User Name</label>
                     <input
                       type="text"
                       class="form-control"
@@ -316,12 +324,12 @@ A front-end developer that focus more on user interface design, a web interface 
                     us consent to share this data wherever your user profile
                     appears.
                   </div>
-                  <button type="button" class="btn btn-primary">
-                    Update Profile
-                  </button>
-                  <button type="reset" class="btn btn-light">
-                    Reset Changes
-                  </button>
+                  <form method="post">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="reset" class="btn btn-light">
+                      Reset Changes
+                    </button>
+                  </form>
                 </form>
               </div>
               <div class="tab-pane" id="account">
@@ -573,6 +581,7 @@ A front-end developer that focus more on user interface design, a web interface 
   </div>
 </body>
 
-<script src="{% static 'js/account_setting.js' %}"></script>
 
-{% endblock content%}
+<script src="{% static 'js/account_settings.js' %}"></script>
+
+{% endblock content %}

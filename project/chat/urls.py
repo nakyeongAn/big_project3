@@ -1,7 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-
 app_name = 'chat'
 
 urlpatterns = [
@@ -11,6 +10,7 @@ urlpatterns = [
     path('friend_profile/', views.friend_profile, name='friend_profile'),
     path('wishlist/', views.wishlist, name='wishlist'),
     path('', views.detail, name='detail'),
-    
+
 ]
+
 

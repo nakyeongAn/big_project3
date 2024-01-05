@@ -1,0 +1,12 @@
+{% if users %}
+    <h2>검색 결과</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} - {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>검색 결과가 없습니다.</p>
+{% endif %}
+
+

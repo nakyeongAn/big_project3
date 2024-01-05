@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import SignUpForm, LoginForm
 from datetime import date
 
+
 def forgotID(request):
     return render(request, 'accounts/forgotID.html')
 
@@ -13,8 +14,6 @@ def forgotpw(request):
 
 def cancel(request):
     return render(request, 'accounts/cancel.html')
-
-
 
 #회원가입 폼
 def signup(request):
@@ -62,3 +61,17 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
+
+# 사용자 이름으로 친구 목록을 검색하여 데이터베이스에서 조회
+from .models import AccountUser
+# 사용자 검색 뷰
+def search_user(request):
+    if request.method == "GET":
+        username = request.GET.get('username', None)
+        if username:
+            users = AccountUser.objects.filter(username__icontains=username)
+            return render(request, 'accounts/user_search_results.html', {'users': users})
+        else:
+            return HttpResponse("검색어를 입력해주세요.")
+    else:
+        return HttpResponse("잘못된 요청입니다.")

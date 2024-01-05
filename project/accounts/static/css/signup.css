@@ -27,12 +27,14 @@ header .title {
 
 header .title a {
     text-decoration: none;
-    color: #FE8947; /* 로고 색상 */
+    color: #FE8947;
+    /* 로고 색상 */
 }
 
 form {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap
 }
 
 label {
@@ -45,8 +47,7 @@ input[type="password"],
 input[type="email"],
 input[type="date"],
 select {
-    padding: 8px; /* 패딩 유지 */
-    margin-bottom: -15px; /* 입력 필드 간 마진 감소 */
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -54,7 +55,8 @@ select {
 input[type="submit"] {
     padding: 10px;
     color: white;
-    background: #FE8947; /* 버튼 배경 색상 */
+    background: #FE8947;
+    /* 버튼 배경 색상 */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -62,5 +64,50 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background: darkgreen; /* 버튼 호버 색상 */
+    background: darkgreen;
+    /* 버튼 호버 색상 */
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group label,
+.form-group input {
+    flex: 1;
+    /* 요소들이 공간을 균등하게 차지하도록 함 */
+}
+
+
+/* 라벨과 입력 필드 간의 간격 조정 */
+
+.form-group label {
+    margin-right: 20px;
+    /* 오른쪽 여백 추가 */
+}
+
+.find-wrap {
+    padding-top: 20px;
+}
+
+.find-wrap ul {
+    list-style: none;
+}
+
+.find-wrap li {
+    display: inline;
+    margin-right: 10px;
+    color: grey;
+}
+
+.find-wrap a {
+    text-decoration: none;
+    color: grey;
+    font-size: 14px;
+}
+
+.find-wrap a:hover {
+    text-decoration: underline;
 }
