@@ -24,11 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // 원본 채팅 목록을 저장하는 함수
 function storeOriginalPeopleList() {
-    originalPeopleList = Array.from(document.querySelectorAll('.people .person')).map(function(node) {
+    originalPeopleList = Array.from(
+        document.querySelectorAll(".people .person")
+    ).map(function(node) {
         return node.outerHTML; // or any other data you need
     });
 }
-
 
 function searchFriends() {
     var query = document.getElementById("searchInput").value;
@@ -60,7 +61,6 @@ function updatePeopleListWithOriginal() {
         peopleList.innerHTML += personHTML; // 원본 목록을 추가합니다.
     });
 }
-
 
 function updatePeopleList(data) {
     var peopleList = document.querySelector(".people");
@@ -137,6 +137,14 @@ function initChatSelection() {
         name: document.querySelector(".container .right .top .name"),
     };
 
+    // '.people' 요소에 대한 클릭 이벤트를 위임합니다.
+    friends.list.addEventListener("mousedown", function(event) {
+        var f = event.target.closest(".person");
+        if (f && !f.classList.contains("active")) {
+            setActiveChat(f, friends, chat);
+        }
+    });
+
     Array.prototype.forEach.call(friends.all, function(f) {
         f.addEventListener("mousedown", function() {
             if (!f.classList.contains("active")) {
@@ -166,6 +174,21 @@ function initChatSelection() {
         chat.name.innerHTML = friends.name;
     }
 }
+
+// 이벤트 위임을 사용하여 .people 요소에 클릭 이벤트 리스너를 추가합니다.
+document.querySelector(".people").addEventListener("click", function(event) {
+    var person = event.target.closest(".person");
+    if (person) { // 클릭된 요소가 .person 요소일 경우에만 동작
+        // 모든 채팅 숨기기
+        document.querySelectorAll(".chat").forEach(function(chat) {
+            chat.style.display = "none";
+        });
+        // 선택한 사람의 채팅 보여주기
+        document.querySelector(`.chat[data-chat="${person.dataset.chat}"]`).style.display = "block";
+        // 기본 메시지 숨기기
+        document.getElementById("defaultMessage").style.display = "none";
+    }
+});
 
 function initEmojiPicker() {
     const button = document.querySelector("#emoji_btn");
