@@ -91,9 +91,12 @@
 <div class="container">
   <div class="profile">
     <div class="profile-image">
-      <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image" id="profileImage" style="cursor:pointer;">
+      <!-- profile.html 내 -->
+      <img src="{{ user.profile_image_url }}" alt="Profile Image" id="currentImage" onclick="document.getElementById('profilePictureInput').click()" style="cursor:pointer;">
+      <!-- 파일 선택을 위한 숨겨진 input 필드 -->
       <input type="file" name="profile_picture" id="profilePictureInput" style="display: none;" onchange="uploadImage()">
     </div>
+
     <h1 class="profile-title m-auto">{{ username}} </h1>
     <div class="profile-user-settings">
       <a href="{% url 'chat:account_settings' %}" class="btn m-auto">프로필 수정</a>
@@ -170,6 +173,9 @@
 
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">var uploadUrl = "{% url 'chat:upload_profile_image' %}";</script>
   <script src="{% static 'js/friend_profile.js' %}"></script>
+
+
 
 {% endblock content%}

@@ -20,12 +20,21 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    # 기존 URL 패턴들...
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('chat.urls')),
     path('accounts/', include('accounts.urls')),
     path('auth/', include('allauth.urls')),
     path('forum/', include('forum.urls')),
     path('chat/', include('chat.urls')),
+    
 ]
 
 if settings.DEBUG:
