@@ -66,7 +66,7 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=20)
     gender = models.CharField(max_length=3, choices = GENDER_CHOICHES, default = '남자')
     birthdate = models.DateField(default= datetime.date.today)
-    phone_number = PhoneNumberField(default = None,region='KR') # unique=True 추가해라 나중에 
+    phone_number = PhoneNumberField(default = '0',region='KR') # unique=True 추가해라 나중에 
     agearound = models.IntegerField(default = 1)
     address = models.CharField(default = 'None', max_length = 100)
     objects = AccountUserManager()
