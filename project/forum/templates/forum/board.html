@@ -1,9 +1,7 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% load static %} 
 {% block title %}질문게시판{% endblock %}
-{% comment %} {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/board.css' %}"/>
-{% endblock extra_css %} {% endcomment %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'forum/board.css' %}"/>
 <h2 class='notice_h2'>질문게시판</h2>
 <div class = 'borad_section'>
     <div class= 'board_section2'>

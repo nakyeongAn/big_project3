@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
     {% block extra_css %}
     {% endblock extra_css %}
   </head>
   <body>
     <header>
         <div class="leftbar">
-            <img src='static\img\스크린샷 2024-01-04 101730 1 (1).png' alt="img2">
+            <img src="{% static 'img/logo.png' %}" alt="img2">
             <div class="name">
                 <a href="{% url 'chat:detail' %}">당선</a>
             </div>
@@ -22,11 +23,27 @@
                 <ul>
                     <li><a href="{% url 'login' %}">로그인</a></li>
                     <li><a href="{% url 'signup' %}">회원가입</a></li>
-                    <li><a href="#">커뮤니티</a></li>
+                    <li class="community-link">
+                        <a href="#" class="toggle-menu">게시판</a> <!-- 'toggle-menu' 클래스 추가 -->
+                        <div class="community-menu">
+                            <ul>
+                                <li><a href="{% url 'forum:notice' %}">공지사항</a></li>
+                                <li><a href="{% url 'forum:board' %}">질문게시판</a></li>
+                            </ul>
+                        </div>
+                    </li>                    
                 </ul>
             </div>
         </div>
     </header>
+    <script>
+        $(document).ready(function(){
+            $(".toggle-menu").click(function(e){ // 'toggle-menu' 클래스를 가진 링크에만 적용
+                e.preventDefault(); // 링크의 기본 동작을 방지합니다
+                $(this).next(".community-menu").slideToggle(); // 메뉴의 표시/숨김을 토글합니다
+            });
+        });
+    </script>        
     <main>
         {% block content%}
         {% endblock %}
