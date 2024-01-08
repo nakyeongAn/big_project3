@@ -12587,6 +12587,87 @@ body {
     border-bottom-right-radius: 50px;
 }
 
+.chat {
+    position: relative;
+    flex-direction : column;
+    align-items : flex-start;
+    display: none;
+    max-height: 93%;
+    height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0 35px 92px;
+    justify-content: flex-end;
+    flex-direction: column;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: var(--main_col);
+    border-bottom-right-radius: 50px;
+}
+
+.product-container {
+    width: 100%; /* 전체 너비를 사용하도록 설정 */
+    display: flex;
+    flex-wrap: wrap; /* 필요에 따라 상품들이 줄바꿈하도록 설정 */
+    justify-content: flex-start; /* 상품들을 시작점에서 정렬 */
+    gap: 3px; /* 상품 간격 설정 */
+    padding: 10px; /* 컨테이너의 패딩도 줄임 */
+  }
+  
+  .product {
+    /* 상품의 너비를 재조정하여 필요에 따라 줄바꿈하도록 설정 */
+    flex: 30%; /* 여기서 20px은 gap의 두 배입니다 */
+    box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
+    background: #fff; /* 하얀 배경 */
+    border: 1px solid #ddd; /* 연한 회색 테두리 */
+    border-radius: 10px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    margin: 5px; /* 주변 마진 */
+    overflow: hidden; /* 이미지가 박스 밖으로 나가지 않도록 */
+    transition: transform 0.3s ease-in-out; /* 호버 효과를 위한 전환 */
+    padding : 0px;
+  }
+
+  .product:hover {
+    transform: translateY(-5px); /* 호버 시 상품이 약간 위로 움직이는 효과 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강조 */
+  }
+  
+  .product img {
+    width: 100%; /* 이미지가 상품 박스 너비에 맞도록 */
+    display: block; /* 이미지가 블록 레벨 요소처럼 동작 */
+  }
+
+  .bottom_area {
+    background-color: #F1EBE1; /* 배경색 설정 */
+  }
+  .bottom_area a {
+    color: inherit; /* 기본 상태의 링크 색상을 상속 받음 */
+    text-decoration: none; /* 밑줄 없애기 */
+  }
+  
+  .bottom_area a:hover {
+    color: #FFA500; /* 주황색으로 변경 */
+    text-decoration: none; /* 호버 상태에서도 밑줄 없애기 */
+  }
+
+  .product p {
+    margin: 0.5em; /* 제목 주변에 약간의 마진 */
+    font-size: 0.8em; /* 큰 글씨 크기 */
+    font-weight: bold; /* 굵은 글씨체 */
+    color: #333; /* 어두운 글씨 색상 */
+    overflow: hidden; /* 길이가 길 경우 잘리는 텍스트 처리 */
+    white-space: nowrap; /* 텍스트가 줄바꿈 없이 한 줄에 표시 */
+    text-overflow: ellipsis; /* 잘린 텍스트는 말줄임표로 표시 */
+  }
+  
+  .price {
+    color: #F7931E; /* 가격 색상 변경 */
+    font-size: 0.8em; /* 큰 글씨 크기 */
+    font-weight: bold; /* 굵은 글씨체 */
+    margin: 0.5em; /* 마진 */
+  }
+
 .chat .active-chat {
     padding-right: 100px;
 }
@@ -12789,3 +12870,23 @@ body {
     height: 100%;
     font-size: 30px;
 }
+
+/* 선물 리스트 */
+.product-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+.product {
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+  }
+.product img {
+    max-width: 100%;
+    height: auto;
+  }
+.price {
+    color: green;
+    font-weight: bold;
+  }

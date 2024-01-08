@@ -6,8 +6,11 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
-def chat(request):
-    return render(request, "chat/chat.html")
+def receive_chat(request):
+    return render(request, 'chat/receive_chat.html')
+
+def give_chat(request):
+    return render(request, 'chat/give_chat.html')
 
 
 def account_settings(request):
