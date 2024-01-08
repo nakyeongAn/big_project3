@@ -1,42 +1,58 @@
-document.getElementById('profileImage').addEventListener('click', function() {
-    document.getElementById('profilePictureInput').click();
-});
+// DOM 요소 캐싱
+var profileImage = document.getElementById('currentImage');
+var profilePictureInput = document.getElementById('profilePictureInput');
+var uploadUrl = uploadButton.getAttribute('data-upload-url');
 
-document
-    .getElementById("profilePictureInput")
-    .addEventListener("change", function(event) {
-        const fileReader = new FileReader();
-        fileReader.onload = function(e) {
-            document.querySelector(".profile-img img").src = e.target.result;
-        };
-        fileReader.readAsDataURL(event.target.files[0]);
-    });
+// 파일 선택 시 동작하는 함수
+function uploadImage(file) {
+    // 로컬에서 이미지 미리보기
+    var fileReader = new FileReader();
+    fileReader.onload = function(e) {
+        profileImage.src = e.target.result;
+    };
+    fileReader.readAsDataURL(file);
 
-document.getElementById('profilePictureInput').addEventListener('change', function() {
-    var form_data = new FormData();
-    form_data.append('profile_picture', this.files[0]);
+    // 서버로 이미지 전송
+    var formData = new FormData();
+    formData.append('profile_picture', file);
 
-    fetch("{% url 'your_django_upload_view_url_name' %}", {
+    fetch(uploadUrl, {
             method: 'POST',
-            body: form_data,
-            credentials: 'include', // For CSRF token
+            body: formData,
+            credentials: 'include',
             headers: {
-                'X-CSRFToken': getCookie('csrftoken'), // CSRF token
+                'X-CSRFToken': getCookie('csrftoken'),
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
-            // Update the profile image if upload is successful
             if (data.success) {
-                document.getElementById('profileImage').src = data.image_url;
+                // 이미지 업데이트
+                profileImage.src = data.image_url;
+            } else {
+                // 오류 처리
+                alert("Failed to upload the image.");
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
         });
+}
+
+// 파일 선택 시 동작하는 이벤트 리스너
+profilePictureInput.addEventListener("change", function(event) {
+    if (this.files && this.files[0]) {
+        uploadImage(this.files[0]);
+    }
 });
 
-// Helper function to get the value of a cookie by name
+// CSRF 토큰 값을 가져오는 함수
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

@@ -1,0 +1,15 @@
+{% extends "layout_after_login.html" %} {% load static %} 
+{% block title %}질문게시판{% endblock %}
+{% block content %}
+<h1>수정하기</h1>
+<hr>
+
+<form action = "{% url 'forum:update' article.pk %}" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type = "submit">
+</form>
+
+<hr>
+<a href="{% url 'forum:read' article.pk %}">돌아가기</a>
+{% endblock content%}

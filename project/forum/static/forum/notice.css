@@ -1,0 +1,128 @@
+/* forum */
+
+/* board css */
+
+.borad_section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 보드 섹션 스타일링 */
+  .board_section2 {
+    padding: 20px 80px 0px 80px;
+  }
+  
+  .notice_h2 {
+    color: #593D3B;
+    text-align: center;
+    margin: 0px 20px 30px 60px;
+    text-align: left; /* 텍스트를 왼쪽으로 정렬합니다. */
+  }
+  
+  /* 검색 상자 스타일링 */
+  #search-box {
+    margin-bottom: 20px;
+  }
+  
+  .search-box_in {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  #search-query {
+    flex: 1;
+    padding: 10px;
+    margin-right: 60px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
+  
+  /* 검색 버튼 스타일링 */
+  #search-box button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right : 20px;
+    border-radius: 0;
+  }
+  
+  #search-box button:hover {
+    background: #555;
+  }
+  
+  /* 테이블 스타일링 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  th {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* 테이블 헤더에 마우스 호버 효과 추가 */
+  th:hover {
+    background-color: #555;
+  }
+  
+  /* 페이지 네비게이션 스타일링 */
+  #pagination {
+    margin-bottom: 20px;
+    padding: 10px 0;
+  }
+  
+  #pagination a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  #pagination a:hover {
+    background: #555;
+  }
+  
+  /* 페이지 네비게이션에서 현재 페이지 강조 */
+  #pagination a.active {
+    background: #e8491d;
+    color: #fff;
+  }
+  
+  /* 반응형 디자인: 태블릿과 모바일 화면 크기에 대한 스타일링 */
+  @media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+  
+    .search-box_in {
+        flex-direction: column;
+        align-items: stretch;
+    }
+  
+    #search-query {
+        margin-bottom: 10px;
+    }
+  
+    #search-box button {
+        width: 100%;
+    }
+  }

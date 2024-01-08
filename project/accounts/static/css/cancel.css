@@ -1,0 +1,86 @@
+/* cancel page css */
+
+/* Basic reset for styling */
+
+h2 {
+    color: #593D3B;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    margin-bottom: 20px;
+    color: #FF832A;
+  }
+  
+  .attr-wrap {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type=password] {
+    width: 20%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: 2px solid;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  #cancel_m-btn {
+    background-color: #fff; /* White background */
+    color: #d9534f; /* Red text */
+    border-color: #d9534f; /* Red border */
+  }
+  
+  #cancel_m-btn:hover {
+    background-color: #d9534f; /* Red background on hover */
+    color: #fff; /* White text on hover */
+  }
+  
+  #cancel-btn {
+    background-color: #fff; /* White background */
+    color: #4cae4c; /* Green text */
+    border-color: #4cae4c; /* Green border */
+  }
+  
+  #cancel-btn:hover {
+    background-color: #4cae4c; /* Green background on hover */
+    color: #fff; /* White text on hover */
+  }
+  
+  /* Adding focus styles for accessibility */
+  button:focus {
+    box-shadow: 0 0 0 3px rgba(0,123,255,.5);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+  
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+    #cancel-btn {
+        margin-right: 0;
+    }
+  
+    
+  }
+  
