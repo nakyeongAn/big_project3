@@ -1,23 +1,21 @@
 import json
 from openai import OpenAI
+import os
 
 # 챗봇
 # secrets.json 파일에서 API 키 읽어오기
 with open('secrets.json', 'r') as secrets_file:
     secrets = json.load(secrets_file)
-openai_key = secrets["openai_api_key"]
+# openai_key = secrets["openai_api_key"]
+
+os.environ['OPENAI_API_KEY'] = secrets["openai_api_key"]
+client = OpenAI()
 
 # OpenAI 클라이언트 설정
-client = OpenAI(api_key=openai_key)
+# client = OpenAI(api_key=openai_key)
 
 # 사용자 이름 설정
 user_name = "친구 이름"  # 여기에 실제 친구 이름 입력
-
-# JSON 파일로 대화 저장하는 함수 (user의 대화만 저장)
-def save_conversation_to_json(conversation, file_name="conversation.json"):
-    with open(file_name, 'w', encoding='utf-8') as file:
-        user_conversation = [message for message in conversation if message['role'] == 'user']
-        json.dump(user_conversation, file, ensure_ascii=False, indent=4)
 
 # 첫 번째 메시지 정의 및 출력
 initial_message = f"안녕하세요! {user_name}님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!"
@@ -40,7 +38,6 @@ while True:
     user_input = input("질문을 입력하세요 (종료하려면 'exit' 입력): ")
 
     if user_input.lower() == 'exit':
-        save_conversation_to_json(conversation)
         break
 
     # 대화 기록에 사용자의 입력 추가
@@ -48,7 +45,7 @@ while True:
 
     # 챗봇에게 대화 전달 및 응답 받기
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="ft:gpt-3.5-turbo-1106:personal::8c5qJUIG",
         messages=conversation,
         max_tokens=150,
         temperature=0.4,
@@ -61,4 +58,4 @@ while True:
     assistant_response = response.choices[0].message.content
     print(f"Assistant: {assistant_response}")
     conversation.append({"role": "assistant", "content": assistant_response})
-    save_conversation_to_json(conversation)  # 대화가 추가될 때마다 저장
+    
