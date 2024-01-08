@@ -2,9 +2,37 @@ from django.shortcuts import render, redirect
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.contrib import messages
 
 def board(request):
+    articles = Article.objects.all()
+    content = {'articles': articles}
+    return render(request, 'forum/board.html', content)
+
+def search(request):
+    question=request.GET.get('q', '')
+    articles = Article.objects.all()
+    if not question:
+        content = {'articles': articles}
+    else :
+        if len(question) > 1 :
+            search_article_list = articles.filter(Q (title__icontains=question) | Q (content__icontains=question)) #  | Q (user_id__icontains=question)
+            content = {'articles': search_article_list}
+            return render(request, "forum/board.html", content)
     return render(request, 'forum/board.html')
+
+def mypost(request):
+    articles = Article.objects.all()
+    search_article_list = articles.filter(Q (user_id=request.user.id))
+    content = {'articles': search_article_list}
+    return render(request, "forum/board.html", content)
+
+
+    # articles = Article.objects.all()
+    # content = {'articles': articles}
+    # print(request.user.id)
+    # return render(request, 'forum/board.html', content)
 
 def notice(request):
     return render(request, 'forum/notice.html')
@@ -13,6 +41,7 @@ def index(request):
     articles = Article.objects.all()
     content = {'articles': articles}
     return render(request, "forum/index.html", content)
+
 
 def create(request):
     if request.method == "POST" :
