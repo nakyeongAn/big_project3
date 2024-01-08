@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initDefaultMessageDisplay();
 });
 
+//사용자가 친구를 검색할 수 있게 하는 기능을 초기화해. 입력된 검색어에 따라 친구 목록을 필터링하고 결과를 표시해.
 function initSearchFilter() {
     var searchInput = document.getElementById("searchInput");
     searchInput.addEventListener("keyup", function() {
@@ -60,7 +61,9 @@ function filterPeople(filterValue, peopleList) {
         }
     }
 }
-
+ 
+// 메시지를 보내는 기능을 초기화해. 사용자가 메시지를 입력하고 전송 버튼을 클릭하거나 
+//엔터 키를 누르면 메시지가 채팅 창에 추가되도록 해.
 function initMessageSending() {
     const sendButton = document.querySelector(".send");
     const messageInput = document.getElementById("message");
@@ -93,7 +96,8 @@ function initMessageSending() {
         return bubble;
     }
 }
-
+//채팅 목록에서 특정 대화를 선택할 수 있게 해주는 기능을 초기화해. 사용자가 친구 목록에서 한 명을 클릭하면 
+//해당 대화가 활성화되고 나타나도록 해.
 function initChatSelection() {
     var friends = {
         list: document.querySelector("ul.people"),
@@ -136,7 +140,8 @@ function initChatSelection() {
         chat.name.innerHTML = friends.name;
     }
 }
-
+//이모지 피커 기능을 초기화해. 사용자가 이모지 버튼을 클릭하면 이모지를 선택할 수 있는 메뉴가 나타나고, 
+//선택한 이모지가 메시지 입력란에 추가돼.
 function initEmojiPicker() {
     const button = document.querySelector("#emoji_btn");
     const textBox = document.querySelector("#message");
@@ -175,12 +180,19 @@ document.querySelectorAll(".person").forEach(function(person) {
         document.querySelectorAll(".chat").forEach(function(chat) {
             chat.style.display = "none";
         });
+
         // 선택한 사람의 채팅 보여주기
-        document.querySelector(
-            `.chat[data-chat="${this.dataset.chat}"]`
-        ).style.display = "block";
+        var chatId = person.getAttribute("data-chat-id");
+        var chatToShow = document.querySelector(`.chat[data-chat="${chatId}"]`);
+        if (chatToShow) {
+            chatToShow.style.display = "block";
+        }
+
         // 기본 메시지 숨기기
-        document.getElementById("defaultMessage").style.display = "none";
+        var defaultMessage = document.getElementById("defaultMessage");
+        if (defaultMessage) {
+            defaultMessage.style.display = "none";
+        }
     });
 });
 

@@ -12,6 +12,8 @@ urlpatterns = [
     #path('friend_profile/', views.friend_profile, name='friend_profile'),
     path('wishlist/', views.wishlist, name='wishlist'),
     path('', views.detail, name='detail'),
+    #chatbot 관련
+
 ]
 
 

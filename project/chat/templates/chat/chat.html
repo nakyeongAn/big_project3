@@ -41,13 +41,14 @@
         <ul class="people">
           <!-- 챗봇 테스트용 계정들-->
           {% for user in users %}
+          <!-- 왼쪽 화면 요약 화면 관련-->
           <li class="person" data-chat-id= "{{user.id}}" >
             <img
               src="https://img.hankyung.com/photo/201904/01.19372617.1.jpg"
               alt=""
               onclick="goToProfile(this)"
             />
-            <span class="name">{{ user.username }}</span>
+            <span class="name"> {{user.username}} </span>
             <span class="time">2:09 PM</span>
             <span class="preview">I was wondering...</span>
           </li>
@@ -121,6 +122,21 @@
         <div class="chat" id="defaultMessage">
           <p>채팅을 시작해보세요!</p>
         </div>
+
+
+        <!-- 여기 채팅 관련 화면 -->  
+        {% for user in users %}
+        <div class="chat" data-chat="{{ user.id }}">
+          <div class="conversation-start">
+            <span>Today, 6:48 AM</span>
+          </div>  
+          <div class="bubble you">Hello,</div>
+          <div class="bubble you">it's me.</div>
+          <div class="bubble you">I was wondering...</div>
+        </div>
+        {% endfor %}
+
+
         <div class="chat" data-chat="person1">
           <div class="conversation-start">
             <span>Today, 6:48 AM</span>
@@ -129,6 +145,7 @@
           <div class="bubble you">it's me.</div>
           <div class="bubble you">I was wondering...</div>
         </div>
+
         <div class="chat" data-chat="person2">
           <div class="conversation-start">
             <span>Today, 5:38 PM</span>
@@ -140,6 +157,7 @@
           <div class="bubble you">When we were younger and free...</div>
           <div class="bubble you">I've forgotten how it felt before</div>
         </div>
+        
         <div class="chat" data-chat="person3">
           <div class="conversation-start">
             <span>Today, 3:38 AM</span>
