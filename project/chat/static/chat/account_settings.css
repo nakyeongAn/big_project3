@@ -113,10 +113,6 @@ body {
     border-top-right-radius: var(--bs-nav-tabs-border-radius);
 }
 
-.main-body {
-    padding: 15px;
-}
-
 .nav-link {
     color: #ff7e36;
 }
@@ -124,6 +120,10 @@ body {
 .profile-head .nav-tabs .nav-link.active {
     border: none;
     border-bottom: 2px solid #ff7e36;
+}
+
+.main-body {
+    padding: 15px;
 }
 
 .profile-tab p {

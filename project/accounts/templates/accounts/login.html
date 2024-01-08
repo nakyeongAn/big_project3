@@ -41,11 +41,6 @@
                     <li><a href="{% url 'signup' %}">회원가입</a></li>
                 </ul>
             </div>
-            <form method="get" action="{% url 'search_user' %}">
-                <label for="username">사용자 검색:</label>
-                <input type="text" id="username" name="username">
-                <input type="submit" value="검색">
-            </form>
             {% load socialaccount %}
             <a href="{% provider_login_url 'kakao' method='oauth2' %}">
             카카오톡 회원가입

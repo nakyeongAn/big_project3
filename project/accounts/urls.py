@@ -9,6 +9,4 @@ urlpatterns = [
      path('cancel/', views.cancel, name='cancel'),
      path('forgotID/', views.forgotID, name='forgotID'),
      path('forgotpw/', views.forgotpw, name='forgotpw'),
-     # 사용자 이름으로 친구 목록을 검색하여 데이터베이스에서 조회
-    path('search_user/', views.search_user, name='search_user'),
 ]
