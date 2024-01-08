@@ -1,0 +1,46 @@
+{% extends "layout_after_login.html" %} {% load static %} 
+{% block title %}질문게시판{% endblock %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<p> 글 제목 : {{article.title}}</p>
+<p> 글 내용 : {{article.content}}</p>
+<hr>
+
+<h3>댓글</h3>
+<ul>
+    {% for comments in comment %}
+        <li> {{comments.user}} | {{comments.content}}
+        {% if request.user == comments.user %}
+        <form action ="{% url 'forum:comment_delete' article.pk comments.pk %}"  method = "POST">
+            {% csrf_token %}
+            <input type = "submit" value = "삭제">
+        </form>
+        {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% if request.user.is_authenticated %}
+<form action = "{% url 'forum:comment_create' article.pk %}" method = "POST">
+    {% csrf_token %}
+    {{ commentform }}
+    <input type = "submit" value="댓글등록">
+</form>
+{% else %}
+댓글을 작성하려면 <a href = "{% url 'accounts:login' %}">로그인</a>하세요
+{% endif %}
+
+{% if request.user == article.user %}
+<form action = "{% url 'forum:read' article.pk %}" method = "POST">
+    {% csrf_token %}
+    <input type = "submit" value="삭제하기">
+</form>
+{% endif %}
+
+<a href = "{% url 'forum:index' %}">돌아가기</a>
+{% if request.user == article.user %}
+<a href = "{% url 'forum:update' article.pk %}">수정하기</a>
+{% endif %}
+
+
+{% endblock content%}
