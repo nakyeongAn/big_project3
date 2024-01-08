@@ -65,8 +65,14 @@ from django.http import JsonResponse
 
 
 def search_user(request):
+    current_user = request.user
     query = request.GET.get("term", "")  # 쿼리 파라미터에서 검색어 가져오기
-    users = AccountUser.objects.filter(username__icontains=query)  # 사용자 이름으로 검색
-    results = [{"username": user.username} for user in users]  # 결과 포맷팅
-    # results = [{'id': user.id, 'username': user.username, 'image_url': user.profile_image_url} for user in users]  # 결과 포맷팅
+    users = AccountUser.objects.filter(username__icontains=query).exclude(username=current_user.username)  # 사용자 이름으로 검색
+    results = [{
+        'id': user.id,
+        'username': user.username,
+        'profile_image_url': user.profile_image_url()  # 프로필 이미지 URL 추가
+    } for user in users]
     return JsonResponse(results, safe=False)  # JSON 형식으로 반환
+
+

@@ -44,9 +44,7 @@ function searchFriends() {
             .then((data) => {
                 updatePeopleList(data); // 검색 결과로 목록 업데이트
             })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+
     } else {
         // 검색창이 비었을 때 원본 채팅 목록을 표시합니다.
         updatePeopleListWithOriginal();
@@ -71,7 +69,7 @@ function updatePeopleList(data) {
         li.className = "person";
         li.setAttribute("data-chat", `person${person.id}`);
         li.innerHTML = `
-            <img src="${person.image_url}" alt="" onclick="goToProfile(this)" />
+            <img src="${person.profile_image_url}" alt="" onclick="goToProfile(this)" />
             <span class="name">${person.username}</span>
         `;
         peopleList.appendChild(li);
