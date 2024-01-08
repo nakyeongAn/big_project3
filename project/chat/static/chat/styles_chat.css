@@ -12605,7 +12605,7 @@ body {
     border-bottom-right-radius: 50px;
 }
 
-.product-container {
+#product-container {
     width: 100%; /* 전체 너비를 사용하도록 설정 */
     display: flex;
     flex-wrap: wrap; /* 필요에 따라 상품들이 줄바꿈하도록 설정 */
@@ -12616,7 +12616,7 @@ body {
   
   .product {
     /* 상품의 너비를 재조정하여 필요에 따라 줄바꿈하도록 설정 */
-    flex: 30%; /* 여기서 20px은 gap의 두 배입니다 */
+    flex: 0 1 calc(33.333% - 20px); /* 여기서 20px은 gap의 두 배입니다 */
     box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
     background: #fff; /* 하얀 배경 */
     border: 1px solid #ddd; /* 연한 회색 테두리 */
@@ -12652,7 +12652,7 @@ body {
   }
 
   .product p {
-    margin: 0.5em; /* 제목 주변에 약간의 마진 */
+    margin: 0; /* 제목 주변에 약간의 마진 */
     font-size: 0.8em; /* 큰 글씨 크기 */
     font-weight: bold; /* 굵은 글씨체 */
     color: #333; /* 어두운 글씨 색상 */
@@ -12665,7 +12665,7 @@ body {
     color: #F7931E; /* 가격 색상 변경 */
     font-size: 0.8em; /* 큰 글씨 크기 */
     font-weight: bold; /* 굵은 글씨체 */
-    margin: 0.5em; /* 마진 */
+    margin:0px ; /* 마진 */
   }
 
 .chat .active-chat {
