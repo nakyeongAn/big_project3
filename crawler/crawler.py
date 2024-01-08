@@ -24,6 +24,7 @@ from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
 
+limit=10000
 
 def scrape_infos(name, url):
     # 로그 초기화
@@ -146,7 +147,7 @@ def scrape_infos(name, url):
         
         # 3. 상품 페이지 이동 / 정보 기록
         for [product_url] in product_urls:
-            time.sleep(random.randint(4000, 10000)/1000)  # (아마도 있을) 봇 체크 피하기 위한 텀
+            time.sleep(random.randint(1000, 2000)/1000)  # (아마도 있을) 봇 체크 피하기 위한 텀
             
             # 상품 페이지 열기
             next_operation =  'open product page'
@@ -217,14 +218,20 @@ def scrape_infos(name, url):
         with open(status_log_txt, 'w', encoding='utf-8') as file:
             file.write(next_operation + '\n')
             file.write(current_page_url + '\n')
-        # 대략 100개 정도 추출 후 해당 카테고리 종료 (정확히 5000개 추출이 아님)                
-        if not count_item>500:
+        # 대략 5000개 정도 추출 후 해당 카테고리 종료 (정확히 5000개 추출이 아님)                
+        if not count_item>limit:
             print('Trying to directly open next page')
             next_operation = 'directly open next page'
             with open(status_log_txt, 'w', encoding='utf-8') as file:
                 file.write(next_operation + '\n')
                 file.write(current_page_url + '\n')
             # 셀레니움 창을 껏다 켜야 할지 그냥 할지 잘 모르겠음 현재는 안끄고 계속 크롤링 하는 형태
+            driver.quit()
+            is_Configured, driver = configure_driver()
+            if is_Configured == False:
+                while is_Configured:
+                    print('Re-configuring Driver...')
+                    is_Configured, driver = configure_driver()  # configure driver over and over again
             driver.get(next_page_url)
         else:
             is_Done = True
@@ -431,11 +438,14 @@ crawl_data = {
     # 'Clothes_man' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000214489&ctgLv=2&page=1',
     # 'Clothes_uni' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000214500&ctgLv=2&page=1',
     # 'Bedclothes' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000214280&ctgLv=3&ctgLast=Y&pbaarentCtgId=6000214279&page=1',
-    # 'Baby_toy' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213839&ctgLv=1&page=1',
-    # 'Bakery' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213839&ctgLv=1&page=1',
-    # 'Drinks' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213424&ctgLv=1&page=1',
-    # 'Carpet' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000214293&ctgLv=2&page=1',
+    'Baby_toy' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213839&ctgLv=1&page=1',
+    'Bakery' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213839&ctgLv=1&page=1',
+    'Drinks' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213424&ctgLv=1&page=1',
+    'Carpet' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000214293&ctgLv=2&page=1',
     'Retort' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213247&ctgLv=1&page=1',
+    'Shoes' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213816&ctgLv=2&page=1',
+    'Meat' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000215194&ctgLv=1&page=1',
+    'Can_food' : 'https://emart.ssg.com/search.ssg?target=all&query=%EC%84%A0%EB%AC%BC&ctgId=6000213319&ctgLv=1&page=1',
 }
 dictionaries = [
     crawl_data,
