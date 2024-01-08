@@ -30,6 +30,20 @@
 {% endblock extrahead %} {% block content %}
 <link rel="stylesheet" href="{% static 'chat/styles_chat.css' %}" />
 
+<!-- 친구 요청 알림 버튼 -->
+<button id="friendRequestAlert" class="btn hidden">신규 친구 요청이 있습니다!</button>
+
+<!-- 친구 요청 관리 모달 -->
+<div id="friendRequestModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>친구 요청</h2>
+        <div id="friendRequestsList">
+            <!-- 여기에 친구 요청 목록이 동적으로 삽입됩니다 -->
+        </div>
+    </div>
+</div>
+
 
 <body class="d-flex flex-column h-100">
   <div class="wrapper">

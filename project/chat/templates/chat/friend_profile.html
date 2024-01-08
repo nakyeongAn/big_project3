@@ -52,8 +52,18 @@
       </select>
 
       <!-- Additional Information -->
-      <label for="additionalInfo">추가 정보:</label>
-      <textarea id="addwishlist-title="additionalInfo" placeholder="예산, 선물의 분위기 등..."></textarea>
+      <label for="budget">예산:</label>
+      <div id="budget" style="display:flex; justify-content:space-between; align-items:center; text-align:justify; margin-right:100px; margin-left:100px;">
+        <div>
+          <input type="number" id="minAmount" placeholder="최소금액" step="1000">
+          <span>원</span>
+        </div>
+        <span>   ~   </span>
+        <div>
+          <input type="number" id="maxAmount" placeholder="최대금액" step="1000">
+          <span>원</span>
+        </div>
+      </div>
 
       <!-- Submit Button -->
       <button type="submit" class="btn">제출</button>

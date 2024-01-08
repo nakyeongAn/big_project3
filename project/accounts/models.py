@@ -207,3 +207,22 @@ class DjangoSession(models.Model):
     class Meta:
         managed = False
         db_table = "django_session"
+
+# 친구 요청 모델 생성
+from django.db import models
+
+class FriendRequest(models.Model):
+    STATUS_CHOICES = [
+        ('requested', 'Requested'),
+        ('accepted', 'Accepted'),
+        ('declined', 'Declined'),
+        ('cancelled', 'Cancelled'),
+    ]
+    
+    sender = models.ForeignKey(AccountUser, related_name='sent_requests', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(AccountUser, related_name='received_requests', on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='requested')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('sender', 'receiver')

@@ -237,3 +237,47 @@ document.querySelectorAll(".person").forEach(function(person) {
 function initDefaultMessageDisplay() {
     document.getElementById("defaultMessage").style.display = "flex";
 }
+
+function fetchFriendRequests() {
+    fetch('/fetch_friend_requests/', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.friend_requests.length > 0) {
+                // 친구 요청이 있으면 알림 버튼을 표시하고, 모달에 친구 요청을 추가합니다.
+                document.getElementById('friendRequestAlert').classList.remove('hidden');
+                populateFriendRequestsModal(data.friend_requests);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// 서버에서 친구 요청 데이터 가져오기:
+function populateFriendRequestsModal(friendRequests) {
+    const list = document.getElementById('friendRequestsList');
+    friendRequests.forEach(request => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <p>${request.sender} 님이 친구 요청을 보냈습니다.</p>
+            <button onclick="manageFriendRequest(${request.id}, 'accept')">수락</button>
+            <button onclick="manageFriendRequest(${request.id}, 'decline')">거절</button>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// 페이지 로드 시 친구 요청을 가져옵니다.
+document.addEventListener('DOMContentLoaded', fetchFriendRequests);
+
+// 친구 요청 알림 및 모달창 표시:
+document.getElementById('friendRequestAlert').addEventListener('click', function() {
+    document.getElementById('friendRequestModal').classList.remove('hidden');
+});
+
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('friendRequestModal').classList.add('hidden');
+});

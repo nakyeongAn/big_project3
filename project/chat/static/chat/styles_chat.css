@@ -12462,10 +12462,12 @@ body {
 
 .container .left .people .person {
     position: relative;
+    height: 80px;
     width: 100%;
     padding: 15px 5%;
     cursor: pointer;
     background-color: var(--white);
+    vertical-align: middle
 }
 
 .container .left .people .person:after {
