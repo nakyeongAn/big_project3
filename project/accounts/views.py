@@ -20,8 +20,8 @@ def cancel(request):
 
 # 회원가입 폼
 def signup(request):
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data["username"]
@@ -66,3 +66,13 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, "accounts/login.html", {"form": form})
+def search_user(request):
+    if request.method == "GET":
+        username = request.GET.get('username', None)
+        if username:
+            users = AccountUser.objects.filter(username__icontains=username)
+            return render(request, 'accounts/user_search_results.html', {'users': users})
+        else:
+            return HttpResponse("검색어를 입력해주세요.")
+    else:
+        return HttpResponse("잘못된 요청입니다.")

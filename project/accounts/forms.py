@@ -8,10 +8,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput)  # 비밀번호 확인 필드 추가
-
+    profile_image = forms.ImageField(required=False)
     class Meta:
         model = AccountUser
-        fields = ['member_id', 'username','password', 'password_confirm', 'email','gender', 'birthdate','phone_number','address']
+        fields = ['member_id', 'username','password', 'password_confirm', 'email','gender', 'birthdate','phone_number','address','profile_image']
         widgets={
             'birthdate':forms.DateInput(attrs={'type':'date', 'placeholder':'yyyy-mm-dd (DOB)', 'class':'form-control'}),
         }

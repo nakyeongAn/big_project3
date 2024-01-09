@@ -7,7 +7,9 @@ app_name = 'forum'
 
 urlpatterns = [
     path('board/', views.board , name='board'),
+    path('search/', views.search, name='search'),
     path('notice/', views.notice , name='notice'),
+    path('mypost/', views.mypost , name='mypost'),
     path('', views.index, name = "index"),
     path('create/', views.create , name='create'),
     path('<int:pk>/', views.read, name='read'),

@@ -17,7 +17,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'chat/friend_profile.css' %}" />
 
-<!-- Modal Structure -->
+<!-- 챗봇에 넘길 데이터 및 챗봇 보내기-->
 <div id="giftModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -62,13 +62,13 @@
   </div>
 </div>
 
-
+<!-- 유저 정보 들어가는 곳-->
 <div class="container">
   <div class="profile">
     <div class="profile-image">
-      <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image">
+      <img src="{{ user.profile_image.url }}" alt="Profile Image">
     </div>
-    <h1 class="profile-title">Emiya Mulzomdao</h1>
+    <h1 class="profile-title">{{user.username}}</h1>
     <div class="profile-user-settings">
       <button class="btn" id="followBtn" onclick="sendFriendRequest()">팔로우</button>
       <!-- Hidden buttons, to be displayed after follow -->
@@ -80,7 +80,7 @@
     </div>
   </div>
 </div>
-
+<!-- 위시리스트-->
 <main>
 <div class="container">
   <div class="gallery">

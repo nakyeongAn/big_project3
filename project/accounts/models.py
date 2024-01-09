@@ -48,17 +48,21 @@ class AccountUserManager(BaseUserManager):
 
 # 회원가입 모델 BaseUser 상속
 class AccountUser(AbstractBaseUser, PermissionsMixin):
-    # 이름
-    # 아이디
-    # 비번
-    # 비번확인
-    # 메일
-    # 성별?
-    # 나이?  생일에서 현재 년도 빼버림
-    # 생일
-    # 전화번호
-    # 주소검색 내꺼 도로명 1
-    GENDER_CHOICHES = {("남자", "남자"), ("여자", "여자")}
+#이름
+#아이디 
+#비번
+#비번확인
+#메일   
+#성별?  
+#나이?  생일에서 현재 년도 빼버림 
+#생일   
+#전화번호   
+#주소검색 내꺼 도로명
+#사진 넣는거 있어야한다
+    GENDER_CHOICHES = {
+        ('남자' , '남자'),
+        ('여자','여자')
+    }
     id = models.BigAutoField(primary_key=True)
     email = models.EmailField(max_length=255)
     organization = models.CharField(max_length=30)

@@ -1,17 +1,19 @@
-{% extends "layout.html" %} {% load static %} 
-{% block title %}문의게시판{% endblock %}
+{% extends "layout_after_login.html" %}{% load static %} 
+{% block title %}질문게시판{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'forum/board.css' %}"/>
 <h2 class='notice_h2'>문의게시판</h2>
 <div class = 'borad_section'>
     <div class= 'board_section2'>
             <section id="search-box">
-                <div class = 'search-box_in'>
-                    <input type="text" id="search-query" placeholder="검색어 입력">
-                    <button class = "search-query-btn1" type="submit">검색</button>
-                    <button class = "search-query-btn2" type="button">나의 글 보기</button>
-                    <button class = "search-query-btn3" type="button">글 작성</button>
-                </div>
+                <form action="{% url 'forum:search'%}" method="GET">
+                    <div class = 'search-box_in'>
+                        <input type="text" id="search-query" placeholder="검색어 입력" name="q" value="{{ q }}">
+                        <button class = "search-query-btn1" type="submit">검색</button>
+                        <a class = "write" href="{% url 'forum:mypost'%}"><button class = "search-query-btn2" type="button">나의 글 보기</button></a>
+                        <a class = "write" href="{% url 'forum:create'%}"><button class = "search-query-btn3" type="button">글 작성</button></a>
+                    </div>
+                </form>
             </section>
             <section id="notice-board">
                 <table>
@@ -19,97 +21,57 @@
                         <tr>
                             <th>번호</th>
                             <th>제목</th>
-                            <th>작성일자</th>
-                            <th>첨부파일</th>
+                            <th>작성자</th>
                             <th>조회수</th>
+                            <th>작성일자</th>
+                            <th>답변여부</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 가정: 공지사항 데이터는 서버에서 가져옵니다. 여기에는 정적인 예시를 나열합니다. -->
-                        <!-- 각 행은 서버 측 스크립트에 의해 생성되어야 합니다. -->
-                        <!-- 이 코드는 1페이지의 첫 10개 공지사항을 보여주는 예시입니다. -->
+                        {% for article in articles %}
                         <tr>
-                            <td>1</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
+                            <td>{{ article.id }}</td>
+                            <td><a href="{% url 'forum:read' article.pk %}">{{ article.title }}</a></td>
+                            <td>{{ article.user }}</td>
+                            <td>{{ article.views }}</td>
+                            <td>{{ article.created_at }}</td>
+                            <td>
+                                {% if article.is_answered %}
+                                    답변완료
+                                {% else %}
+                                    답변 대기 중
+                                {% endif %}
+                            </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>공지사항 제목 예시</td>
-                            <td>2024.01.05</td>
-                            <td>[첨부]</td>
-                            <td>89</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <!-- 페이징 버튼 -->
                 <div id="pagination" style="text-align: center; margin-top: 20px;">
-                    <a href="?page=1">이전</a>
+                    <a href="?page=1"><</a>
                     <!-- 실제 웹 애플리케이션에서는 이 부분이 동적으로 생성되어야 합니다. -->
                     <a href="?page=1">1</a>
                     <a href="?page=2">2</a>
                     <!-- 추가 페이지 링크 -->
-                    <a href="?page=2">다음</a>
+                    <a href="?page=2">></a>
                 </div>
             </section>    
     </div>
 </div>
+
+
 {% endblock content%}
+
+{% comment %} {% for article in articles %}
+<p> 글 번호 : {{article.id}}</p>
+<a href ="{% url 'forum:read' article.pk %}"><p> 글 제목 : {{article.title}}</p></a>
+<p> 작성자 : {{article.user}} </p>
+<p> 조회수: {{ article.views }}</p>
+<p> 작성일자 : {{article.created_at}} </p>
+{% if article.is_answered %}
+    <p>답변완료</p>
+{% else %}
+    <p>답변 대기 중</p>
+{% endif %}
+<hr>
+{% endfor %} {% endcomment %}
