@@ -32,7 +32,7 @@ def testing(request):
         # 결과 값 챗봇 넘기기 
         result = chatbot_machine(friend_id, user_id)
         # 친구페이지로 돌아가버림
-        return redirect('chat:friend_profile', id = friend_id)
+        return redirect('chat:friend_profile', user_id = friend_id)
     
 # 챗봇 사용자 대답 db에 저장
 @require_POST
