@@ -30,6 +30,15 @@
 {% endblock extrahead %} {% block content %}
 <link rel="stylesheet" href="{% static 'chat/styles_chat.css' %}" />
 
+<!-- 친구 요청 알림 버튼과 드롭다운 -->
+<div id="friendRequestAlertContainer" class="friend-request-alert-container">
+  <button id="friendRequestAlert" class="btn hidden">새로운 알림이 있습니다!</button>
+  <div id="friendRequestsDropdown" class="friend-requests-dropdown hidden">
+      <div id="friendRequestsList"></div>
+  </div>
+</div>
+
+
 
 <body class="d-flex flex-column h-100">
   <div class="wrapper">

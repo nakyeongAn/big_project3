@@ -17,6 +17,32 @@
     }
 }
 
+
+/* .friend-request-alert-container {
+    position: relative;
+    display: inline-block;
+}
+
+.friend-requests-dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    display: none;
+}
+
+.friend-requests-dropdown div {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.friend-requests-dropdown div:hover {
+    background-color: #f1f1f1;
+} */
+
 body {
     margin: 0;
     font-family: var(--bs-body-font-family);
@@ -12462,10 +12488,12 @@ body {
 
 .container .left .people .person {
     position: relative;
+    height: 80px;
     width: 100%;
     padding: 15px 5%;
     cursor: pointer;
     background-color: var(--white);
+    vertical-align: middle
 }
 
 .container .left .people .person:after {

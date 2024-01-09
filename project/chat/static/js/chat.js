@@ -44,8 +44,7 @@ function searchFriends() {
             .then((response) => response.json())
             .then((data) => {
                 updatePeopleList(data); // 검색 결과로 목록 업데이트
-            })
-
+            });
     } else {
         // 검색창이 비었을 때 원본 채팅 목록을 표시합니다.
         updatePeopleListWithOriginal();
@@ -69,9 +68,11 @@ function updatePeopleList(data) {
         var li = document.createElement("li");
         li.className = "person";
         li.setAttribute("data-chat", `person${person.id}`);
+        li.setAttribute("data-userid", `${person.id}`);
         li.innerHTML = `
-            <img src="${person.profile_image_url}" alt="" onclick="goToProfile(this)" />
+            <img src="${person.profile_image}" alt="" onclick="goToProfile(this)" />
             <span class="name">${person.username}</span>
+            <span class="name">${person.id}</span>
         `;
         peopleList.appendChild(li);
     });
@@ -180,13 +181,16 @@ function initChatSelection() {
 // 이벤트 위임을 사용하여 .people 요소에 클릭 이벤트 리스너를 추가합니다.
 document.querySelector(".people").addEventListener("click", function(event) {
     var person = event.target.closest(".person");
-    if (person) { // 클릭된 요소가 .person 요소일 경우에만 동작
+    if (person) {
+        // 클릭된 요소가 .person 요소일 경우에만 동작
         // 모든 채팅 숨기기
         document.querySelectorAll(".chat").forEach(function(chat) {
             chat.style.display = "none";
         });
         // 선택한 사람의 채팅 보여주기
-        document.querySelector(`.chat[data-chat="${person.dataset.chat}"]`).style.display = "block";
+        document.querySelector(
+            `.chat[data-chat="${person.dataset.chat}"]`
+        ).style.display = "block";
         // 기본 메시지 숨기기
         document.getElementById("defaultMessage").style.display = "none";
     }
@@ -218,15 +222,11 @@ function initEmojiPicker() {
 
 // 친구목록 이미지 클릭하면  프로필 페이지 및 친구 요청 기능:
 function goToProfile(elem) {
-    var parentLi = elem.closest('.person');
-    var userID = parentLi.getAttribute("data-chat-id"); // 사용자 식별 정보
-    // 페이지 이동 또는 모달 띄우기
-    window.location.href = "/friend_profile/" + userID; // 사용자 프로필 페이지로 이동
-    // 또는 프로필 정보를 모달로 띄우는 등의 동작을 구현할 수 있습니다.
-    console.log(userID)
-    print(userID)
+    var personElement = elem.closest(".person");
+    var userID = personElement.getAttribute("data-userid");
+    console.log("Redirecting to user profile with ID:", userID); // 디버깅을 위한 로그
+    window.location.href = "/friend_profile/" + userID;
 }
-
 
 // 모든 .person 요소에 클릭 이벤트 리스너 추가
 document.querySelectorAll(".person").forEach(function(person) {
@@ -254,3 +254,105 @@ document.querySelectorAll(".person").forEach(function(person) {
 function initDefaultMessageDisplay() {
     document.getElementById("defaultMessage").style.display = "flex";
 }
+
+function fetchFriendRequests() {
+    fetch("/fetch_friend_requests/", { // 서버에서 친구 요청을 가져오는 URL
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.friend_requests.length > 0) {
+                // 친구 요청이 있으면 알림 버튼을 표시하고, 모달에 친구 요청을 추가합니다.
+                document.getElementById("friendRequestAlert").classList.remove("hidden");
+                populateFriendRequestsModal(data.friend_requests);
+            }
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+// 모달창에 친구 요청을 추가하는 함수
+function populateFriendRequestsModal(friendRequests) {
+    const list = document.getElementById("friendRequestsList");
+    friendRequests.forEach((request) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <img src="${request.sender_profile_image}" alt="${request.sender_name}" />
+            <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
+            <button onclick="manageFriendRequest(${request.id}, 'accept')">수락</button>
+            <button onclick="manageFriendRequest(${request.id}, 'decline')">거절</button>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// 페이지 로드 시 친구 요청을 가져옵니다.
+document.addEventListener("DOMContentLoaded", fetchFriendRequests);
+
+// 친구 요청 알림 및 모달창 표시:
+document
+    .getElementById("friendRequestAlert")
+    .addEventListener("click", function() {
+        document.getElementById("friendRequestModal").classList.remove("hidden");
+    });
+
+document.querySelector(".close").addEventListener("click", function() {
+    document.getElementById("friendRequestModal").classList.add("hidden");
+});
+
+// 친구 요청 목록을 가져와 표시하는 함수
+function loadFriendRequests() {
+    fetch("/get_friend_requests/", {
+            // 친구 요청을 가져오는 백엔드 뷰 URL
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            var friendRequestsDiv = document.getElementById("friendRequests");
+            friendRequestsDiv.innerHTML = ""; // 기존 목록을 비웁니다.
+
+            data.requests.forEach(function(request) {
+                // 각 요청에 대한 HTML 요소를 생성합니다.
+                var div = document.createElement("div");
+                div.innerHTML = `
+                    <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
+                    <button onclick="manageFriendRequest(${request.id}, 'accept')">승인</button>
+                    <button onclick="manageFriendRequest(${request.id}, 'decline')">거절</button>
+                `;
+                friendRequestsDiv.appendChild(div);
+            });
+        });
+}
+
+// 친구 요청을 승인하거나 거절하는 함수
+function manageFriendRequest(requestId, action) {
+    fetch(`/manage_friend_request/${requestId}/${action}/`, {
+            method: "POST",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": getCookie("csrftoken"), // CSRF 토큰 필요
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert(`요청이 ${action === "accept" ? "승인되었습니다." : "거절되었습니다."}`);
+                fetchFriendRequests(); // 친구 요청 데이터를 다시 가져옵니다.
+            } else {
+                alert("오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        });
+}
+
+document.getElementById("friendRequestAlert").addEventListener("mouseover", function() {
+    document.getElementById("friendRequestsDropdown").classList.remove("hidden");
+});
+
+document.getElementById("friendRequestAlertContainer").addEventListener("mouseleave", function() {
+    document.getElementById("friendRequestsDropdown").classList.add("hidden");
+});
