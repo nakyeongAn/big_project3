@@ -133,10 +133,6 @@ def is_number(s):
         return True
     except ValueError:
         return False
-    
-sex = True
-min_price = 10000
-max_price = 100000
 
 def calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price):
     # 숫자를 문자열로 변환
