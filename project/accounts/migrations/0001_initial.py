@@ -2,8 +2,8 @@
 
 import accounts.models
 import datetime
-import phonenumber_field.modelfields
 from django.db import migrations, models
+import phonenumber_field.modelfields
 
 
 class Migration(migrations.Migration):
@@ -197,13 +197,14 @@ class Migration(migrations.Migration):
                 (
                     "gender",
                     models.CharField(
-                        choices=[("남자", "남자"), ("여자", "여자")], default="남자", max_length=3
+                        choices=[("여자", "여자"), ("남자", "남자")], default="남자", max_length=3
                     ),
                 ),
                 ("birthdate", models.DateField(default=datetime.date.today)),
                 (
                     "phone_number",
                     phonenumber_field.modelfields.PhoneNumberField(
+                        default="0", max_length=128, region="KR"
                         default="0", max_length=128, region="KR"
                     ),
                 ),
