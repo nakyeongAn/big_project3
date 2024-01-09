@@ -20,4 +20,5 @@ urlpatterns = [
     path('fetch_friend_requests/', views.fetch_friend_requests, name='fetch_friend_requests'),
     # friend_profile form submit 
     path('testing/', views.testing, name='testing'),
+    path('receive_chat/', views.receive_chat, name='receive_chat'),
 ]
