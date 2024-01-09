@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+import json
+from .models import * 
 
 from .chatbot import chatbot_machine
 from accounts.models import AccountUser
@@ -32,6 +33,19 @@ def testing(request):
         result = chatbot_machine(friend_id, user_id)
         # 친구페이지로 돌아가버림
         return redirect('chat:friend_profile', id = friend_id)
+    
+# 챗봇 사용자 대답 db에 저장
+@require_POST
+def send_message(request):
+    data = json.loads(request.body)
+    message_text = data.get('message')
+    if message_text:
+        # 'user_content' 필드에 메시지 저장
+        Message.objects.create(user_content=message_text, user=request.user)
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'No message text provided'})
+
 
 
 def receive_chat(request):
