@@ -42,7 +42,7 @@ response = client.chat.completions.create(
                 "role": "system",
                 "content": "당신은 문장에서 각 명사가 긍정적인지 부정적인지 분리해주는 똑똑한 사람입니다. \
                 문장의 맥락을 고려해 긍정적인 명사와 부정적인 명사로 정확하게 분류하고 출력해주세요. \
-                '긍정적인 명사:  부정적인 명사: ' 이런 형태로 출력해줘, 선물이란 단어는 빼줘"
+                '긍정적인 명사:  부정적인 명사: ' 이런 형태로 출력해줘, '선물', '브랜드', '제품'이라는 단어는 빼줘"
             },
             {
                 "role": "user",
@@ -86,6 +86,7 @@ colors_rgb = {
     "네이비": (0, 0, 128),         # 남색의 RGB 코드
     "보라색": (128, 0, 128),     # 보라색의 RGB 코드
     "흰색": (255, 255, 255),     # 흰색의 RGB 코드
+    "하얀색" : (255, 255, 255),     # 흰색의 RGB 코드
     "베이지" : (245,245,220),     # 베이지색의 RGB 코드
     "검정색": (0, 0, 0),         # 검정색의 RGB 코드
     "검은색": (0, 0, 0),         # 검정색의 RGB 코드
@@ -145,7 +146,7 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
     for neg in negative:
         if neg in category1 or neg in category2 or neg in category3 or neg in name:
             return None
-    
+
     if len(negative_colors) != 0:
         for neg_color in negative_colors:
             neg_red = abs(row['R'] - neg_color[0])
@@ -156,6 +157,9 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
             elif sum([neg_red, neg_green, neg_blue]) <= 128:
                 return None
 
+    if row['price'] < min_price and row['price'] > max_price:
+        return None
+
     # 긍정적 요소 점수 계산
     score = 0
     for j in matching:
@@ -163,6 +167,7 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
             score += 1
         elif j in name:
             score += 1
+
 
     for word, word_embed in zip(matching, matching_embed):
         # word_embed를 텐서로 변환 및 차원 조정
@@ -216,28 +221,13 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
             color_diff = pos_red + pos_green + pos_blue
             min_color_diff = min(min_color_diff, color_diff)
 
+
     # 가장 작은 색상 차이를 30으로 나눈 값을 점수에서 감점
     total -= min_color_diff // 30
     # 'grade' 추가 점수 (현재 주석 처리됨)
     total += row['grade']
-    
-    if sex:
-        pos_sex = "남성"
-        neg_sex = "여성"
-    else:
-        pos_sex = "여성"
-        neg_sex = "남성"
-    if str(pos_sex) in category1 or str(pos_sex) in category2 or str(pos_sex) in category3:
-        total += 5
-    elif str(pos_sex) in name:
-        total += 5
-    if str(neg_sex) in category1 or str(neg_sex) in category2 or str(neg_sex) in category3:
-        total -= 5
-    elif str(neg_sex) in name:
-        total -= 5
-        
-    if row['price'] < min_price or row['price'] > max_price:
-        return None
+    if sex in category1 or sex in category2 or sex in category3 or sex in name:
+        total += 0.2
 
     return total
 
@@ -246,5 +236,6 @@ data3['score'] = data3.apply(lambda row: calculate_score_improved(row, matching,
 
 # 결과 정렬 및 출력
 data3_sorted = data3.sort_values(by='score', ascending=False)
-print(data3_sorted[['category', 'name', 'grade', 'score']].head(10))
+data3_sorted[['category', 'name', 'grade', 'score']].head(10)
 # data3_sorted.head(10)
+
