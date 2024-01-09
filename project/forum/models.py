@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Article(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=10)
+    title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)  # 작성일자 필드 추가
     views = models.PositiveIntegerField(default=0)

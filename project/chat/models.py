@@ -21,12 +21,19 @@ from django.conf import settings
 
 # 대화가 끝나서 결과 -> 확인
 class Conversation(models.Model):
+    # 대화 id
     id = models.AutoField(primary_key=True)
+    # 주는 사람(로그인한사람)
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='conversations_as_sender', on_delete=models.CASCADE)
+    # 받는 사람
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='conversations_as_receiver', on_delete=models.CASCADE)
+    # 채팅 시작 시간
     start_time = models.DateTimeField(auto_now_add=True)
+    # 채팅 끝난 시간
     end_time = models.DateTimeField(null=True, blank=True)
+    # 채팅 완료 여부
     end_status = models.BooleanField(default = False)
+    
 
 
 class Message(models.Model):

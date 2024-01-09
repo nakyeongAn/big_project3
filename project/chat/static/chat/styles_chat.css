@@ -12667,7 +12667,7 @@ body {
   }
 
   .bottom_area {
-    background-color: #F1EBE1; /* 배경색 설정 */
+    background-color: white; /* 배경색 설정 */
   }
   .bottom_area a {
     color: inherit; /* 기본 상태의 링크 색상을 상속 받음 */
