@@ -2,17 +2,60 @@ from django.shortcuts import render, redirect
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.contrib import messages
+from django.core.paginator import Paginator
 
 def board(request):
-    return render(request, 'forum/board.html')
+    articles = Article.objects.all().order_by('-id')
+    page = int(request.GET.get('page', 1))
+    paginator=Paginator(articles, 10)
+    pages = paginator.get_page(page)
+    content = {'articles': pages}
+    return render(request, "forum/index.html", content)
+
+def search(request):
+    question=request.GET.get('q', '')
+    articles = Article.objects.order_by('-id')
+    content={}
+    if not question:
+        search_article_list = articles
+    else :
+        if len(question) > 1 :
+            search_article_list = articles.filter(Q (title__icontains=question) | Q (content__icontains=question)) #  | Q (user_id__icontains=question)
+            
+    page = int(request.GET.get('page', 1))
+    paginator=Paginator(search_article_list, 10)
+    pages = paginator.get_page(page)
+    content = {'articles': pages}
+    return render(request, 'forum/board.html', content)
+
+def mypost(request):
+    articles = Article.objects.order_by('-id')
+    search_article_list = articles.filter(Q (user_id=request.user.id))
+    page = int(request.GET.get('page', 1))
+    paginator=Paginator(search_article_list, 10)
+    pages = paginator.get_page(page)
+    content = {'articles': pages}
+    return render(request, "forum/board.html", content)
+
+
+    # articles = Article.objects.all()
+    # content = {'articles': articles}
+    # print(request.user.id)
+    # return render(request, 'forum/board.html', content)
 
 def notice(request):
     return render(request, 'forum/notice.html')
 
 def index(request):
-    articles = Article.objects.all()
-    content = {'articles': articles}
+    articles = Article.objects.all().order_by('-id')
+    page = int(request.GET.get('page', 1))
+    paginator=Paginator(articles, 10)
+    pages = paginator.get_page(page)
+    content = {'articles': pages}
     return render(request, "forum/index.html", content)
+
 
 def create(request):
     if request.method == "POST" :

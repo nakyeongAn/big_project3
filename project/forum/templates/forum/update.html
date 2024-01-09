@@ -1,15 +1,23 @@
-{% extends "layout_after_login.html" %} {% load static %} 
+{% extends "layout_after_login.html" %}
+{% load static %}
 {% block title %}질문게시판{% endblock %}
 {% block content %}
-<h1>수정하기</h1>
-<hr>
-
-<form action = "{% url 'forum:update' article.pk %}" method="POST">
+<link rel="stylesheet" href="{% static 'forum/update.css' %}"/>
+<h4 class='update_h4'>수정하기</h4>
+<div class='update-container'>
+  <form action="{% url 'forum:update' article.pk %}" method="POST" class='update-form'>
     {% csrf_token %}
-    {{form.as_p}}
-    <input type = "submit">
-</form>
-
-<hr>
-<a href="{% url 'forum:read' article.pk %}">돌아가기</a>
-{% endblock content%}
+    <div class='form-group'>
+      <label for="{{ form.title.id_for_label }}">제목:</label>
+      {{ form.title }}
+    </div>
+    <div class='form-group'>
+      <label for="{{ form.content.id_for_label }}">내용:</label>
+      {{ form.content }}
+    </div>
+    <input type='submit' class='btn btn-primary' value='수정 완료'>
+  </form>
+  <hr>
+  <a href="{% url 'forum:read' article.pk %}" class='go-back-link'>돌아가기</a>
+</div>
+{% endblock content %}

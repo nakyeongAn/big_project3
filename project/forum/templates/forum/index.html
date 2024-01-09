@@ -2,16 +2,18 @@
 {% block title %}질문게시판{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'forum/board.css' %}"/>
-<h2 class='notice_h2'>문의게시판</h2>
+<h4 class='notice_h2'>문의게시판</h4>
 <div class = 'borad_section'>
     <div class= 'board_section2'>
             <section id="search-box">
-                <div class = 'search-box_in'>
-                    <input type="text" id="search-query" placeholder="검색어 입력">
-                    <button class = "search-query-btn1" type="submit">검색</button>
-                    <button class = "search-query-btn2" type="button">나의 글 보기</button>
-                    <a class = "write" href="{% url 'forum:create'%}"><button class = "search-query-btn3" type="button">글 작성</button></a>
-                </div>
+                <form action="{% url 'forum:search'%}" method="GET">
+                    <div class = 'search-box_in'>
+                        <input type="text" id="search-query" placeholder="검색어 입력" name="q" value="{{ q }}">
+                        <button class = "search-query-btn1" type="submit">검색</button>
+                        <a class = "write" href="{% url 'forum:mypost'%}"><button class = "search-query-btn2" type="button">내가 쓴 글</button></a>
+                        <a class = "write" href="{% url 'forum:create'%}"><button class = "search-query-btn3" type="button">글 작성</button></a>
+                    </div>
+                </form>
             </section>
             <section id="notice-board">
                 <table>
@@ -26,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for article in articles %}
+                        {% for article in articles.object_list %}
                         <tr>
                             <td>{{ article.id }}</td>
                             <td><a href="{% url 'forum:read' article.pk %}">{{ article.title }}</a></td>
@@ -34,7 +36,7 @@
                             <td>{{ article.views }}</td>
                             <td>{{ article.created_at }}</td>
                             <td>
-                                {% if article.is_answered %}
+                                {% if article.is_superuser %}
                                     답변완료
                                 {% else %}
                                     답변 대기 중
@@ -46,13 +48,35 @@
                 </table>
                 <!-- 페이징 버튼 -->
                 <div id="pagination" style="text-align: center; margin-top: 20px;">
-                    <a href="?page=1"><</a>
-                    <!-- 실제 웹 애플리케이션에서는 이 부분이 동적으로 생성되어야 합니다. -->
-                    <a href="?page=1">1</a>
-                    <a href="?page=2">2</a>
-                    <!-- 추가 페이지 링크 -->
-                    <a href="?page=2">></a>
+                        <ul class="pagination">
+                            {% if articles.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ articles.previous_page_number }}" tabindex="-1">이전</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">이전</a>
+                                </li>
+                            {% endif %}
+
+                            {% for page in articles.page_range %}
+                                <li class="page-item {% if page == articles.number %} activate {% endif %}">
+                                    <a class="page-link" href="?page={{ articles.number }}">{{ page }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if articles.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ articles.next_page_number }}">다음</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">다음</a>
+                                </li>
+                            {% endif %}
+                        </ul>
                 </div>
+                
             </section>    
     </div>
 </div>
