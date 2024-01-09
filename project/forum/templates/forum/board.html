@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for article in articles %}
+                        {% for article in articles.object_list %}
                         <tr>
                             <td>{{ article.id }}</td>
                             <td><a href="{% url 'forum:read' article.pk %}">{{ article.title }}</a></td>
@@ -48,13 +48,34 @@
                 </table>
                 <!-- 페이징 버튼 -->
                 <div id="pagination" style="text-align: center; margin-top: 20px;">
-                    <a href="?page=1"><</a>
-                    <!-- 실제 웹 애플리케이션에서는 이 부분이 동적으로 생성되어야 합니다. -->
-                    <a href="?page=1">1</a>
-                    <a href="?page=2">2</a>
-                    <!-- 추가 페이지 링크 -->
-                    <a href="?page=2">></a>
-                </div>
+                    <ul class="pagination">
+                        {% if articles.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ articles.previous_page_number }}" tabindex="-1">이전</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">이전</a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in articles.page_range %}
+                            <li class="page-item {% if page == articles.number %} activate {% endif %}">
+                                <a class="page-link" href="?page={{ articles.number }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if articles.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ articles.next_page_number }}">다음</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">다음</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+            </div>
             </section>    
     </div>
 </div>
