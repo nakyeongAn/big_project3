@@ -76,11 +76,12 @@
 <div class="container">
   <div class="profile">
     <div class="profile-image">
-      <img src="{% static 'assets/profile.jpg' %}" alt="Profile Image">
+      <img src="{{ user.profile_image_url }}" alt="Profile Image">
     </div>
-    <h1 class="profile-title">Emiya Mulzomdao</h1>
+    <h1 class="profile-title">{{user.username}}</h1>
     <div class="profile-user-settings">
-      <button class="btn" id="followBtn" onclick="sendFriendRequest()">팔로우</button>
+      <!-- 친구 요청 버튼 -->
+      <button class="btn" id="followBtn" data-user-id="{{ user.id }}">팔로우</button>
       <!-- Hidden buttons, to be displayed after follow -->
       <button class="btn hidden" id="findGiftBtn">선물 알아내기</button>
       <button class="btn hidden" id="unfollowBtn">팔로우 취소</button>

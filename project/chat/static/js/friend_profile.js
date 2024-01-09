@@ -20,15 +20,8 @@ function getCookie(name) {
 }
 
 followBtn.addEventListener('click', function() {
-    sendFriendRequest(userId, function(isFollowAccepted) {
-        if (isFollowAccepted) {
-            followBtn.classList.add('hidden');
-            findGiftBtn.classList.remove('hidden');
-            unfollowBtn.classList.remove('hidden');
-        } else {
-            alert('친구 요청이 거절되었습니다.');
-        }
-    });
+    var friendId = this.getAttribute('data-user-id'); // 팔로우할 사용자 ID 가져오기
+    sendFriendRequest(friendId); // 친구 요청 함수 호출
 });
 
 function unfollowUser(userId, callback) {
@@ -85,20 +78,32 @@ document.getElementById('occasion').addEventListener('change', function() {
     }
 });
 
-function sendFriendRequest(receiverId, callback) {
-    fetch(`/send_friend_request/${receiverId}/`, {
-            method: 'POST',
+function sendFriendRequest(friendId) {
+    fetch(`/send_friend_request/${friendId}/`, { // 친구 요청 뷰로 요청 보내기
+            method: "POST",
+            credentials: "include",
             headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCookie('csrftoken')
+                "X-CSRFToken": getCookie("csrftoken"),
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
         .then(data => {
-            callback(data.success); // 서버로부터의 응답에 따라 콜백을 호출합니다.
+            if (data.success) {
+                // 요청 성공 시, 사용자에게 알림
+                alert("친구 요청이 성공적으로 보내졌습니다!");
+                // 필요하다면 페이지를 새로고침하거나 UI를 업데이트하여 사용자에게 상태 변경을 반영
+            } else {
+                // 요청 실패 시, 사용자에게 알림
+                alert("친구 요청을 보낼 수 없습니다.");
+            }
         })
         .catch(error => {
             console.error('Error:', error);
-            callback(false); // 에러가 발생한 경우 실패로 간주합니다.
+            alert("친구 요청을 보낼 수 없습니다.");
         });
 }

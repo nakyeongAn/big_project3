@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import FriendRequest, Friendship
+from django.conf import settings
 
 def chat(request):
     return render(request, "chat/chat.html")
@@ -21,7 +23,7 @@ def profile(request):
         "username": user.username,
         "user_id": user.member_id,
         "email": user.email,
-        "profile_image": user.profile_image,  # profile_image 필드가 모델에 존재한다고 가정
+        "profile_image": user.profile_image_url,  # profile_image 필드가 모델에 존재한다고 가정
     }
     return render(request, "chat/profile.html", context)
 
@@ -54,9 +56,19 @@ def wishlist(request):
 def detail(request):
     return render(request, "chat/detail.html")
 
+@login_required
+def friend_profile(request, user_id):
+    # 사용자 ID를 사용하여 특정 사용자 객체를 가져옵니다.
+    user = get_object_or_404(AccountUser, id=user_id)
 
-def friend_profile(request):
-    return render(request, "chat/friend_profile.html")
+    # 프로필 페이지에 전달할 컨텍스트를 준비합니다.
+    context = {
+        "user": user,
+        # 필요한 다른 컨텍스트 변수들...
+    }
+
+    # 프로필 페이지를 렌더링합니다.
+    return render(request, 'chat/friend_profile.html', context)
 
 
 # 사용자의 username을 조회
@@ -74,24 +86,37 @@ def search_user(request):
     return JsonResponse(results, safe=False)  # JSON 형식으로 반환
 
 # 친구 요청 보내기 뷰 생성
-
-from accounts.models import AccountUser, FriendRequest
 @login_required
+@require_POST
 def send_friend_request(request, receiver_id):
-    receiver = get_object_or_404(AccountUser, id=receiver_id)
-    if request.user != receiver:
-        # 이미 요청을 보냈는지 확인
-        if not FriendRequest.objects.filter(sender=request.user, receiver=receiver).exists():
-            FriendRequest.objects.create(sender=request.user, receiver=receiver, status='requested')
-    return redirect('some_view')  # 요청 후 리다이렉트할 뷰
+    receiver = get_object_or_404(AccountUser, pk=receiver_id)
+    # 이미 요청이 있는지 확인
+    if not FriendRequest.objects.filter(sender=request.user, receiver=receiver).exists():
+        FriendRequest.objects.create(sender=request.user, receiver=receiver)
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
 
+#  친구 요청 목록 가져오기
 @login_required
+def fetch_friend_requests(request):
+    friend_requests = FriendRequest.objects.filter(receiver=request.user, status='sent')
+    requests_data = [{
+        'id': fr.id,
+        'sender_name': fr.sender.username,
+        'sender_profile_image': fr.sender.profile_image.url  # profile_image 필드가 모델에 있다고 가정
+    } for fr in friend_requests]
+    return JsonResponse({'friend_requests': requests_data})
+
+# 친구 요청 관리
+@login_required
+@require_POST
 def manage_friend_request(request, request_id, action):
     friend_request = get_object_or_404(FriendRequest, id=request_id, receiver=request.user)
     if action == 'accept':
-        friend_request.status = 'accepted'
-        # 실제 친구 관계를 추가하는 로직을 여기에 구현할 수 있습니다.
+        # 친구 요청을 승인하고 친구 관계를 생성합니다.
+        Friendship.objects.create(user1=request.user, user2=friend_request.sender)
+        friend_request.delete()  # 승인된 친구 요청을 삭제합니다.
     elif action == 'decline':
-        friend_request.status = 'declined'
-    friend_request.save()
-    return redirect('some_view')  # 관리 후 리다이렉트할 뷰
+        # 친구 요청을 거절합니다.
+        friend_request.delete()
+    return JsonResponse({'success': True})

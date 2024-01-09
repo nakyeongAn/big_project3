@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Article",
+            name="FriendRequest",
             fields=[
                 (
                     "id",
@@ -25,22 +25,27 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("title", models.CharField(max_length=10)),
-                ("content", models.TextField()),
-                ("created_at", models.DateTimeField(auto_now_add=True)),
-                ("views", models.PositiveIntegerField(default=0)),
-                ("is_answered", models.BooleanField(default=False)),
+                ("status", models.CharField(default="sent", max_length=10)),
                 (
-                    "user",
+                    "receiver",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
+                        related_name="accounts_friend_requests_received",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "sender",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="accounts_friend_requests_sent",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
         ),
         migrations.CreateModel(
-            name="Comment",
+            name="Friendship",
             fields=[
                 (
                     "id",
@@ -51,18 +56,20 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("content", models.CharField(max_length=500)),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 (
-                    "article",
+                    "user1",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="forum.article"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="friendship_user1",
+                        to=settings.AUTH_USER_MODEL,
                     ),
                 ),
                 (
-                    "user",
+                    "user2",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
+                        related_name="friendship_user2",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
