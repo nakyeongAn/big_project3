@@ -103,3 +103,19 @@ def friend_profile(request, id):
 #     return render(request, 'chat/account_settings.html', {'form': form})  # chat 템플릿 경로 사용
 
 
+#회원정보 수정
+# from django.shortcuts import render, get_object_or_404, redirect
+# from .forms import AccountUserForm
+
+# def edit_member_info(request, member_id):
+#     user = get_object_or_404(AccountUser, member_id=member_id)
+
+#     if request.method == 'POST':
+#         form = AccountUserForm(request.POST, request.FILES, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('chat:edit_member_info')
+#     else:
+#         form = AccountUserForm(instance=user)
+
+#     return render(request, 'edit_member_info.html', {'form': form})
