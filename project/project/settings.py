@@ -111,7 +111,7 @@ AUTH_USER_MODEL = "accounts.AccountUser"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "icis",
+        "NAME": "icis3",
         "USER": "admin",
         "PASSWORD": secrets["rds_pass"],
         "HOST": secrets["rds_host"],
