@@ -8,7 +8,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+}
+
+header {
+    padding-top : 10px;
+    height: auto;
 }
 
 .wrap {
@@ -16,20 +21,31 @@ body {
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 450px;
 }
 
-header .title {
+.title {
     margin-bottom: 20px;
-    text-align: center;
-    font-size: 1.5em;
+    /* title과 contents 사이의 간격 */
 }
 
-header .title a {
+.title a {
     text-decoration: none;
-    color: #FE8947;
-    /* 로고 색상 */
+    color: #333;
+    /* 링크 색상 */
+    font-size: 1.6em;
+    /* 서비스명 폰트 크기 */
+    vertical-align: middle; 
+    font-weight: bold;
 }
+
+.title img {
+    height: 1.5em; /* 이미지 높이를 텍스트의 글꼴 크기와 일치시킵니다 */
+    width: auto; /* 이미지의 너비를 자동으로 조정하여 비율을 유지합니다 */
+    vertical-align: middle; /* 이미지를 텍스트의 중간 높이에 맞춥니다 */
+}
+
+
 
 form {
     display: flex;
@@ -42,58 +58,82 @@ label {
     color: #666;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="date"],
-select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-input[type="submit"] {
-    padding: 10px;
-    color: white;
-    background: #FE8947;
-    /* 버튼 배경 색상 */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-input[type="submit"]:hover {
-    background: darkgreen;
-    /* 버튼 호버 색상 */
-}
-
 .form-group {
     display: flex;
+    flex-wrap : wrap;
     justify-content: space-between;
     align-items: center;
 }
 
 .form-group label,
-.form-group input {
+.form-group input,
+.form-group select {
     flex: 1;
     /* 요소들이 공간을 균등하게 차지하도록 함 */
 }
 
 
 /* 라벨과 입력 필드 간의 간격 조정 */
+.form-group input {
+    border: none; /* 테두리를 제거합니다 */
+    border-bottom: 1px solid #ccc; /* 아래쪽에만 얇은 회색 테두리를 추가합니다 */
+    outline: none; /* 입력 필드를 선택했을 때 나타나는 아웃라인을 제거합니다 */
+}
 
-.form-group label {
-    margin-right: 20px;
+
+.form-group input, 
+.form-group select {
+    margin-right: 10px;
     /* 오른쪽 여백 추가 */
 }
 
+/* 에러메시지 스타일 */
+.alert {
+    color: red; 
+    font-size: 0.8em;
+    margin-top: 5px; 
+    white-space: pre-line;
+}
+
+.form-group .alert {
+    order: 3; 
+    width: 100%; 
+    text-align: right;
+}
+
+/* 버튼 스타일 */
+#address_kakao,
+#signup_button {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FE8947;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 5px;
+    /* 버튼 위 여백 */
+}
+
+#address_kakao:hover,
+#signup_button:hover {
+    background-color: #fcb388;
+}
+
+
 .find-wrap {
+    display: block; /* 블록 레벨 요소로 만듭니다. */
+    margin: 0 auto; /* 상하 마진은 0, 좌우 마진은 자동으로 설정하여 중앙 정렬합니다. */
+    width: fit-content; /* 내용의 너비만큼만 차지하도록 설정합니다. */
     padding-top: 20px;
+    text-align: center; 
+
 }
 
 .find-wrap ul {
     list-style: none;
+    padding : 0px;
 }
 
 .find-wrap li {

@@ -11,29 +11,46 @@
     <div class="wrap">
       <header>
         <div class="title">
-          <a href="{% url 'chat:chat' %}">서비스명</a>
-        </div>
+          <img src="{% static 'img/logo.png' %}" alt="img2">
+          <a class = "to_main" href="{% url 'chat:detail' %}">당선</a>
+      </div>
       </header>
 
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {% if field.field.widget.input_type == 'select' %}
-                        <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control">
-                            {% for key, value in field.field.choices %}
-                                <option value="{{ key }}" {% if field.value == key %} selected {% endif %}>
-                                    {{ value }}
-                                </option>
-                            {% endfor %}
-                        </select>    
-                    {% else %}
-                        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}를 입력해주세요." name="{{ field.name }}" >
-                    {% endif %}
-                </div>
-                <hr>
-                {% endfor %}
+      <form method="post">
+        {% csrf_token %}
+        <!-- 전체 폼 에러 표시 -->
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <!-- 필드 별 에러 및 입력 폼 -->
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% if field.field.widget.input_type == 'select' %}
+              <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control">
+                  {% for key, value in field.field.choices %}
+                      <option value="{{ key }}" {% if field.value == key %} selected {% endif %}>
+                          {{ value }}
+                      </option>
+                  {% endfor %}
+              </select>
+            {% else %}
+              <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}를 입력해주세요." name="{{ field.name }}" >
+            {% endif %}
+
+            <!-- 필드별 에러 메시지 -->
+            {% if field.errors %}
+              <div class="alert alert-danger">
+                {{ field.errors.as_text }}
+              </div>
+            {% endif %}
+          </div>
+          <hr>
+        {% endfor %}
             
                 <!-- 주소  api -->
 
@@ -65,7 +82,7 @@
         <!-- 필요한 회원가입 필드들 추가 -->
         <!-- CSRF 토큰 추가. Django 폼을 사용하는 경우 필요 -->
         {% csrf_token %}
-        <button type="submit">회원가입</button>
+        <button id="signup_button" type="submit">회원가입</button>
       </form>
       <div class = 'find-wrap'>
         <ul>

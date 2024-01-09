@@ -4,38 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import FriendRequest, Friendship
-from django.conf import settings
-from .chatbot import chatbot_machine
-from accounts.models import AccountUser
-
-def testing(request):
-    if request.method == 'POST':
-        #폼데이터 및 받는 놈 id 값
-        
-        occasion = request.POST.get('occasion')
-        relationship = request.POST.get('relationship')
-        additional_info = request.POST.get('additionalInfo')
-        friend_id = request.POST.get('friend_id')
-
-        # 보내는 놈 정보 
-        if request.user.is_authenticated:
-            print("로그인한 사용자:", request.user.id)
-            user_id = request.user.id
-        else:
-            # 사용자가 로그인하지 않았음
-            print("로그인하지 않은 사용자")
-
-        # 결과 값 챗봇 넘기기 
-        result = chatbot_machine(friend_id, user_id)
-        # 친구페이지로 돌아가버림
-        return redirect('chat:friend_profile', id = friend_id)
 
 
+def receive_chat(request):
+    return render(request, 'chat/receive_chat.html')
 
-def chat(request):
-    users = AccountUser.objects.filter(is_admin=0)
-    return render(request, 'chat/chat.html', {'users':users})
+def give_chat(request):
+    return render(request, 'chat/give_chat.html')
+
 
 def account_settings(request):
     return render(request, "chat/account_settings.html")
