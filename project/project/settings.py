@@ -36,6 +36,7 @@ secret_file = os.path.join(BASE_DIR, "secrets.json")  # secrets.json 파일 위�
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets["secret_key"]
+SECRET_OPENAI = secrets["openai_key"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -5,14 +5,18 @@ import pickle
 import pandas as pd
 import torch
 from sentence_transformers import util
+from django.db import models
+from sqlalchemy import create_engine
+from django.conf import settings
 
+db_settings = settings.DATABASES['default']
 # 챗봇
 # secrets.json 파일에서 API 키 읽어오기
-with open('secrets.json', 'r') as secrets_file:
-    secrets = json.load(secrets_file)
+# with open('secrets.json', 'r') as secrets_file:
+#     secrets = json.load(secrets_file)
 # openai_key = secrets["openai_api_key"]
 
-os.environ['OPENAI_API_KEY'] = secrets["openai_api_key"]
+os.environ['OPENAI_API_KEY'] = db_settings['SECRET_KEY']
 client = OpenAI()
 
 response = client.chat.completions.create(
@@ -116,7 +120,13 @@ for i in converted_negative:
   elif type(i) == tuple:
     negative_colors.append(i)
     
-data3 = pd.read_json('all_data_embed.json')
+
+engine = create_engine(f"mysql+pymysql://{db_settings['USER']}:{db_settings['PASSWORD']}@{db_settings['HOST']}:{db_settings['PORT']}/{db_settings['NAME']}")
+table_name = "products_product"
+# df = pd.read_sql_table(table_name, engine)
+# data3 = pd.read_json('all_data_embed.json')
+data=pd.read_sql_table(table_name, engine)
+
 
 # 자신의 드라이브 형식에 맞게 파일 읽
 with open('sentencetransformer.pkl', 'rb') as file:
