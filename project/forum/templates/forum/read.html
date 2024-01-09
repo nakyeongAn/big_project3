@@ -13,7 +13,7 @@
         
           <p class = 'comment-title'>댓글</p>
           <ul class='comment-list'>
-            {% for comment in comments %}
+            {% for comment in comment %}
               <li class='comment-item'>
                 <span class='comment-user'>{{ comment.user }} |</span>
                 <span class='comment-content'>{{ comment.content }}</span>

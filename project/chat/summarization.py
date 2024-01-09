@@ -250,5 +250,6 @@ data3['score'] = data3.apply(lambda row: calculate_score_improved(row, matching,
 
 # 결과 정렬 및 출력
 data3_sorted = data3.sort_values(by='score', ascending=False)
-print(data3_sorted[['category', 'name', 'grade', 'score']].head(10))
+print(data3_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
 # data3_sorted.head(10)
+

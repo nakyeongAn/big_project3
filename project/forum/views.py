@@ -64,7 +64,7 @@ def create(request):
             article = form.save(commit=False)
             article.user = request.user
             article.save()
-            return redirect('forum:read', pk = article.pk)
+            return redirect('forum:index', pk = article.pk)
     else:
         form = ArticleForm()
     content = {'form':form}
@@ -118,9 +118,9 @@ def comment_create(request,pk):
 
             # 답변 여부를 업데이트합니다. 여기서 request.user가 관리자인지 확인해야 합니다.
             # 예를 들어, 관리자 여부를 확인하는 is_admin 필드가 있다고 가정하면:
-            # if request.user.is_admin:
-            #     article.is_answered = True
-            #     article.save()
+            if request.user.is_admin:
+                article.is_answered = True
+                article.save()
 
         return redirect('forum:read', article.pk)
     else :
