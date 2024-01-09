@@ -2,7 +2,7 @@
 {% block title %}질문게시판{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'forum/board.css' %}"/>
-<h2 class='notice_h2'>문의게시판</h2>
+<h4 class='notice_h2'>문의게시판</h4>
 <div class = 'borad_section'>
     <div class= 'board_section2'>
             <section id="search-box">
@@ -10,7 +10,7 @@
                     <input type="text" id="search-query" placeholder="검색어 입력">
                     <button class = "search-query-btn1" type="submit">검색</button>
                     <button class = "search-query-btn2" type="button">내가 쓴 글</button>
-                    <a class = "write" href="{% url 'forum:create'%}"><button class = "search-query-btn3" type="button">글 작성</button></a>
+                    <a class = "write" href="{% url 'forum:create'%}"><button class = "search-query-btn3" type="button">글쓰기</button></a>
                 </div>
             </section>
             <section id="notice-board">
@@ -34,7 +34,7 @@
                             <td>{{ article.views }}</td>
                             <td>{{ article.created_at }}</td>
                             <td>
-                                {% if article.is_answered %}
+                                {% if article.is_superuser %}
                                     답변완료
                                 {% else %}
                                     답변 대기 중

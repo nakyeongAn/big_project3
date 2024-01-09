@@ -9,18 +9,12 @@
 <body>
     <header>
         <div class="title">
-            <a href="{% url 'chat:receive_chat' %}">서비스명</a>
+            <img src="{% static 'img/logo.png' %}" alt="img2">
+            <a class = "to_main" href="{% url 'chat:detail' %}">당선</a>
         </div>
     </header>
     <main class="contents">
         <section class="wrap">
-            {% if messages %}
-            <div>
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-            {% endif %}
             <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
@@ -30,7 +24,18 @@
                     placeholder="{{field.label}}를 입력해주세요." name="{{field.name}}">
                 </div><hr>
                 {% endfor %}
+                {% if messages %}
+                <div class = "error">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <button id="login-btn" type="submit">로그인</button>
+                {% load socialaccount %}
+                <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="provider-login">
+                카카오톡 회원가입
+                </a>
             </form>
             <div class = 'find-wrap'>
                 <ul>
@@ -41,10 +46,6 @@
                     <li><a href="{% url 'signup' %}">회원가입</a></li>
                 </ul>
             </div>
-            {% load socialaccount %}
-            <a href="{% provider_login_url 'kakao' method='oauth2' %}">
-            카카오톡 회원가입
-            </a>
         </section>
     </main>
 </body>

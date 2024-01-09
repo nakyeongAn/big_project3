@@ -1,46 +1,53 @@
-{% extends "layout_after_login.html" %} {% load static %} 
+{% extends "layout_after_login.html" %}
+{% load static %}
 {% block title %}질문게시판{% endblock %}
 {% block content %}
-<h1>DETAIL</h1>
-<hr>
-<p> 글 제목 : {{article.title}}</p>
-<p> 글 내용 : {{article.content}}</p>
-<hr>
-
-<h3>댓글</h3>
-<ul>
-    {% for comments in comment %}
-        <li> {{comments.user}} | {{comments.content}}
-        {% if request.user == comments.user %}
-        <form action ="{% url 'forum:comment_delete' article.pk comments.pk %}"  method = "POST">
-            {% csrf_token %}
-            <input type = "submit" value = "삭제">
-        </form>
-        {% endif %}
-        </li>
-    {% endfor %}
-</ul>
-{% if request.user.is_authenticated %}
-<form action = "{% url 'forum:comment_create' article.pk %}" method = "POST">
-    {% csrf_token %}
-    {{ commentform }}
-    <input type = "submit" value="댓글등록">
-</form>
-{% else %}
-댓글을 작성하려면 <a href = "{% url 'accounts:login' %}">로그인</a>하세요
-{% endif %}
-
-{% if request.user == article.user %}
-<form action = "{% url 'forum:read' article.pk %}" method = "POST">
-    {% csrf_token %}
-    <input type = "submit" value="삭제하기">
-</form>
-{% endif %}
-
-<a href = "{% url 'forum:index' %}">돌아가기</a>
-{% if request.user == article.user %}
-<a href = "{% url 'forum:update' article.pk %}">수정하기</a>
-{% endif %}
-
-
-{% endblock content%}
+<link rel="stylesheet" href="{% static 'forum/read.css' %}"/>
+<h4 class='notice_h2'>문의게시판</h4>
+<div class='read-container'>
+    <div class = 'read-container2'>
+        <div class='article'>
+            <p class='article-title'>글 제목 : {{ article.title }}</p>
+            <p class='article-content'>글 내용 : <br>{{ article.content }}</p>
+          </div>
+        
+          <p class = 'comment-title'>댓글</p>
+          <ul class='comment-list'>
+            {% for comment in comments %}
+              <li class='comment-item'>
+                <span class='comment-user'>{{ comment.user }} |</span>
+                <span class='comment-content'>{{ comment.content }}</span>
+                {% if request.user == comment.user %}
+                  <form action="{% url 'forum:comment_delete' article.pk comment.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="삭제">
+                  </form>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        
+          {% if request.user.is_authenticated %}
+            <form action="{% url 'forum:comment_create' article.pk %}" method="POST" class='comment-form'>
+              {% csrf_token %}
+              {{ commentform }}
+              <input type="submit" value="댓글 등록">
+            </form>
+          {% else %}
+            <p>댓글을 작성하려면 <a href="{% url 'login' %}">로그인</a>하세요</p>
+          {% endif %}
+        
+          {% if request.user == article.user %}
+            <form action="{% url 'forum:read' article.pk %}" method="POST" class='article-delete-form'>
+              {% csrf_token %}
+              <input type="submit" value="삭제하기">
+            </form>
+          {% endif %}
+        
+          <a href="{% url 'forum:index' %}" class='go-back-link'>돌아가기</a>
+          {% if request.user == article.user %}
+            <a href="{% url 'forum:update' article.pk %}" class='edit-link'>수정하기</a>
+          {% endif %}
+    <div>
+</div>
+{% endblock content %}

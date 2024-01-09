@@ -1,130 +1,16 @@
-/* forum */
-
-/* board css */
-
-.borad_section {
-    background-color: #fff;
-    padding: 20px 60px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* 보드 섹션 스타일링 */
-  .board_section2 {
-    padding: 20px 90px 0px 90px;
-  }
-  
-  .notice_h2 {
+.update_h4 {
     color: #593D3B;
     text-align: center;
     margin: 10px 150px 30px 150px;
     text-align: left; /* 텍스트를 왼쪽으로 정렬합니다. */
     font-weight: bold;
   }
-  
-  /* 검색 상자 스타일링 */
-  #search-box {
-    margin-bottom: 20px;
-  }
-  
-  .search-box_in {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  #search-query {
-    flex: 1;
-    padding: 10px;
-    margin-right: 60px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-  }
-  
-  /* 검색 버튼 스타일링 */
-  #search-box button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background: #F7C3A2;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-right : 20px;
-    border-radius: 0;
-  }
-  
-  #search-box button:hover {
-    background: #555;
-  }
-  
-  /* 테이블 스타일링 */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    margin-bottom: 20px;
-  }
-  
-  th, td {
-    padding: 10px;
-    border: 1px solid white;
-  }
-  
-  th {
-    background-color: #F7C3A2;
-    color: #fff;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  
-  /* 페이지 네비게이션 스타일링 */
-  #pagination {
-    margin-bottom: 20px;
-    padding: 10px 0;
-  }
-  
-  #pagination a {
-    padding: 5px 10px;
-    margin: 0 5px;
-    background: white;
-    color: #624F53;
-    text-decoration: none;
-  }
-  
 
-  
-  /* 페이지 네비게이션에서 현재 페이지 강조 */
-  #pagination a.active {
-    background: #e8491d;
-    color: #fff;
-  }
-  
-  /* 반응형 디자인: 태블릿과 모바일 화면 크기에 대한 스타일링 */
-  @media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-  
-    .search-box_in {
-        flex-direction: column;
-        align-items: stretch;
-    }
-  
-    #search-query {
-        margin-bottom: 10px;
-    }
-  
-    #search-box button {
-        width: 100%;
-    }
-  }
 
-  /* header */
 
-  .navbar {
+/* header */
+
+.navbar {
     --bs-navbar-padding-x: 0;
     --bs-navbar-padding-y: 0.5rem;
     --bs-navbar-color: rgba(255, 126, 54, 1);
