@@ -56,19 +56,19 @@
       <label for="budget">예산:</label>
       <div id="budget" style="display:flex; justify-content:space-between; align-items:center; text-align:justify; margin-right:100px; margin-left:100px;">
         <div>
-          <input type="number" id="minAmount" placeholder="최소금액" step="1000">
+          <input type="number" name="minAmount" id="minAmount" placeholder="최소금액" step="1000">
           <span>원</span>
         </div>
         <span>   ~   </span>
         <div>
-          <input type="number" id="maxAmount" placeholder="최대금액" step="1000">
+          <input type="number" name = 'maxAmount' id="maxAmount" placeholder="최대금액" step="1000">
           <span>원</span>
         </div>
       </div>
 
       <label for="additionalInfo">추가 정보:</label>
       <textarea id="addwishlist-title="additionalInfo" name="additionalInfo" id="additionalInfo" placeholder="예산, 선물의 분위기 등..."></textarea>
-      <input type="hidden" name="friend_id" value="{{ friend_id }}">
+      <input type="hidden" name="friend_id" value="{{ user.id }}">
       <!-- Submit Button -->
       <button type="submit" class="btn">제출</button>
 
@@ -84,11 +84,16 @@
     </div>
     <h1 class="profile-title">{{user.username}}</h1>
     <div class="profile-user-settings">
-      <!-- 친구 요청 버튼 -->
+      <!-- 친구 요청 버튼 (친구가 아닐 경우에만 표시) -->
+      {% if not is_friend %}
       <button class="btn" id="followBtn" data-user-id="{{ user.id }}">팔로우</button>
-      <!-- Hidden buttons, to be displayed after follow -->
-      <button class="btn hidden" id="findGiftBtn">선물 알아내기</button>
-      <button class="btn hidden" id="unfollowBtn">팔로우 취소</button>
+      {% endif %}
+      
+      <!-- Hidden buttons, to be displayed after follow (친구인 경우에만 표시) -->
+      {% if is_friend %}
+      <button class="btn" id="findGiftBtn">선물 알아내기</button>
+      <button class="btn" id="unfollowBtn">팔로우 취소</button>
+      {% endif %}
     </div>
     <div class="profile-bio">
       <wishlist-title">여기에는 자기소개를 넣습니다...<//p>
