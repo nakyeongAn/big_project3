@@ -19,6 +19,7 @@ urlpatterns = [
     path('upload_profile_image/', views.upload_profile_image, name='upload_profile_image'),
     path('send_friend_request/<int:receiver_id>/', views.send_friend_request, name='send_friend_request'),
     path('fetch_friend_requests/', views.fetch_friend_requests, name='fetch_friend_requests'),
+    path('manage_friend_request/<int:request_id>/<str:action>/', views.manage_friend_request, name='manage_friend_request'),
     # friend_profile form submit 
     path('testing/', views.testing, name='testing'),
 ]

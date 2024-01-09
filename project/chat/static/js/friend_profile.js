@@ -1,109 +1,131 @@
-var followBtn = document.getElementById('followBtn');
-var findGiftBtn = document.getElementById('findGiftBtn');
-var unfollowBtn = document.getElementById('unfollowBtn');
-var userId = followBtn.getAttribute('data-user-id');
-
-// CSRF 토큰 가져오기 위한 함수
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+document.addEventListener("DOMContentLoaded", function() {
+    // CSRF 토큰을 가져오는 함수
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
+        return cookieValue;
     }
-    return cookieValue;
-}
 
-followBtn.addEventListener('click', function() {
-    var friendId = this.getAttribute('data-user-id'); // 팔로우할 사용자 ID 가져오기
-    sendFriendRequest(friendId); // 친구 요청 함수 호출
-});
+    // 친구 요청 보내기 함수
+    function sendFriendRequest(friendId) {
+        fetch(`/send_friend_request/${friendId}/`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert("친구 요청이 성공적으로 보내졌습니다!");
+                } else {
+                    alert("친구 요청을 보낼 수 없습니다.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("친구 요청을 보낼 수 없습니다.");
+            });
+    }
 
-function unfollowUser(userId, callback) {
-    fetch(`/unfollow_user/${userId}/`, {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            callback(data.success); // 서버로부터의 응답에 따라 콜백을 호출합니다.
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            callback(false); // 에러가 발생한 경우 실패로 간주합니다.
+    // 팔로우 버튼 클릭 이벤트
+    var followBtn = document.getElementById('followBtn');
+    if (followBtn) {
+        followBtn.addEventListener('click', function() {
+            var friendId = this.getAttribute('data-user-id');
+            sendFriendRequest(friendId);
         });
-}
+    }
 
-// Get the modal
-var modal = document.getElementById('giftModal');
+    // 프로필 사용자 설정에 대한 이벤트 위임
+    document.querySelector('.profile-user-settings').addEventListener('click', function(event) {
+        // 선물 알아내기 버튼 클릭
+        if (event.target.id === 'findGiftBtn') {
+            document.getElementById('giftModal').style.display = "block";
+        }
 
-// Get the button that opens the modal
-var btn = document.getElementById('findGiftBtn');
+        // 팔로우 취소 버튼 클릭
+        if (event.target.id === 'unfollowBtn') {
+            var userId = event.target.getAttribute('data-user-id');
+            unfollowUser(userId, function(success) {
+                if (success) {
+                    alert("팔로우가 취소되었습니다.");
+                    updateButtonVisibility(false);
+                } else {
+                    alert("팔로우 취소에 실패했습니다.");
+                }
+            });
+        }
+    });
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    // 팔로우 취소 함수
+    function unfollowUser(userId, callback) {
+        fetch(`/unfollow_user/${userId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data.success);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                callback(false);
+            });
+    }
 
-// gpt 보내는 모달창 띄우기
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+    // 버튼 가시성 업데이트 함수
+    function updateButtonVisibility(isFriend) {
+        var followBtn = document.getElementById('followBtn');
+        var findGiftBtn = document.getElementById('findGiftBtn');
+        var unfollowBtn = document.getElementById('unfollowBtn');
+        if (isFriend) {
+            followBtn.classList.add('hidden');
+            findGiftBtn.classList.remove('hidden');
+            unfollowBtn.classList.remove('hidden');
+        } else {
+            followBtn.classList.remove('hidden');
+            findGiftBtn.classList.add('hidden');
+            unfollowBtn.classList.add('hidden');
+        }
+    }
+    var modal = document.getElementById('giftModal');
+    var span = document.getElementsByClassName("close")[0];
 
-// 보내기 누르면 모달창 닫기
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// 모달창 밖에 아무데나 누르면 모달창 닫기
-window.onclick = function(event) {
-    if (event.target == modal) {
+    // 모달창 닫기 함수
+    function closeModal() {
         modal.style.display = "none";
     }
-}
 
-document.getElementById('occasion').addEventListener('change', function() {
-    var value = this.value;
-    var birthdayPicker = document.getElementById('birthdayPicker');
-    if (value === 'birthday') {
-        birthdayPicker.classList.remove('hidden');
-    } else {
-        birthdayPicker.classList.add('hidden');
+    // 보내기 버튼 또는 닫기 <span> 클릭 시 모달창 닫기
+    span.onclick = function() {
+        closeModal();
     }
-});
 
-function sendFriendRequest(friendId) {
-    fetch(`/send_friend_request/${friendId}/`, { // 친구 요청 뷰로 요청 보내기
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // 요청 성공 시, 사용자에게 알림
-                alert("친구 요청이 성공적으로 보내졌습니다!");
-                // 필요하다면 페이지를 새로고침하거나 UI를 업데이트하여 사용자에게 상태 변경을 반영
-            } else {
-                // 요청 실패 시, 사용자에게 알림
-                alert("친구 요청을 보낼 수 없습니다.");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("친구 요청을 보낼 수 없습니다.");
-        });
-}
+    // 모달창 밖 클릭 시 모달창 닫기
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+
+});

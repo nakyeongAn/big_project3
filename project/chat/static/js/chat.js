@@ -90,7 +90,7 @@ function filterPeople(filterValue, peopleList) {
         }
     }
 }
- 
+
 // 메시지를 보내는 기능을 초기화해. 사용자가 메시지를 입력하고 전송 버튼을 클릭하거나 
 //엔터 키를 누르면 메시지가 채팅 창에 추가되도록 해.
 function initMessageSending() {
@@ -273,7 +273,6 @@ function fetchFriendRequests() {
         .catch((error) => console.error("Error:", error));
 }
 
-// 모달창에 친구 요청을 추가하는 함수
 function populateFriendRequestsModal(friendRequests) {
     const list = document.getElementById("friendRequestsList");
     friendRequests.forEach((request) => {
@@ -281,8 +280,8 @@ function populateFriendRequestsModal(friendRequests) {
         div.innerHTML = `
             <img src="${request.sender_profile_image}" alt="${request.sender_name}" />
             <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
-            <button onclick="manageFriendRequest(${request.id}, 'accept')">수락</button>
-            <button onclick="manageFriendRequest(${request.id}, 'decline')">거절</button>
+            <button data-request-id="${request.id}" data-action="accept">수락</button>
+            <button data-request-id="${request.id}" data-action="decline">거절</button>
         `;
         list.appendChild(div);
     });
@@ -291,43 +290,17 @@ function populateFriendRequestsModal(friendRequests) {
 // 페이지 로드 시 친구 요청을 가져옵니다.
 document.addEventListener("DOMContentLoaded", fetchFriendRequests);
 
-// 친구 요청 알림 및 모달창 표시:
-document
-    .getElementById("friendRequestAlert")
-    .addEventListener("click", function() {
-        document.getElementById("friendRequestModal").classList.remove("hidden");
-    });
-
-document.querySelector(".close").addEventListener("click", function() {
-    document.getElementById("friendRequestModal").classList.add("hidden");
+document.getElementById("friendRequestsList").addEventListener("click", function(event) {
+    const target = event.target;
+    if (target.tagName === "BUTTON") {
+        const requestId = target.getAttribute("data-request-id");
+        const action = target.getAttribute("data-action");
+        if (requestId && action) {
+            manageFriendRequest(requestId, action);
+        }
+    }
 });
 
-// 친구 요청 목록을 가져와 표시하는 함수
-function loadFriendRequests() {
-    fetch("/get_friend_requests/", {
-            // 친구 요청을 가져오는 백엔드 뷰 URL
-            method: "GET",
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            var friendRequestsDiv = document.getElementById("friendRequests");
-            friendRequestsDiv.innerHTML = ""; // 기존 목록을 비웁니다.
-
-            data.requests.forEach(function(request) {
-                // 각 요청에 대한 HTML 요소를 생성합니다.
-                var div = document.createElement("div");
-                div.innerHTML = `
-                    <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
-                    <button onclick="manageFriendRequest(${request.id}, 'accept')">승인</button>
-                    <button onclick="manageFriendRequest(${request.id}, 'decline')">거절</button>
-                `;
-                friendRequestsDiv.appendChild(div);
-            });
-        });
-}
 
 // 친구 요청을 승인하거나 거절하는 함수
 function manageFriendRequest(requestId, action) {
@@ -343,16 +316,46 @@ function manageFriendRequest(requestId, action) {
             if (data.success) {
                 alert(`요청이 ${action === "accept" ? "승인되었습니다." : "거절되었습니다."}`);
                 fetchFriendRequests(); // 친구 요청 데이터를 다시 가져옵니다.
+                location.reload(); // 페이지 새로고침
             } else {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
+                location.reload(); // 오류 발생시 페이지 새로고침
             }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("요청 처리 중 오류가 발생했습니다.");
+            location.reload(); // 오류 발생시 페이지 새로고침
         });
 }
 
+
+// 친구 요청 드롭다운을 표시하거나 숨기는 기능
 document.getElementById("friendRequestAlert").addEventListener("mouseover", function() {
     document.getElementById("friendRequestsDropdown").classList.remove("hidden");
 });
 
 document.getElementById("friendRequestAlertContainer").addEventListener("mouseleave", function() {
     document.getElementById("friendRequestsDropdown").classList.add("hidden");
+});
+
+// CSRF 토큰 값을 가져오는 함수
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 예를 들어, 서버에서 전달받은 is_friend 값을 이용하여 버튼 상태 설정
+    updateButtonVisibility(isFriend); // isFriend는 서버로부터 전달받은 값
 });

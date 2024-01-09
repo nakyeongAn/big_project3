@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from .models import FriendRequest, Friendship
+from django.db.models import Q
+
 
 
 from .chatbot import chatbot_machine
@@ -99,19 +103,36 @@ def wishlist(request):
 def detail(request):
     return render(request, "chat/detail.html")
 
+# @login_required
+# def friend_profile(request, user_id):
+#     # 사용자 ID를 사용하여 특정 사용자 객체를 가져옵니다.
+#     user = get_object_or_404(AccountUser, id=user_id)
+
+#     # 프로필 페이지에 전달할 컨텍스트를 준비합니다.
+#     context = {
+#         "user": user,
+#         # 필요한 다른 컨텍스트 변수들...
+#     }
+
+#     # 프로필 페이지를 렌더링합니다.
+#     return render(request, 'chat/friend_profile.html', context)
+
 @login_required
 def friend_profile(request, user_id):
-    # 사용자 ID를 사용하여 특정 사용자 객체를 가져옵니다.
     user = get_object_or_404(AccountUser, id=user_id)
+    is_friend = Friendship.objects.filter(
+        (Q(user1=request.user) & Q(user2=user)) | (Q(user1=user) & Q(user2=request.user))
+    ).exists()
 
-    # 프로필 페이지에 전달할 컨텍스트를 준비합니다.
     context = {
         "user": user,
-        # 필요한 다른 컨텍스트 변수들...
+        "is_friend": is_friend,
+        # 기타 필요한 컨텍스트 변수들...
     }
 
-    # 프로필 페이지를 렌더링합니다.
     return render(request, 'chat/friend_profile.html', context)
+
+
 
 
 # 사용자의 username을 조회
