@@ -16,8 +16,10 @@ def testing(request):
         occasion = request.POST.get('occasion')
         relationship = request.POST.get('relationship')
         additional_info = request.POST.get('additionalInfo')
+        minAmount = request.POST.get('minAmount')
+        maxAmount = request.POST.get('maxAmount') 
         friend_id = request.POST.get('friend_id')
-
+        print(occasion, relationship, additional_info, minAmount, maxAmount, '친구 id ',friend_id)
         # 보내는 놈 정보 
         if request.user.is_authenticated:
             print("로그인한 사용자:", request.user.id)

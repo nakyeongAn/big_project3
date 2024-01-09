@@ -1,5 +1,10 @@
 var followBtn = document.getElementById('followBtn');
 var findGiftBtn = document.getElementById('findGiftBtn');
+// 챗봇 확인용 코드 
+var findGiftBtn2 = document.getElementById('findGiftBtn2');
+// 챗봇 확인용 코드 
+
+
 var unfollowBtn = document.getElementById('unfollowBtn');
 var userId = followBtn.getAttribute('data-user-id');
 
@@ -47,6 +52,11 @@ var modal = document.getElementById('giftModal');
 
 // Get the button that opens the modal
 var btn = document.getElementById('findGiftBtn');
+
+
+// 챗봇 확인용 코드
+var btn = document.getElementById('findGiftBtn2');
+// 챗봇 확인용 코드
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
