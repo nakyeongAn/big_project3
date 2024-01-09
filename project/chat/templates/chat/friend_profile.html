@@ -84,16 +84,16 @@
     </div>
     <h1 class="profile-title">{{user.username}}</h1>
     <div class="profile-user-settings">
-      <!-- 친구 요청 버튼 -->
-
-      <!-- 챗봇 확인용 -->
-      <button class="btn" id="findGiftBtn2">선물 알아내기</button>
-      <!-- 챗봇 확인용 -->
-
+      <!-- 친구 요청 버튼 (친구가 아닐 경우에만 표시) -->
+      {% if not is_friend %}
       <button class="btn" id="followBtn" data-user-id="{{ user.id }}">팔로우</button>
-      <!-- Hidden buttons, to be displayed after follow -->
-      <button class="btn hidden" id="findGiftBtn">선물 알아내기</button>
-      <button class="btn hidden" id="unfollowBtn">팔로우 취소</button>
+      {% endif %}
+      
+      <!-- Hidden buttons, to be displayed after follow (친구인 경우에만 표시) -->
+      {% if is_friend %}
+      <button class="btn" id="findGiftBtn">선물 알아내기</button>
+      <button class="btn" id="unfollowBtn">팔로우 취소</button>
+      {% endif %}
     </div>
     <div class="profile-bio">
       <wishlist-title">여기에는 자기소개를 넣습니다...<//p>
