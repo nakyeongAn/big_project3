@@ -76,7 +76,7 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     agearound = models.IntegerField(default=1)
     address = models.CharField(default="None", max_length=100)
     profile_image = models.ImageField(
-        upload_to="profile_images/", null=True, blank=True
+        upload_to="profile_images/", null=True, blank=True,default='profile_images/default.jpg'
     )
     objects = AccountUserManager()
 

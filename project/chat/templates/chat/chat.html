@@ -44,12 +44,12 @@
           {% for user in users %}
           <!-- 왼쪽 화면 요약 화면 관련-->
           <li class="person" data-chat-id= "{{user.id}}" >
-            <img
-              src="https://img.hankyung.com/photo/201904/01.19372617.1.jpg"
-              alt=""
-              onclick="goToProfile(this)"
-            />
-            <span class="name"> {{user.username}} </span>
+            {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}" alt="{{ user.username }}" onclick="goToProfile(this)" />
+          {% else %}
+              <img src="https://img.hankyung.com/photo/201904/01.19372617.1.jpg" alt="Default Image" />
+          {% endif %}
+              <span class="name"> {{user.username}} </span>
             <span class="time">2:09 PM</span>
             <span class="preview">I was wondering...</span>
           </li>

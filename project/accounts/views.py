@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm
 from datetime import date
-
+from .models import *
 
 def forgotID(request):
     return render(request, "accounts/forgotID.html")

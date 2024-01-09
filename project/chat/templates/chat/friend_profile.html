@@ -22,11 +22,12 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>선물 선택 도우미</h2>
-    <form id="giftForm">
 
+    <form id="giftForm"  action="{% url 'chat:testing' %}" method="post">
+      {% csrf_token %}
       <!-- Occasion Selection -->
       <label for="occasion">기념일:</label>
-      <select iwishlist-title="occasion">
+      <select iwishlist-title="occasion" name="occasion" id="occasion">
         <option value="birthday">생일</option>
         <option value="parents_day">어버이날</option>
         <option value="graduation">졸업축하</option>
@@ -44,7 +45,7 @@
 
       <!-- Relationship Selection -->
       <label for="relationship">관계:</label>
-      <select id="rwishlist-title="relationship">
+      <select id="rwishlist-title="relationship" name="relationship" id="relationship">
         <option value="family">가족</option>
         <option value="friend">친구</option>
         <option value="colleague">동료</option>
@@ -53,8 +54,8 @@
 
       <!-- Additional Information -->
       <label for="additionalInfo">추가 정보:</label>
-      <textarea id="addwishlist-title="additionalInfo" placeholder="예산, 선물의 분위기 등..."></textarea>
-
+      <textarea id="addwishlist-title="additionalInfo" name="additionalInfo" id="additionalInfo" placeholder="예산, 선물의 분위기 등..."></textarea>
+      <input type="hidden" name="friend_id" value="{{ friend_id }}">
       <!-- Submit Button -->
       <button type="submit" class="btn">제출</button>
 

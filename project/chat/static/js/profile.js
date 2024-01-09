@@ -1,8 +1,8 @@
 // DOM 요소 캐싱
 var profileImage = document.getElementById('currentImage');
 var profilePictureInput = document.getElementById('profilePictureInput');
-var uploadUrl = uploadButton.getAttribute('data-upload-url');
-
+//var uploadUrl = uploadButton.getAttribute('data-upload-url');
+var uploadUrl = '/upload_profile_image/';
 // 파일 선택 시 동작하는 함수
 function uploadImage(file) {
     // 로컬에서 이미지 미리보기

@@ -18,4 +18,6 @@ urlpatterns = [
     path('search_user/', views.search_user, name='search_user'),
     # 이미지 업로드 처리:
     path('upload_profile_image/', views.upload_profile_image, name='upload_profile_image'),
+    # friend_profile form submit 
+    path('testing/', views.testing, name='testing'),
 ]

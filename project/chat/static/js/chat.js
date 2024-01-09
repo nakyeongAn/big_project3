@@ -223,6 +223,8 @@ function goToProfile(elem) {
     // 페이지 이동 또는 모달 띄우기
     window.location.href = "/friend_profile/" + userID; // 사용자 프로필 페이지로 이동
     // 또는 프로필 정보를 모달로 띄우는 등의 동작을 구현할 수 있습니다.
+    console.log(userID)
+    print(userID)
 }
 
 
