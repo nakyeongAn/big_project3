@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
     'phonenumber_field',
+    'products',
  
 ]   
 
