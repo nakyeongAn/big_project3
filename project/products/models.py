@@ -1,11 +1,9 @@
 from django.db import models
 
-from django.conf import settings
- 
  
 # 대화가 끝나서 결과 -> 확인
-class Products(models.Model):
-    id = models.AutoField(primary_key=True)
+class Product(models.Model):
+    id = models.BigAutoField(primary_key=True)
     category = models.CharField(max_length=2000, null=True, blank=True)  
     name = models.CharField(max_length=2000, null=True, blank=True)  
     price = models.IntegerField(null=True, blank=True)  
@@ -20,4 +18,3 @@ class Products(models.Model):
     blue = models.IntegerField(null=True, blank=True)  
     text = models.CharField(max_length=2000, null=True, blank=True)  
     embed = models.CharField(max_length=2000, null=True, blank=True)  
-
