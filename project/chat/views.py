@@ -113,7 +113,7 @@ def giftform(request):
         friend_id = request.POST.get('friend_id')
         user_id = request.user.id
             
-        result=GiftRequest(sender =user_id, receiver = friend_id, additionalinfo = additional_info, minamount = minAmount, maxamount = maxAmount, relationship=relationship, occasion=occasion)
+        result=GiftRequest(sender =user_id, receiver = friend_id, additionalinfo = additional_info, minamount = minAmount, maxamount = maxAmount, relationship=relationship, occasion=occasion, is_completed=False)
         result.save()
         # 친구페이지로 돌아가버림
         return redirect('chat:friend_profile', user_id = friend_id)
@@ -170,6 +170,17 @@ def manage_friend_request(request, request_id, action):
         friend_request.delete()
     return JsonResponse({'success': True})
 
+def fetch_gift_requests(request):
+    gift_requests=GiftRequest.objects.filter(receiver=request.user, is_completed=False)
+    requests_data = [{
+        'id' : gr.id,
+        'additionalinfo' : gr.additionalinfo,
+        'minamount' : gr.minamount,
+        'maxamount' : gr.maxamount,
+        'relationship' : gr.relationship,
+        'occasion' : gr.occasion
+    } for gr in gift_requests]
+    return JsonResponse({'gift_requests' : requests_data})
 
 #챗봇
 def chatbot(request):

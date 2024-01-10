@@ -296,6 +296,24 @@ function fetchFriendRequests() {
         .catch((error) => console.error("Error:", error));
 }
 
+function fetchGiftRequests() {
+    fetch("/fetch_gift_requests/", { // 서버에서 친구 요청을 가져오는 URL
+        method: "GET",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.gift_requests.length > 0) {
+            // document.getElementById("friendRequestAlert").classList.remove("hidden");
+            // populateFriendRequestsModal(data.gift_requests);
+            console.log(data.gift_requests);
+        }
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
 function populateFriendRequestsModal(friendRequests) {
     const list = document.getElementById("friendRequestsList");
     friendRequests.forEach((request) => {
@@ -324,6 +342,7 @@ document.getElementById("friendRequestsList").addEventListener("click", function
     }
 });
 
+document.addEventListener("DOMContentLoaded", fetchGiftRequests);
 
 // 친구 요청을 승인하거나 거절하는 함수
 function manageFriendRequest(requestId, action) {

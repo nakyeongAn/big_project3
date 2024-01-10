@@ -56,4 +56,5 @@ class GiftRequest(models.Model):
     maxamount = models.BigIntegerField(null=True, blank=True)
     relationship = models.CharField(max_length=10, blank=True, null=True)
     occasion = models.CharField(max_length=10, blank=True, null=True)
+    is_completed = models.BooleanField(default=False)
  
