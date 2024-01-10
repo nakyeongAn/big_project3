@@ -5,13 +5,13 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from .models import FriendRequest, Friendship, Conversation
+from .models import FriendRequest, Friendship, Conversation, GiftRequest
 from django.db.models import Q
 from .forms import CustomedUserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import update_session_auth_hash
-from summarization import three_products_str
+#from summarization import three_products_str
 
 
 
@@ -55,7 +55,8 @@ def profile(request):
     return render(request, "chat/profile.html", context)
 
 
-
+def account_settings(request):
+    return render(request, "chat/account_settings.html")
 @login_required
 @csrf_exempt
 def upload_profile_image(request):
@@ -247,3 +248,32 @@ def chatbot_machine(message):
 def item_in(three_products_str, sender_id, receiver_id):
     my_object = Conversation()
     
+from django.contrib.auth.forms import UserChangeForm
+
+
+def account_settings(request):
+    return render(request, "chat/account_settings.html")
+
+def update(request):
+    if request.method == "POST":
+        form = CustomedUserChangeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('chat:account_settings')
+    else:
+        form =CustomedUserChangeForm()
+    content = {'form' : form}
+    return render(request, 'chat/update.html', content)
+
+def password_change(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('chat:account_settings')
+    else:
+        form =PasswordChangeForm(request.POST)
+    content = {'form' : form}
+    return render(request, 'chat/password_change.html', content)
+
