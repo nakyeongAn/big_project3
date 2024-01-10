@@ -18,11 +18,7 @@ def search(request):
     question=request.GET.get('q', '')
     articles = Article.objects.order_by('-id')
     content={}
-    if not question:
-        search_article_list = articles
-    else :
-        if len(question) > 1 :
-            search_article_list = articles.filter(Q (title__icontains=question) | Q (content__icontains=question)) #  | Q (user_id__icontains=question)
+    search_article_list = articles.filter(Q (title__icontains=question) | Q (content__icontains=question)) #  | Q (user_id__icontains=question)
             
     page = int(request.GET.get('page', 1))
     paginator=Paginator(search_article_list, 10)

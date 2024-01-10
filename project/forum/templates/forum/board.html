@@ -1,12 +1,22 @@
 {% extends "layout_after_login.html" %}{% load static %} 
 {% block title %}질문게시판{% endblock %}
 {% block content %}
+<script>
+    function validateSearch() {
+        var searchText = document.getElementById('search-query').value;
+        if (searchText.length < 2) {
+            alert("검색어는 최소 2글자 이상이어야 합니다.");
+            return false;
+        }
+        return true;
+    }
+</script>
 <link rel="stylesheet" href="{% static 'forum/board.css' %}"/>
 <h2 class='notice_h2'>문의게시판</h2>
 <div class = 'borad_section'>
     <div class= 'board_section2'>
             <section id="search-box">
-                <form action="{% url 'forum:search'%}" method="GET">
+                <form action="{% url 'forum:search'%}" method="GET" onsubmit="return validateSearch()">
                     <div class = 'search-box_in'>
                         <input type="text" id="search-query" placeholder="검색어 입력" name="q" value="{{ q }}">
                         <button class = "search-query-btn1" type="submit">검색</button>
