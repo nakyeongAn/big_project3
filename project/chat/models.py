@@ -45,3 +45,15 @@ class Message(models.Model):
     bot_content = models.CharField(max_length=2000, null=True, blank=True)  
     user_content = models.CharField(max_length=2000, null=True, blank=True)  
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class GiftRequest(models.Model):
+    id = models.AutoField(primary_key=True)
+    sender = models.CharField(max_length=10, blank=True, null=True)
+    receiver = models.CharField(max_length=10, blank=True, null=True)
+    additionalinfo = models.TextField(null=True, blank=True)
+    minamount = models.BigIntegerField(null=True, blank=True)
+    maxamount = models.BigIntegerField(null=True, blank=True)
+    relationship = models.CharField(max_length=10, blank=True, null=True)
+    occasion = models.CharField(max_length=10, blank=True, null=True)
+ 

@@ -12,6 +12,7 @@ from summarization import three_products_str
 
 
 from openai import OpenAI
+import os
 import json
 from .models import * 
 from accounts.models import AccountUser
@@ -27,8 +28,6 @@ def send_message(request):
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False, 'error': 'No message text provided'})
-
-
 
 def receive_chat(request):
     return render(request, 'chat/receive_chat.html')
@@ -89,6 +88,7 @@ def friend_profile(request, user_id):
     is_friend = Friendship.objects.filter(
         (Q(user1=request.user) & Q(user2=user)) | (Q(user1=user) & Q(user2=request.user))
     ).exists()
+    
 
     context = {
         "user": user,
@@ -98,6 +98,22 @@ def friend_profile(request, user_id):
 
     return render(request, 'chat/friend_profile.html', context)
 
+def giftform(request):
+    if request.method == 'POST':
+        #폼데이터 및 받는 놈 id 값
+        
+        occasion = request.POST.get('occasion')
+        relationship = request.POST.get('relationship')
+        additional_info = request.POST.get('additionalInfo')
+        minAmount = request.POST.get('minAmount')
+        maxAmount = request.POST.get('maxAmount') 
+        friend_id = request.POST.get('friend_id')
+        user_id = request.user.id
+            
+        result=GiftRequest(sender =user_id, receiver = friend_id, additionalinfo = additional_info, minamount = minAmount, maxamount = maxAmount, relationship=relationship, occasion=occasion)
+        result.save()
+        # 친구페이지로 돌아가버림
+        return redirect('chat:friend_profile', user_id = friend_id)
 
 
 
