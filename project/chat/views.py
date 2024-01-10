@@ -11,34 +11,8 @@ from django.db.models import Q
 from openai import OpenAI
 import json
 from .models import * 
-
-from .chatbot import chatbot_machine
 from accounts.models import AccountUser
 
-def testing(request):
-    if request.method == 'POST':
-        #폼데이터 및 받는 놈 id 값
-        
-        occasion = request.POST.get('occasion')
-        relationship = request.POST.get('relationship')
-        additional_info = request.POST.get('additionalInfo')
-        minAmount = request.POST.get('minAmount')
-        maxAmount = request.POST.get('maxAmount') 
-        friend_id = request.POST.get('friend_id')
-        print(occasion, relationship, additional_info, minAmount, maxAmount, '친구 id ',friend_id)
-        # 보내는 놈 정보 
-        if request.user.is_authenticated:
-            print("로그인한 사용자:", request.user.id)
-            user_id = request.user.id
-        else:
-            # 사용자가 로그인하지 않았음
-            print("로그인하지 않은 사용자")
-
-        # 결과 값 챗봇 넘기기 
-        result = chatbot_machine(friend_id, user_id)
-        # 친구페이지로 돌아가버림
-        return redirect('chat:friend_profile', user_id = friend_id)
-    
 # 챗봇 사용자 대답 db에 저장
 @require_POST
 def send_message(request):
@@ -180,41 +154,31 @@ def chatbot(request):
     if request.method == 'POST':
         message = request.POST.get('message')
 
-        # # 대화 상태 체크
-        # if request.session.get('chat_state') == 'ended':
-        #     return JsonResponse({'message': message, 'response': '대화가 이미 종료되었습니다.'})
-
-        # if message.lower() == 'exit':
-        #     request.session['chat_state'] = 'ended'
-        #     return JsonResponse({'message': message, 'response': '대화가 종료되었습니다.'})
-
         response = chatbot_machine(message)
         
         return JsonResponse({'message': message, 'response': response})
 
     return render(request, 'receive_chat')
 
-def chatbot_machine(message):
-    user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
 
-    # 성별 입력
-    sex = input("성별 : ") # 성별 입력
-    not_sex = " "
-    if sex == "여성":
-        not_sex = "남성"
-    else:
-        not_sex = "여성"
+def chatbot_machine(message):
+  #  user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
+
+    # # 성별 입력
+    # sex = input("성별 : ") # 성별 입력
+    # not_sex = " "
+    # if sex == "여성":
+    #     not_sex = "남성"
+    # else:
+    #     not_sex = "여성"
 
     with open('secrets.json', 'r') as secrets_file:
         secrets = json.load(secrets_file)
-    openai_key = secrets["openai_key"]
+    openai_key = secrets["openai_key_kim"]
 
     # OpenAI 클라이언트 설정
     client = OpenAI(api_key=openai_key)
     
-    conversation_history = [
-        # 기존의 내용들
-    ]
     # 첫 번째 메시지 정의
     initial_message = f"안녕하세요! 너님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!"
 
@@ -223,12 +187,12 @@ def chatbot_machine(message):
     conversation = [
         {
             "role": "system",
-            "content": "누군가에게 선물을 주기 위해 그 사람의 취향을 알아보려고 해. 하지만 선물 받는 당사자에게 직접 물어보기 어려워서 너를 이용해서 익명으로 선물을 받는 상대에게 물어보려고 해. 너는 상대방에게 구체적으로 어떤 취향을 갖고 있는지 물어보고, 취향을 파악해주는 조수야. 너는 상대방의 이름, 나이를 알고 있어. 제일 첫 대화는 인사와 함께 상대방에게 갖고 싶은 물건이 있는 물어봐줘야 해. 누군가가 상대방을 위해 선물을 준비하고 있다는 사실을 알려줘. 상대방에게 답변이 오면 구체적인 품목에 대한 선호도 질문을 해야해. 상대방이 이미 선호하는 품목을 언급했다면, 그 품목에 대해 더 자세히 물어볼 수 있어. 최대 3문장으로 말해줘."
+            "content": "누군가에게 선물을 주기 위해 그 사람의 취향을 알아보려고 해. 하지만 선물 받는 당사자에게 직접 물어보기 어려워서 너를 이용해서 익명으로 선물을 받는 상대에게 물어보려고 해. 너는 상대방에게 구체적으로 어떤 취향을 갖고 있는지 물어보고, 취향을 파악해주는 조수야. 너는 상대방의 이름, 나이, 성별을 알고 있어. 제일 첫 대화는 인사와 함께 상대방에게 갖고 싶은 물건이 있는지 물어봐줘야 해. 누군가가 상대방을 위해 선물을 준비하고 있다는 사실을 알려줘. 상대방에게 답변이 오면 구체적인 품목에 대한 선호도 질문을 해야해. 상대방이 이미 선호하는 품목을 언급했다면, 그 품목에 대해 더 자세히 물어볼 수 있어. 최대 3문장으로 말해줘."
         },
         {
             "role": "assistant",
             "content": initial_message
-        }
+        }   
     ]
     user_input = message
 
@@ -239,7 +203,7 @@ def chatbot_machine(message):
     conversation.append({"role": "user", "content": user_input})
     # 챗봇에게 대화 전달 및 응답 받기
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="ft:gpt-3.5-turbo-1106:personal::8c5qJUIG",
         messages=conversation,
         max_tokens=150,
         temperature=0.4,
@@ -247,8 +211,12 @@ def chatbot_machine(message):
         frequency_penalty=0,
         presence_penalty=0
     )
-
+    
     # 챗봇의 응답을 대화 기록에 추가 및 출력
     assistant_response = response.choices[0].message.content
-    conversation_history.append({"role": "assistant", "content": assistant_response})
+    conversation.append({"role": "assistant", "content": assistant_response})
+    print('response ', response)
+    print('assistant_response ',assistant_response)
+    print('conversation ',conversation)
+    print('==========================================')
     return assistant_response

@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'phonenumber_field',
     'products',
-    'chatbot',
+
  
 ]   
 

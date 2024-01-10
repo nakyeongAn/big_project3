@@ -70,7 +70,7 @@
                     document.querySelector("input[name='address']").value =
                       data.address; // 주소 넣기
                     document
-                      .querySelector("input[name='address_detail']")
+                      .querySelector("input[name='address_detail'] placeholder='{{ field.label }}를 입력해주세요.'")
                       .focus(); //상세입력 포커싱
                   },
                 }).open();

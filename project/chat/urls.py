@@ -21,7 +21,7 @@ urlpatterns = [
     path('fetch_friend_requests/', views.fetch_friend_requests, name='fetch_friend_requests'),
     path('manage_friend_request/<int:request_id>/<str:action>/', views.manage_friend_request, name='manage_friend_request'),
     # friend_profile form submit 
-    path('testing/', views.testing, name='testing'),
+
     
     # 챗봇 url 저장 용
     path('fetch_chatbot_message/', views.chatbot, name='fetch_chatbot_message')
