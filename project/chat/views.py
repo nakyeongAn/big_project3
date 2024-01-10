@@ -9,6 +9,7 @@ from .models import FriendRequest, Friendship
 from django.db.models import Q
 
 from openai import OpenAI
+import os
 import json
 from .models import * 
 from accounts.models import AccountUser
@@ -24,8 +25,6 @@ def send_message(request):
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False, 'error': 'No message text provided'})
-
-
 
 def receive_chat(request):
     return render(request, 'chat/receive_chat.html')
@@ -185,7 +184,7 @@ def chatbot(request):
     return render(request, 'receive_chat')
 
 
-def chatbot_machine(message):
+def chatbot_machine(friend_id, user_id):
   #  user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
 
     # # 성별 입력
@@ -195,13 +194,18 @@ def chatbot_machine(message):
     #     not_sex = "남성"
     # else:
     #     not_sex = "여성"
-
+    
+    # db_settings = settings.DATABASES['default']
     with open('secrets.json', 'r') as secrets_file:
         secrets = json.load(secrets_file)
-    openai_key = secrets["openai_key_kim"]
+    openai_key = secrets["openai_key"]
 
-    # OpenAI 클라이언트 설정
+    # # OpenAI 클라이언트 설정
     client = OpenAI(api_key=openai_key)
+    # db_settings = settings.DATABASES['default']
+    # os.environ['OPENAI_API_KEY'] = db_settings['SECRET_OPENAI']
+    # client = OpenAI()
+
     
     # 첫 번째 메시지 정의
     initial_message = f"안녕하세요! 너님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!"
