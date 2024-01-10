@@ -5,8 +5,11 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from .models import FriendRequest, Friendship
+from .models import FriendRequest, Friendship, Conversation
 from django.db.models import Q
+from summarization import three_products_str
+
+
 
 from openai import OpenAI
 import json
@@ -220,3 +223,9 @@ def chatbot_machine(message):
     print('conversation ',conversation)
     print('==========================================')
     return assistant_response
+
+
+# 재남's 머리를 터뜨리는 코드..
+def item_in(three_products_str, sender_id, receiver_id):
+    my_object = Conversation()
+    

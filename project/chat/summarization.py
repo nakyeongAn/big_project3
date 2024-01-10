@@ -249,5 +249,11 @@ data['score'] = data.apply(lambda row: calculate_score_improved(row, matching, m
 data_sorted = data.sort_values(by='score', ascending=False)
 three_product = data_sorted[['Img_URL', 'Product URL', 'name', 'price']][0:3]
 print(data_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
+
+three_products_str = []
+for index, row in three_product.iterrows():
+    three_products_str.append((row['Img_URL'], row['Product URL'], row['name'], row['price']))
+    
+three_products_str = str(three_products_str)
 # data_sorted.head(10)
 
