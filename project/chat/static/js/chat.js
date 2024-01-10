@@ -125,6 +125,7 @@ function initMessageSending() {
         return bubble;
     }
 }
+
 //채팅 목록에서 특정 대화를 선택할 수 있게 해주는 기능을 초기화해. 사용자가 친구 목록에서 한 명을 클릭하면 
 //해당 대화가 활성화되고 나타나도록 해.
 function initChatSelection() {

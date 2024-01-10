@@ -202,3 +202,21 @@ def manage_friend_request(request, request_id, action):
     return JsonResponse({'success': True})
 
 
+#챗봇
+def chatbot(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')
+
+        # # 대화 상태 체크
+        # if request.session.get('chat_state') == 'ended':
+        #     return JsonResponse({'message': message, 'response': '대화가 이미 종료되었습니다.'})
+
+        # if message.lower() == 'exit':
+        #     request.session['chat_state'] = 'ended'
+        #     return JsonResponse({'message': message, 'response': '대화가 종료되었습니다.'})
+
+        response = chatbot_machine(message)
+        
+        return JsonResponse({'message': message, 'response': response})
+
+    return render(request, 'chat/receive_chat')
