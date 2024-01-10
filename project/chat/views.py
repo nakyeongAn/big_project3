@@ -8,6 +8,7 @@ from django.conf import settings
 from .models import FriendRequest, Friendship
 from django.db.models import Q
 
+from openai import OpenAI
 import json
 from .models import * 
 
@@ -76,20 +77,6 @@ def profile(request):
     return render(request, "chat/profile.html", context)
 
 
-# @require_POST  # 요청이 POST 방식인지 확인합니다. 아닐 경우 405 Method Not Allowed 응답을 반환합니다.
-# @login_required  # 사용자가 로그인한 상태인지 확인합니다. 아닐 경우 로그인 페이지로 리디렉션합니다.
-# def upload_profile_image(request):
-#     user = request.user  # 현재 로그인한 사용자 객체를 가져옵니다.
-#     profile_image = request.FILES.get("profile_picture")  # 요청에서 'profile_picture'라는 이름으로 전송된 파일을 가져옵니다.
-
-#     if profile_image:
-#         user.profile_image = profile_image  # 사용자의 profile_image 필드를 새로운 이미지로 업데이트합니다.
-#         user.save()  # 변경 사항을 데이터베이스에 저장합니다.
-#         # 성공적으로 이미지가 저장되었음을 나타내는 JSON 응답을 반환합니다. 새 이미지의 URL도 포함됩니다.
-#         return JsonResponse({"success": True, "image_url": user.profile_image.url})
-#     # 이미지가 제대로 전송되지 않았을 경우, 실패를 나타내는 JSON 응답을 반환합니다.
-#     return JsonResponse({"success": False})
-
 
 @login_required
 @csrf_exempt
@@ -118,20 +105,6 @@ def wishlist(request):
 
 def detail(request):
     return render(request, "chat/detail.html")
-
-# @login_required
-# def friend_profile(request, user_id):
-#     # 사용자 ID를 사용하여 특정 사용자 객체를 가져옵니다.
-#     user = get_object_or_404(AccountUser, id=user_id)
-
-#     # 프로필 페이지에 전달할 컨텍스트를 준비합니다.
-#     context = {
-#         "user": user,
-#         # 필요한 다른 컨텍스트 변수들...
-#     }
-
-#     # 프로필 페이지를 렌더링합니다.
-#     return render(request, 'chat/friend_profile.html', context)
 
 @login_required
 def friend_profile(request, user_id):
@@ -219,4 +192,63 @@ def chatbot(request):
         
         return JsonResponse({'message': message, 'response': response})
 
-    return render(request, 'chat/receive_chat')
+    return render(request, 'receive_chat')
+
+def chatbot_machine(message):
+    user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
+
+    # 성별 입력
+    sex = input("성별 : ") # 성별 입력
+    not_sex = " "
+    if sex == "여성":
+        not_sex = "남성"
+    else:
+        not_sex = "여성"
+
+    with open('secrets.json', 'r') as secrets_file:
+        secrets = json.load(secrets_file)
+    openai_key = secrets["openai_key"]
+
+    # OpenAI 클라이언트 설정
+    client = OpenAI(api_key=openai_key)
+    
+    conversation_history = [
+        # 기존의 내용들
+    ]
+    # 첫 번째 메시지 정의
+    initial_message = f"안녕하세요! 너님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!"
+
+
+    # 대화 기록을 저장할 리스트 초기화
+    conversation = [
+        {
+            "role": "system",
+            "content": "누군가에게 선물을 주기 위해 그 사람의 취향을 알아보려고 해. 하지만 선물 받는 당사자에게 직접 물어보기 어려워서 너를 이용해서 익명으로 선물을 받는 상대에게 물어보려고 해. 너는 상대방에게 구체적으로 어떤 취향을 갖고 있는지 물어보고, 취향을 파악해주는 조수야. 너는 상대방의 이름, 나이를 알고 있어. 제일 첫 대화는 인사와 함께 상대방에게 갖고 싶은 물건이 있는 물어봐줘야 해. 누군가가 상대방을 위해 선물을 준비하고 있다는 사실을 알려줘. 상대방에게 답변이 오면 구체적인 품목에 대한 선호도 질문을 해야해. 상대방이 이미 선호하는 품목을 언급했다면, 그 품목에 대해 더 자세히 물어볼 수 있어. 최대 3문장으로 말해줘."
+        },
+        {
+            "role": "assistant",
+            "content": initial_message
+        }
+    ]
+    user_input = message
+
+    if user_input.lower() == 'exit':
+        # 디비에 저장을 시키고 status 바꾸면 됨
+        return "대화가 종료되었습니다. "
+    
+    conversation.append({"role": "user", "content": user_input})
+    # 챗봇에게 대화 전달 및 응답 받기
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=conversation,
+        max_tokens=150,
+        temperature=0.4,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+
+    # 챗봇의 응답을 대화 기록에 추가 및 출력
+    assistant_response = response.choices[0].message.content
+    conversation_history.append({"role": "assistant", "content": assistant_response})
+    return assistant_response

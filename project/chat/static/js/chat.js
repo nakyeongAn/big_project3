@@ -115,6 +115,28 @@ function initMessageSending() {
                 activeChat.scrollTop = activeChat.scrollHeight;
             }
             messageInput.value = "";
+
+            // 챗봇에 메시지 보내기
+            fetch('/fetch_chatbot_message/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'message': messageText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const response = data.response;
+                const messageItem = createMessageBubble(response, 'you');
+                if (activeChat) {
+                    activeChat.appendChild(messageItem);
+                    activeChat.scrollTop = activeChat.scrollHeight;
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
         }
     }
 
@@ -279,7 +301,7 @@ function populateFriendRequestsModal(friendRequests) {
     friendRequests.forEach((request) => {
         const div = document.createElement("div");
         div.innerHTML = `
-            <img src="${request.sender_profile_image}" alt="${request.sender_name}" />
+            <img style="width:100px; height:100px;" src="${request.sender_profile_image}" alt="${request.sender_name}" />
             <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
             <button data-request-id="${request.id}" data-action="accept">수락</button>
             <button data-request-id="${request.id}" data-action="decline">거절</button>

@@ -8,7 +8,7 @@ def chatbot(request):
     if request.method == 'POST':
         message = request.POST.get('message')
 
-        # 대화 상태 체크
+
         # if request.session.get('chat_state') == 'ended':
         #     return JsonResponse({'message': message, 'response': '대화가 이미 종료되었습니다.'})
 
@@ -69,5 +69,6 @@ def chatbot_machine(message):
     # 챗봇의 응답을 대화 기록에 추가 및 출력
     assistant_response = response.choices[0].message.content
     conversation_history.append({"role": "assistant", "content": assistant_response})
+    print(conversation_history, message)
     return assistant_response
 

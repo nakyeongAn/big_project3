@@ -24,5 +24,5 @@ urlpatterns = [
     path('testing/', views.testing, name='testing'),
     
     # 챗봇 url 저장 용
-    path('message/send/', views.send_message, name = 'send_message'),
+    path('fetch_chatbot_message/', views.chatbot, name='fetch_chatbot_message')
 ]
