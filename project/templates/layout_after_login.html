@@ -15,14 +15,14 @@
           <a class="navbar-brand" href="{% url 'chat:receive_chat' %}">
             <img
               class="logo"
-              src="{% static 'assets/main_img.png' %}"
+              src="{% static 'img/logo.png' %}"
               alt="Logo"
-              style="height: 50px; margin-right: 10px; vertical-align: middle"
+              style="height: 40px; margin-right: 10px; vertical-align: middle"
             />
             <span class="d-inline-block">
               <span
                 class="fw-bolder text-primary"
-                style="font-size: 20px; line-height: 1; display: block;"
+                style="font-size: 20px; line-height: 1; display: block; color : #593D3B"
                 >당선
                 </span
               >
@@ -48,20 +48,7 @@
                 <a class="nav-link" href="{% url 'chat:give_chat' %}">선물주기</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link " href="#">커뮤니티</a>
-                <ul
-                  class="dropdown-menu"
-                  aria-labelledby="navbarDropdownProfile"
-                >
-                  <li>
-                    <a class="dropdown-item" href="{% url 'forum:index' %}">문의게시판</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#"
-                      >자유게시판</a
-                    >
-                  </li>
-                </ul>
+                <a class="nav-link " href="{% url 'forum:index' %}">문의게시판</a>
               </li>
               <li class="nav-item dropdown">
                 <a

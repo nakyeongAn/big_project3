@@ -1,30 +1,38 @@
-{% extends "layout.html" %} {% load static %} 
+{% extends "layout_after_login.html" %} {% load static %} 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/cancel.css' %}"/>
-    <h2>회원탈퇴</h2>
-    <p>탈퇴하시려면 비밀번호를 입력해 주십시오.</p>
-    <div class="attr-wrap">
-        <label>비밀번호</label><br>
-        <input id="pw" type="password" placeholder="비밀번호를 입력해 주세요.">
-    </div>
-    <div>
-        <button id="cancel_m-btn" type="button" name="button" onclick="confirmCancellation()">탈퇴하기</button>
+<h4 class='cancel_title'>회원탈퇴</h4>
+    <div class = 'cancel-container'>
+        <div class = 'cancel-container2'>
+            <p class = "des">탈퇴하시려면 비밀번호를 입력해 주십시오.</p>
+            <div class="attr-wrap">
+                <label>비밀번호</label><br>
+                <input id="pw" type="password" placeholder="비밀번호를 입력해 주세요.">
+            </div>
+            <div>
+                <button id="cancel_m-btn" type="button" name="button" onclick="confirmCancellation()">탈퇴하기</button>
 
-        <script>
-            function confirmCancellation() {
-                var userConfirmation = confirm('정말 탈퇴하시겠습니까?');
-                if (userConfirmation) {
-                    // If the user clicks "OK", you can handle the logic for account deletion here.
-                    // For example, sending an AJAX request or submitting a form.
-                    console.log('User confirmed cancellation.');
-                } else {
-                    // If the user clicks "Cancel", you might not need to do anything,
-                    // or you can handle the logic to abort the account deletion.
-                    console.log('User cancelled the action.');
-                }
-            }
-        </script>
+                <script>
+                    function confirmCancellation() {
+                        var userConfirmation = confirm('정말 탈퇴하시겠습니까?');
+                        if (userConfirmation) {
+                            // 사용자가 "확인"을 클릭한 경우, 여기서 계정 삭제 로직을 처리합니다.
+                            // 예를 들어 AJAX 요청을 보내거나 폼을 제출할 수 있습니다.
+                            console.log('User confirmed cancellation.');
+                
+                            // 메인 페이지로 리디렉션
+                            window.location.href = 'http://127.0.0.1:8000/'; // 이 경로는 사이트의 메인 페이지 URL로 변경해야 할 수 있습니다.
+                        } else {
+                            // 사용자가 "취소"를 클릭한 경우, 아무 것도 할 필요가 없거나
+                            // 계정 삭제 작업을 중단하는 로직을 처리할 수 있습니다.
+                            console.log('User cancelled the action.');
+                        }
+                    }
+                </script>
+                
 
-        <button id="cancel-btn" type="button" name="button">취소</button>
+                <button id="cancel-btn" type="button" name="button">취소</button>
+            </div>
+        </div>
     </div>
 {% endblock content%}

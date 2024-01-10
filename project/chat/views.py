@@ -7,6 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import FriendRequest, Friendship, Conversation
 from django.db.models import Q
+from .forms import CustomedUserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth import update_session_auth_hash
 from summarization import three_products_str
 
 
@@ -36,8 +40,6 @@ def give_chat(request):
     return render(request, 'chat/give_chat.html')
 
 
-def account_settings(request):
-    return render(request, "chat/account_settings.html")
 
 # 프로필 페이지를 위해 수정
 @login_required

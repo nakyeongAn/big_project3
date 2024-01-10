@@ -1,0 +1,10 @@
+{% extends "layout_after_login.html" %}
+
+{% block content %}
+<form action="{% url 'chat:update' %}" method = "POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type = "submit">
+</form>
+<a href="{% url 'chat:account_settings' %}">돌아가기</a>
+{% endblock content %}
