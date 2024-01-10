@@ -1,5 +1,25 @@
 /* create.css */
 
+body,
+html {
+    height: 100%;
+    /* 전체 높이 설정 */
+    width: 90%;
+    padding: 0;
+    /* Flex 컨테이너 설정 */
+    flex-direction: column;
+    margin: auto;
+    /* 자식 요소들을 세로로 정렬 */
+    justify-content: center;
+    /* 수직 정렬 */
+    align-items: center;
+    /* 수평 정렬 */
+    font-family: 'Arial', sans-serif;
+    /* 필요한 폰트로 변경 가능 */
+    background-color: #FBF6EC;
+    /* 배경색 */
+}
+
 .create-container {
     margin: 0 auto;
     background-color: #fff;

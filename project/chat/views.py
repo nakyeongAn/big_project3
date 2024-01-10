@@ -7,6 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import FriendRequest, Friendship
 from django.db.models import Q
+from .forms import CustomedUserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth import update_session_auth_hash
 
 import json
 from .models import * 
@@ -59,8 +63,6 @@ def give_chat(request):
     return render(request, 'chat/give_chat.html')
 
 
-def account_settings(request):
-    return render(request, "chat/account_settings.html")
 
 # 프로필 페이지를 위해 수정
 @login_required
@@ -220,3 +222,33 @@ def chatbot(request):
         return JsonResponse({'message': message, 'response': response})
 
     return render(request, 'chat/receive_chat')
+
+from django.contrib.auth.forms import UserChangeForm
+
+
+def account_settings(request):
+    return render(request, "chat/account_settings.html")
+
+def update(request):
+    if request.method == "POST":
+        form = CustomedUserChangeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('chat:account_settings')
+    else:
+        form =CustomedUserChangeForm()
+    content = {'form' : form}
+    return render(request, 'chat/update.html', content)
+
+def password_change(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('chat:account_settings')
+    else:
+        form =PasswordChangeForm(request.POST)
+    content = {'form' : form}
+    return render(request, 'chat/password_change.html', content)
+

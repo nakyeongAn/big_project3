@@ -1,3 +1,24 @@
+
+body,
+html {
+    height: 100%;
+    /* 전체 높이 설정 */
+    width: 90%;
+    padding: 0;
+    /* Flex 컨테이너 설정 */
+    flex-direction: column;
+    margin: auto;
+    /* 자식 요소들을 세로로 정렬 */
+    justify-content: center;
+    /* 수직 정렬 */
+    align-items: center;
+    /* 수평 정렬 */
+    font-family: 'Arial', sans-serif;
+    /* 필요한 폰트로 변경 가능 */
+    background-color: #FBF6EC;
+    /* 배경색 */
+}
+
 .notice_h2 {
     color: #593D3B;
     text-align: center;
@@ -28,8 +49,9 @@
   }
   
   .article-content {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 16px;
+    margin-bottom : 60px;
   }
   
   .comment-title{
@@ -56,7 +78,50 @@
   .comment-form {
     margin-top: 20px;
   }
+  .comment-list {
+    list-style: none; /* 리스트 아이템 앞의 기본 마커를 제거 */
+    padding-left: 0; /* 왼쪽 패딩 제거 */
+  }
   
+  .comment-item {
+    display: flex; /* Flexbox를 사용하여 내부 요소를 가로로 나열 */
+    align-items: center; /* 내부 요소들을 세로 중앙에 정렬 */
+    gap: 10px; /* 요소들 사이의 간격 */
+    margin-bottom: 10px; /* 아이템들 사이의 마진 */
+  }
+
+  .comment_button {
+    background-color: white; /* 배경색을 흰색으로 설정 */
+    border: none; /* 테두리 제거 */
+    text-decoration: underline; /* 텍스트에 밑줄 추가 */
+    text-decoration-color: grey; /* 밑줄 색상을 회색으로 설정 */
+    color: grey; /* 텍스트 색상을 검은색으로 설정 */
+    cursor: pointer; /* 마우스를 올렸을 때 커서 변경 */
+  }
+  
+
+  .comment-form {
+    display: flex;        /* Flexbox를 사용하여 내부 요소를 가로로 나열 */
+    align-items: center;  /* 내부 요소들을 세로 중앙에 정렬 */
+    gap: 10px;            /* 요소들 사이의 간격 */
+  }
+  
+  .comment-form input[type="submit"] {
+    margin-left: 10px;    /* '댓글 등록' 버튼을 오른쪽으로 밀어냄 */
+    padding: 8px 16px;    /* 버튼 내부의 여백 */
+    background-color: #593D3B; /* 버튼 배경 색상 */
+    color: white;          /* 버튼 텍스트 색상 */
+    border: none;          /* 테두리 없음 */
+    border-radius: 4px;    /* 모서리 둥글게 */
+    cursor: pointer;       /* 마우스를 올렸을 때 커서 변경 */
+  }
+  .article_button_group {
+    display: flex;        /* Flexbox를 사용하여 자식 요소들을 배치합니다 */
+    justify-content: flex-start; /* 자식 요소들을 컨테이너의 시작 부분으로 정렬합니다 */
+    align-items: center;  /* 자식 요소들을 세로 방향 중앙에 정렬합니다 */
+    gap: 10px;           /* 각 아이템 사이의 공간 */
+  }
+
   .article-delete-form,
   .go-back-link,
   .edit-link {
@@ -66,7 +131,22 @@
   .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #593D3B;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .article_button,
+  .go-back-link,
+  .edit-link{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #F7C3A2;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -77,7 +157,7 @@
   }
   
   .btn:hover {
-    background-color: #0056b3;
+    background-color: grey;
     text-decoration: none;
   }
   

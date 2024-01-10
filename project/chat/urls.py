@@ -25,4 +25,6 @@ urlpatterns = [
     
     # 챗봇 url 저장 용
     path('message/send/', views.send_message, name = 'send_message'),
+    path('update/', views.update, name = 'update'),
+    path('password_change/', views.password_change, name = 'password_change'),
 ]

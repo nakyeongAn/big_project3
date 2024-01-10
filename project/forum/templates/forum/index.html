@@ -36,7 +36,7 @@
                             <td>{{ article.views }}</td>
                             <td>{{ article.created_at }}</td>
                             <td>
-                                {% if article.is_superuser %}
+                                {% if article.is_answered %}
                                     답변완료
                                 {% else %}
                                     답변 대기 중

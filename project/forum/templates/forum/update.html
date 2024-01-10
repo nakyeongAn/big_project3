@@ -15,9 +15,10 @@
       <label for="{{ form.content.id_for_label }}">내용:</label>
       {{ form.content }}
     </div>
-    <input type='submit' class='btn btn-primary' value='수정 완료'>
+    <div class="button-group">
+      <input type='submit' class='btn btn-primary' value='수정 완료'>
+      <a href="{% url 'forum:read' article.pk %}" class='btn btn-primary'>돌아가기</a>
+    </div>
   </form>
-  <hr>
-  <a href="{% url 'forum:read' article.pk %}" class='go-back-link'>돌아가기</a>
 </div>
 {% endblock content %}
