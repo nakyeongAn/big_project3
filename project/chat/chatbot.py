@@ -3,10 +3,11 @@ from openai import OpenAI
 from accounts.models import AccountUser
 from .models import *
 from django.utils import timezone
+from .summarization import recommend_gifts
 
 
 
-def chatbot_machine(friend_id, user_id):
+def chatbot_machine(friend_id, user_id, minAmount, maxAmount):
     user = AccountUser.objects.get(id=friend_id)
     user_name = user.username
     sender = AccountUser.objects.get(id=user_id)
@@ -54,6 +55,17 @@ def chatbot_machine(friend_id, user_id):
         user_input = input("질문을 입력하세요 (종료하려면 'exit' 입력): ")
 
         if user_input.lower() == 'exit':
+            # 내가 바꾼 부분
+            # 필요한 입력값 설정
+            conversation = ...  # 대화 내용
+            sex = user.gender  # 사용자 성별
+            min_price = minAmount # 최소 가격
+            max_price = maxAmount  # 최대 가격
+
+            # 머신러닝 모델 함수 실행
+            recommended_gifts_result = recommend_gifts(conversation, sex, min_price, max_price)
+            current_conversation.recommended_products = recommended_gifts_result.to_json(orient="records")
+            # 여기까지
             current_conversation.end_time = timezone.now()
             current_conversation.end_status = True
             current_conversation.save()

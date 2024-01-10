@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 
 class FriendRequest(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='accounts_friend_requests_sent', on_delete=models.CASCADE)
@@ -33,7 +34,8 @@ class Conversation(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     # 채팅 완료 여부
     end_status = models.BooleanField(default = False)
-    
+    # 선물 리스트
+    recommended_products = JSONField(null=True, blank=True)
 
 
 class Message(models.Model):

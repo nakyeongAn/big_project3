@@ -34,7 +34,7 @@ def testing(request):
             print("로그인하지 않은 사용자")
 
         # 결과 값 챗봇 넘기기 
-        result = chatbot_machine(friend_id, user_id)
+        result = chatbot_machine(friend_id, user_id, minAmount, maxAmount)
         # 친구페이지로 돌아가버림
         return redirect('chat:friend_profile', user_id = friend_id)
     
