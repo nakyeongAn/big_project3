@@ -23,7 +23,7 @@
     <span class="close">&times;</span>
     <h2>선물 선택 도우미</h2>
 
-    <form id="giftForm"  action="{% url 'chat:testing' %}" method="post">
+    <form id="giftForm"  action="{% url 'chat:giftform' %}" method="post">
       {% csrf_token %}
       <!-- Occasion Selection -->
       <label for="occasion">기념일:</label>

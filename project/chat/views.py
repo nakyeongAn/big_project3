@@ -86,6 +86,7 @@ def friend_profile(request, user_id):
     is_friend = Friendship.objects.filter(
         (Q(user1=request.user) & Q(user2=user)) | (Q(user1=user) & Q(user2=request.user))
     ).exists()
+    
 
     context = {
         "user": user,
@@ -95,6 +96,29 @@ def friend_profile(request, user_id):
 
     return render(request, 'chat/friend_profile.html', context)
 
+def giftform(request):
+    if request.method == 'POST':
+        #폼데이터 및 받는 놈 id 값
+        
+        occasion = request.POST.get('occasion')
+        relationship = request.POST.get('relationship')
+        additional_info = request.POST.get('additionalInfo')
+        minAmount = request.POST.get('minAmount')
+        maxAmount = request.POST.get('maxAmount') 
+        friend_id = request.POST.get('friend_id')
+        print(occasion, relationship, additional_info, minAmount, maxAmount, '친구 id ',friend_id)
+        # 보내는 놈 정보 
+        if request.user.is_authenticated:
+            print("로그인한 사용자:", request.user.id)
+            user_id = request.user.id
+        else:
+            # 사용자가 로그인하지 않았음
+            print("로그인하지 않은 사용자")
+
+        # 결과 값 챗봇 넘기기 
+        result = chatbot_machine(friend_id, user_id)
+        # 친구페이지로 돌아가버림
+        return redirect('chat:friend_profile', user_id = friend_id)
 
 
 

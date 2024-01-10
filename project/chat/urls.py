@@ -13,6 +13,7 @@ urlpatterns = [
     path('friend_profile/<int:user_id>/', views.friend_profile, name='friend_profile'),
     path('wishlist/', views.wishlist, name='wishlist'),
     path('accounts/', include('accounts.urls')),
+    path('giftform/', views.giftform, name='giftform'),
     # 사용자 이름으로 친구 목록을 검색하여 데이터베이스에서 조회
     path('search_user/', views.search_user, name='search_user'),
     # 이미지 업로드 처리:
