@@ -8,6 +8,7 @@ from sentence_transformers import util
 from django.db import models
 from sqlalchemy import create_engine
 from django.conf import settings
+from views import conversation
 
 db_settings = settings.DATABASES['default']
 # 챗봇
@@ -242,10 +243,11 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
     return total
 
 # DataFrame에 함수 적용
-data3['score'] = data3.apply(lambda row: calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price), axis=1)
+data['score'] = data.apply(lambda row: calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price), axis=1)
 
 # 결과 정렬 및 출력
-data3_sorted = data3.sort_values(by='score', ascending=False)
-print(data3_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
-# data3_sorted.head(10)
+data_sorted = data.sort_values(by='score', ascending=False)
+three_product = data_sorted[['Img_URL', 'Product URL', 'name', 'price']][0:3]
+print(data_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
+# data_sorted.head(10)
 

@@ -33,6 +33,9 @@ class Conversation(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     # 채팅 완료 여부
     end_status = models.BooleanField(default = False)
+    # 추천된 3개의 상품
+    items = models.CharField(max_length=200, blank=True, default='')
+
     
 
 

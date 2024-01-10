@@ -250,5 +250,6 @@ def chatbot_machine(message):
 
     # 챗봇의 응답을 대화 기록에 추가 및 출력
     assistant_response = response.choices[0].message.content
-    conversation_history.append({"role": "assistant", "content": assistant_response})
-    return assistant_response
+    conversation.append({"role": "assistant", "content": assistant_response})
+    return assistant_response, conversation
+
