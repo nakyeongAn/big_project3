@@ -18,6 +18,9 @@ os.environ['OPENAI_API_KEY'] = openai_key
 # os.environ['OPENAI_API_KEY'] = db_settings['SECRET_KEY']
 client = OpenAI()
 
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, 'sentencetransformer.pkl')
+
 def summary(conversation):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -121,7 +124,7 @@ def summary(conversation):
             negative_colors.append(i)
 
     # 자신의 드라이브 형식에 맞게 파일 읽기
-    with open('C:\\Users\\hjn\\Desktop\\bigproject\\big_project3\\project\\chat\\sentencetransformer.pkl', 'rb') as file:
+    with open(file_path, 'rb') as file:
         loaded_model = pickle.load(file)
     
     matching_embed = []
