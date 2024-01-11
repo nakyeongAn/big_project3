@@ -101,6 +101,7 @@ def friend_profile(request, user_id):
 
     return render(request, 'chat/friend_profile.html', context)
 
+# 폼데이터 받기
 def giftform(request):
     if request.method == 'POST':
         #폼데이터 및 받는 놈 id 값
@@ -170,6 +171,7 @@ def manage_friend_request(request, request_id, action):
         friend_request.delete()
     return JsonResponse({'success': True})
 
+# 선물정보데이터 보내버리기
 def fetch_gift_requests(request):
     gift_requests=GiftRequest.objects.filter(receiver=request.user, is_completed=False)
     requests_data = [{
@@ -257,7 +259,7 @@ def chatbot_machine(message):
 
 # 재남's 머리를 터뜨리는 코드..
 def item_in(three_products_str, sender_id, receiver_id):
-    my_object = Conversation()
+    pass    
     
 from django.contrib.auth.forms import UserChangeForm
 
