@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from .models import FriendRequest, Friendship, Conversation, GiftRequest
+from .models import FriendRequest, Friendship, Conversation, GiftRequest,Three
 from accounts.models import AccountUser
 from django.db.models import Q
 from .forms import CustomedUserChangeForm
@@ -18,6 +18,7 @@ from django.conf import settings
 from .summarization import summary, calculate_score_improved
 import pymysql
 import pandas as pd
+
 
 #from summarization import three_products_str
 #from . import summarization
@@ -59,13 +60,40 @@ def receive_chat(request):
         gift_requests = GiftRequest.objects.filter(receiver=user_id)
         context['gift_requests'] = gift_requests
         context['has_chat_gift_request'] = gift_requests.exists()
-
+        account_user = AccountUser.objects.get(id=user_id)
+        context['username'] = account_user.username
     return render(request, 'chat/receive_chat.html', context)
 
 
-
+# 받는 쪽 gift_requests가 끝났을 경우에 확인
+# views.py
 def give_chat(request):
-    return render(request, 'chat/give_chat.html')
+    context = {}
+    
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        gift_requests = GiftRequest.objects.filter(sender=user_id, is_completed=1)
+        
+        # receiver id를 사용하여 각 AccountUser를 조회하고 이름을 저장
+        gift_receiver_usernames = {}
+        for gr in gift_requests:
+            receiver_id = str(gr.receiver)  # receiver_id를 문자열로 변환
+            receiver_user = AccountUser.objects.get(id=receiver_id)
+            gift_receiver_usernames[receiver_id] = receiver_user.username
+        print(type(gift_receiver_usernames))
+        context['gift_requests'] = gift_requests
+        context['has_chat_gift_request'] = gift_requests.exists()
+        context['gift_receiver_usernames'] = gift_receiver_usernames
+        
+        
+        # sender화면에서 receiver의 상품결과를 봐야한다 
+        #
+        gift_list = Three.objects.filter(sender = user_id).values_list('three_products', flat=True)
+        context['three_list'] = gift_list
+        
+    return render(request, 'chat/give_chat.html', context)
+
+
 
 
 
@@ -301,10 +329,9 @@ def chatbot_machine(message, userdata):
         gift_requests=GiftRequest.objects.filter(receiver=userdata['receiver'])
         product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=product_result(data, sex, min_price, max_price))
         product.save()
-        gift_requests[0].is_completed=True
-        gift_requests[0].save()
+        gift_requests.first().is_completed=True
+        gift_requests.first().save()
         # 디비에 저장을 시키고 status 바꾸면 됨
-        # summarization.summarizations('dddddddd===============')
         return "대화가 종료되었습니다. "
     
     conversation.append({"role": "user", "content": user_input})

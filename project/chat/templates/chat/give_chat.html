@@ -39,170 +39,85 @@
           <input class='search' type="text" id="searchInput" placeholder="친구 검색" onkeyup="searchFriends()">
         </div>
         <ul class="people">
-          <li class="person" data-chat="person1" data-userid="{{ user_id }}">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg"
-              alt=""
-              onclick="goToProfile(this)"
-            />
-            <span class="name">Thomas Bangalter</span>
-            <span class="time">2:09 PM</span>
-            <span class="preview">I was wondering...</span>
-          </li>
-          <li class="person" data-chat="person2" data-userid="{{ user_id }}">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/dog.png"
-              alt=""
-              onclick="goToProfile(this)"
-            />
-            <span class="name">Dog Woofson{{ user_id }}</span>
-            <span class="time">1:44 PM</span>
-            <span class="preview">I've forgotten how it felt before</span>
-          </li>
-          <li class="person" data-chat="person3">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/louis-ck.jpeg"
-              alt=""
-            />
-            <span class="name">황재남</span>
-            <span class="time">2:09 PM</span>
-            <span class="preview"
-              >But we’re probably gonna need a new carpet.</span
-            >
-          </li>
-          <li class="person" data-chat="person4">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/bo-jackson.jpg"
-              alt=""
-            />
-            <span class="name">Bo Jackson</span>
-            <span class="time">2:09 PM</span>
-            <span class="preview">It’s not that bad...</span>
-          </li>
-          <li class="person" data-chat="person5">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/michael-jordan.jpg"
-              alt=""
-            />
-            <span class="name">Michael Jordan</span>
-            <span class="time">2:09 PM</span>
-            <span class="preview"
-              >Wasup for the third time like is you blind bitch</span
-            >
-          </li>
-          <li class="person" data-chat="person6">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/drake.jpg"
-              alt=""
-            />
-            <span class="name">Drake</span>
-            <span class="time">2:09 PM</span>
-            <span class="preview">hey boy</span>
-          </li>
+          {% if has_chat_gift_request  %}
+            {% for gift_request in gift_requests  %}
+              <li class="person" data-chat="person{{ gift_request.id }}">
+                  <img src="media\profile_images\president.png" alt=""/>
+                  <span class="name"> 윤석열 </span> <!-- 예시: 선물 요청자 이름 -->
+                  <span class="time"> 용산의 시간 </span> <!-- 예시: 요청 시간 -->
+                  <span class="preview"> 대통령 대국민 담화 </span> <!-- 예시: 요청 메시지 -->
+              </li>
+            {% endfor %}
+          {% endif %}
         </ul>
       </div>
+
       <div class="right">
         <div class="top">
           <span><span class="name"></span></span>
         </div>
-        <div class="chat" data-chat="person1">
-          <div class="conversation-start">
-            <span>Today, 6:48 AM</span>
-          </div>
-          <div class="bubble you">Thomas Bangalter's 선물 리스트</div>
-          <div id="product-container">
-            <!-- Product 1 -->
+
+<!-- give_chat.html -->
+          {% if has_chat_gift_request %}
+          {% for gift_request in gift_requests %}
+          <div class="chat" data-chat="person{{ gift_request.id }}">
+            <div class="conversation-start">
+              <span>Today, 2:58 PM</span>
+            </div>
+            <div class="bubble you">
+              
+              안녕하세요!  친구 {{ gift_receiver_usernames.1 }}님을 위한 선물 추천 리스트 입니다. 
+            </div>
+            <div class="bubble you">
+              
+              {{three_list}}
+            </div>
+            {% endfor %}
+            {% endif %}
+           
+            <div id="product-container">
+          
+          <!-- Product 1 -->
             <div class="product">
               <div class = "up_area">
-                <img src="https://mall.cowaystatic.com/static/upload/product/product/ID0105_4619_attimg_org.png">
+                <img src="https://sitem.ssgcdn.com/47/05/22/item/1000569220547_i1_1100.jpg">
               </div>
               <div class = "bottom_area">
-                <a href = '#'><p>안마의자</p></a> 
-                <p class="price">$50</p>
+                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000569220547&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>도톰하고 부드러운 페이크퍼 원형 러그 베이지</p></a> 
+                <p class="price">37,430원</p>
               </div>
             </div>
             
-            <!-- Product 2 -->
-            <div class="product">
+             <!-- Product 2 -->
+             <div class="product">
               <div class = "up_area">
-                <img src="https://mall.cowaystatic.com/static/upload/product/product/ID0105_4619_attimg_org.png">
+                <img src="https://sitem.ssgcdn.com/35/27/69/item/1000019692735_i1_1100.jpg">
               </div>
               <div class = "bottom_area">
-                <a href = '#'><p>안마의자</p></a> 
-                <p class="price">$50</p>
+                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000019692735&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>루블린 샤기 러그 베이지(한평)</p></a> 
+                <p class="price">95,400원</p>
               </div>
             </div>
-            
-            <!-- Product 3 -->
-            <div class="product">
+
+             <!-- Product 3 -->
+             <div class="product">
               <div class = "up_area">
-                <img src="https://mall.cowaystatic.com/static/upload/product/product/ID0105_4619_attimg_org.png">
+                <img src="https://sitem.ssgcdn.com/53/74/55/item/1000059557453_i1_1100.jpg">
               </div>
               <div class = "bottom_area">
-                <a href = '#'><p>안마의자</p></a> 
-                <p class="price">$50</p>
+                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000059557453&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>모로코 사이잘룩 러그[아이보리/베이지] 반평</p></a> 
+                <p class="price">62,300원</p>
               </div>
             </div>
+
+          
           </div>
-        </div>
-        <div class="chat" data-chat="person2">
-          <div class="conversation-start">
-            <span>Today, 5:38 PM</span>
           </div>
-          <div class="bubble you">Hello, can you hear me?</div>
-          <div class="bubble you">I'm in California dreaming</div>
-          <div class="bubble me">... about who we used to be.</div>
-          <div class="bubble me">Are you serious?</div>
-          <div class="bubble you">When we were younger and free...</div>
-          <div class="bubble you">I've forgotten how it felt before</div>
-        </div>
-        <div class="chat" data-chat="person3">
-          <div class="conversation-start">
-            <span>Today, 3:38 AM</span>
-          </div>
-          <div class="bubble you">Hey human!</div>
-          <div class="bubble you">
-            Umm... Someone took a shit in the hallway.
-          </div>
-          <div class="bubble me">... what.</div>
-          <div class="bubble me">Are you serious?</div>
-          <div class="bubble you">I mean...</div>
-          <div class="bubble you">It’s not that bad...</div>
-          <div class="bubble you">
-            But we’re probably gonna need a new carpet.
-          </div>
-        </div>
-        <div class="chat" data-chat="person4">
-          <div class="conversation-start">
-            <span>Yesterday, 4:20 PM</span>
-          </div>
-          <div class="bubble me">인석님</div>
-          <div class="bubble me">잘사세요</div>
-          <div class="bubble you">... what.</div>
-          <div class="bubble you">Are you serious?</div>
-          <div class="bubble me">I mean...</div>
-          <div class="bubble me">It’s not that bad...</div>
-        </div>
-        <div class="chat" data-chat="person5">
-          <div class="conversation-start">
-            <span>Today, 6:28 AM</span>
-          </div>
-          <div class="bubble you">Wasup</div>
-          <div class="bubble you">Wasup</div>
-          <div class="bubble you">
-            Wasup for the third time like is <br />you blind bitch
-          </div>
-        </div>
-        <div class="chat" data-chat="person6">
-          <div class="conversation-start">
-            <span>Monday, 1:27 PM</span>
-          </div>
-          <div class="bubble you">So, how's your new phone?</div>
-          <div class="bubble you">You finally have a smartphone :D</div>
-          <div class="bubble me">Drake?</div>
-          <div class="bubble me">Why aren't you answering?</div>
-          <div class="bubble you">howdoyoudoaspace</div>
-        </div>
+
+
+
+
+
         <div class="write">
           <input type="text" id="message" />
           <button class="write-link smiley" id="emoji_btn"></button>
