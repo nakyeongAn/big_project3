@@ -65,12 +65,18 @@
               <span>Today, 2:58 PM</span>
             </div>
             <div class="bubble you">
+              
               안녕하세요!  친구 {{ gift_receiver_usernames.1 }}님을 위한 선물 추천 리스트 입니다. 
             </div>
-
-
+            <div class="bubble you">
+              
+              {{three_list}}
+            </div>
+            {% endfor %}
+            {% endif %}
+           
             <div id="product-container">
-
+          
           <!-- Product 1 -->
             <div class="product">
               <div class = "up_area">
@@ -104,10 +110,10 @@
               </div>
             </div>
 
+          
           </div>
           </div>
-          {% endfor %}
-          {% endif %}
+
 
 
 

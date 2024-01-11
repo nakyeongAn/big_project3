@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from .models import FriendRequest, Friendship, Conversation, GiftRequest
+from .models import FriendRequest, Friendship, Conversation, GiftRequest,Three
 from accounts.models import AccountUser
 from django.db.models import Q
 from .forms import CustomedUserChangeForm
@@ -18,6 +18,7 @@ from django.conf import settings
 from .summarization import summary, calculate_score_improved
 import pymysql
 import pandas as pd
+
 
 #from summarization import three_products_str
 #from . import summarization
@@ -87,7 +88,8 @@ def give_chat(request):
         
         # sender화면에서 receiver의 상품결과를 봐야한다 
         #
-        
+        gift_list = Three.objects.filter(sender = user_id).values_list('three_products', flat=True)
+        context['three_list'] = gift_list
         
     return render(request, 'chat/give_chat.html', context)
 
