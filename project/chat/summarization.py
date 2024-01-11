@@ -169,14 +169,13 @@ def calculate_score_improved(row, matching, matching_embed, negative, positive_c
 
     # 긍정적 요소 점수 계산
     score = 0
-    for j in matching:
-        if j in category1 or j in category2 or j in category3:
-            score += 1
-        elif j in name:
-            score += 1
+    # for j in matching:
+    #     if j in category1 or j in category2 or j in category3:
+    #         score += 1
+    #     elif j in name:
+    #         score += 1
 
-
-    for word, word_embed in zip(matching, matching_embed):
+    for word_embed in zip(matching_embed):
         # word_embed를 텐서로 변환 및 차원 조정
         if not isinstance(word_embed, torch.Tensor):
             word_embed = torch.tensor(word_embed, dtype=torch.float)
