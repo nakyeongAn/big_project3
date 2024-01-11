@@ -67,4 +67,4 @@ class Three(models.Model):
     # 받는 사람
     receiver = models.BigIntegerField(blank=True, null=True)
     # 추천된 3개의 상품
-    three_products = models.CharField(max_length=200, blank=True, default='')
+    three_products = models.TextField(null=True, blank=True)
