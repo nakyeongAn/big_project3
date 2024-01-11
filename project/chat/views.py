@@ -11,15 +11,23 @@ from .forms import CustomedUserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import update_session_auth_hash
+from sqlalchemy import create_engine
+from django.db import models
+from django.conf import settings
+from .summarization import summary, calculate_score_improved
+import pymysql
+import pandas as pd
+
+
 #from summarization import three_products_str
-
-
 
 from openai import OpenAI
 import os
 import json
 from .models import * 
 from accounts.models import AccountUser
+
+db_settings = settings.DATABASES['default']
 
 # 챗봇 사용자 대답 db에 저장
 @require_POST
@@ -291,3 +299,29 @@ def password_change(request):
     content = {'form' : form}
     return render(request, 'chat/password_change.html', content)
 
+engine = create_engine(f"mysql+pymysql://{db_settings['USER']}:{db_settings['PASSWORD']}@{db_settings['HOST']}:{db_settings['PORT']}/{db_settings['NAME']}")
+table_name = "products_product"
+# engine.connect()
+# df = pd.read_sql_table(table_name, engine)
+# data3 = pd.read_json('all_data_embed.json')
+df=pd.read_sql_table(table_name, engine)
+
+
+matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
+
+def product_result(data, sex, min_price, max_price):
+    # DataFrame에 함수 적용
+    data['score'] = data.apply(lambda row: calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price), axis=1)
+
+    # 결과 정렬 및 출력
+    data_sorted = data.sort_values(by='score', ascending=False)
+    three_product = data_sorted[['Img_URL', 'Product URL', 'name', 'price']][0:3]
+    print(data_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
+
+    three_products_str = []
+    for index, row in three_product.iterrows():
+        three_products_str.append((row['Img_URL'], row['Product URL'], row['name'], row['price']))
+        
+    three_products_str = str(three_products_str)
+    print(three_products_str)
+    return three_products_str
