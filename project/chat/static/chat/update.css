@@ -191,26 +191,17 @@ h4 {
 }
 
 .form-control {
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.grey-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: grey;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.grey-button:hover {
-    background-color: darkgrey;
-}
-
-.d-block {
-    font-size : 1.3em;
-    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

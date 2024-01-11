@@ -265,14 +265,15 @@ from django.contrib.auth.forms import UserChangeForm
 def account_settings(request):
     return render(request, "chat/account_settings.html")
 
+
 def update(request):
     if request.method == "POST":
-        form = CustomedUserChangeForm(request.POST)
+        form = CustomedUserChangeForm(request.POST,instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('chat:account_settings')
     else:
-        form =CustomedUserChangeForm()
+        form =CustomedUserChangeForm(instance=request.user)
     content = {'form' : form}
     return render(request, 'chat/update.html', content)
 

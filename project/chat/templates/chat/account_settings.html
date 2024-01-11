@@ -219,83 +219,11 @@
             </div>
             <div class="card-body tab-content m-4">
               <div class="tab-pane active" id="profile">
-                <h4>이*룡님의 회원정보</h4>
-                <hr />
-                <form>
-                  <div class="form-group">
-                    <label for="fullName">아이디</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="fullName"
-                      aria-describedby="fullNameHelp"
-                      placeholder="ID를 입력해주세요."
-                      value="namwonking"
-                    />
-                  </div>
-                </form>
-                <form>
-                  <div class = "form-group">
-                    <label for="fullpw">비밀번호</label>
-                    <a href = "{% url 'chat:password_change' %}">비밀번호 변경</a>
-                  </div>
-                </form>
-                  <form>
-                    <div class="form-group">
-                      <label class="d-block">Email</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Email을 입력해주세요."
-                        value = "namwonking@naver.com"
-                      />
-                    </div>
-                  </form>
-                  <form>
-                    <div class = "form-group">
-                      <label class="d-block">성별</label>
-                      <select name = "gender" class="id_gender">
-                        <option value="남자" selected> 남자 </option>
-                        <option value="여자"> 여자 </option>
-                      </select>
-                    </div>
-                  </form>
-                  <form>
-                    <div class = "form-group">
-                      <label class="d-block">생일</label>
-                      <input type="date" name="birthdate" id="birthdate" value="2024-01-10">
-                    </div>
-                  </form>
-                    <div class = "form-group">
-                      <label class="d-block">전화번호</label>
-                      <input
-                        type="text"
-                        class="form-control mt-1"
-                        placeholder="New password"
-                        value = "010-9876-5432"
-                      />
-                    </div>
-                  </form>
-                  <form>
-                    <div class="form-group">
-                      <label for="location">주소</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="location"
-                        placeholder="Enter your location"
-                        value="전북 남원시 요천로 1447 광화루원"
-                      />
-                    </div>
-                </form>
-                  <form class = "form-group" method="post">
-                    <button type="submit" class="btn btn-primary">회원정보 수정</button>
-                    <button type="reset" class="btn btn-light">
-                      초기화
-                    </button>
-                    <a href = "{% url 'chat:update' %}">확인</a>
-                  </form>
-                </form>
+                <h4>비밀번호 확인이 필요합니다.</h4>
+                <hr>
+                <label class = "d-block">비밀번호 확인</label>
+                <input class = 'form-control' type=password placeholder = "비밀번호를 입력해주세요.">
+                <a href="{% url 'chat:update' %}" class="grey-button">확인</a>
               </div>
               <div class="tab-pane" id="account">
                 <h6>회원탈퇴</h6>
