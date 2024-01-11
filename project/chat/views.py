@@ -21,6 +21,7 @@ import json
 from .models import * 
 from accounts.models import AccountUser
 
+
 # 챗봇 사용자 대답 db에 저장
 @require_POST
 def send_message(request):
@@ -120,7 +121,6 @@ def giftform(request):
         return redirect('chat:friend_profile', user_id = friend_id)
 
 
-
 # 사용자의 username을 조회
 from accounts.models import AccountUser
 from django.http import JsonResponse
@@ -173,7 +173,7 @@ def manage_friend_request(request, request_id, action):
 
 # 선물정보데이터 보내버리기
 def fetch_gift_requests(request):
-    gift_requests=GiftRequest.objects.filter(receiver=request.user, is_completed=False)
+    gift_requests=GiftRequest.objects.filter(receiver=request.user.id)
     requests_data = [{
         'id' : gr.id,
         'additionalinfo' : gr.additionalinfo,

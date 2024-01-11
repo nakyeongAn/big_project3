@@ -308,7 +308,7 @@ function fetchGiftRequests() {
         if (data.gift_requests.length > 0) {
             // document.getElementById("friendRequestAlert").classList.remove("hidden");
             // populateFriendRequestsModal(data.gift_requests);
-            console.log(data.gift_requests);
+            alert(data.gift_requests[0].id);
         }
     })
     .catch((error) => console.error("Error:", error));
