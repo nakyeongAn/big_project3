@@ -34,7 +34,10 @@ def signup(request):
             address_detail = request.POST.get("address_detail", "")
             full_address = f"{address} {address_detail}"
             user.address = full_address
-
+            # if 'profile_image' in request.FILES:
+            #         user.profile_image = request.FILES['profile_image']
+            # else:
+            #     user.profile_image = 'profile_images/default.jpg'
             user.save()
             # 로그인 처리나 리디렉션 추가
             return redirect("login")  # 예: 홈페이지로 리디렉션

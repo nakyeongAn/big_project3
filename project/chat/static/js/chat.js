@@ -114,6 +114,28 @@ function initMessageSending() {
                 activeChat.scrollTop = activeChat.scrollHeight;
             }
             messageInput.value = "";
+
+            // 챗봇에 메시지 보내기
+            fetch('/fetch_chatbot_message/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'message': messageText
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const response = data.response;
+                    const messageItem = createMessageBubble(response, 'you');
+                    if (activeChat) {
+                        activeChat.appendChild(messageItem);
+                        activeChat.scrollTop = activeChat.scrollHeight;
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
         }
     }
 
@@ -124,6 +146,7 @@ function initMessageSending() {
         return bubble;
     }
 }
+
 //채팅 목록에서 특정 대화를 선택할 수 있게 해주는 기능을 초기화해. 사용자가 친구 목록에서 한 명을 클릭하면 
 //해당 대화가 활성화되고 나타나도록 해.
 function initChatSelection() {
@@ -272,6 +295,24 @@ function fetchFriendRequests() {
         .catch((error) => console.error("Error:", error));
 }
 
+function fetchGiftRequests() {
+    fetch("/fetch_gift_requests/", { // 서버에서 친구 요청을 가져오는 URL
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.gift_requests.length > 0) {
+                // document.getElementById("friendRequestAlert").classList.remove("hidden");
+                // populateFriendRequestsModal(data.gift_requests);
+                alert(data.gift_requests[0].id);
+            }
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
 function populateFriendRequestsModal(friendRequests) {
     const list = document.getElementById("friendRequestsList");
     friendRequests.forEach((request) => {
@@ -304,6 +345,7 @@ document.getElementById("friendRequestsList").addEventListener("click", function
     }
 });
 
+document.addEventListener("DOMContentLoaded", fetchGiftRequests);
 
 // 친구 요청을 승인하거나 거절하는 함수
 function manageFriendRequest(requestId, action) {

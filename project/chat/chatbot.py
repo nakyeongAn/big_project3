@@ -83,5 +83,5 @@ def chatbot_machine(friend_id, user_id):
         Message.objects.create(conversation=current_conversation, user_content=user_input)
         Message.objects.create(conversation=current_conversation, bot_content=assistant_response)
 
-    print('1')
+
 

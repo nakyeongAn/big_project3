@@ -75,6 +75,15 @@ body {
     padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
 }
 
+h4 {
+    font-weight: bold;
+    color : #593D3B;
+}
+
+.form-group {
+    padding : 10px
+}
+
 .nav-link {
     display: block;
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
@@ -179,4 +188,29 @@ body {
 
 .shadow-none {
     box-shadow: none !important;
+}
+
+.form-control {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.grey-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: grey;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.grey-button:hover {
+    background-color: darkgrey;
+}
+
+.d-block {
+    font-size : 1.3em;
+    margin-bottom: 10px;
 }

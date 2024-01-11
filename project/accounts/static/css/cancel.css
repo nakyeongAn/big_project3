@@ -2,14 +2,51 @@
 
 /* Basic reset for styling */
 
-h2 {
-    color: #593D3B;
+body,
+html {
+    height: 100%;
+    /* 전체 높이 설정 */
+    width: 90%;
+    padding: 0;
+    /* Flex 컨테이너 설정 */
+    flex-direction: column;
+    margin: auto;
+    /* 자식 요소들을 세로로 정렬 */
+    justify-content: center;
+    /* 수직 정렬 */
+    align-items: center;
+    /* 수평 정렬 */
+    font-family: 'Arial', sans-serif;
+    /* 필요한 폰트로 변경 가능 */
+    background-color: #FBF6EC;
+    /* 배경색 */
+}
+
+.cancel_title {
+  color: #593D3B;
+  text-align: center;
+  margin: 10px 150px 30px 150px;
+  text-align: left; /* 텍스트를 왼쪽으로 정렬합니다. */
+  font-weight: bold;
+}
+
+.cancel-container {
+  margin: 0 auto;
+  background-color: white ;
+  padding: 30px 60px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-height: 500px;
+}
+
+.cancel-container2 {
+  padding: 10px 90px;
+}
+
+.dex {
     margin-bottom: 20px;
-  }
-  
-  p {
-    margin-bottom: 20px;
-    color: #FF832A;
+    color: black;
   }
   
   .attr-wrap {
@@ -83,4 +120,85 @@ h2 {
   
     
   }
-  
+
+  /* header */
+
+.navbar {
+  --bs-navbar-padding-x: 0;
+  --bs-navbar-padding-y: 0.5rem;
+  --bs-navbar-color: rgba(255, 126, 54, 1);
+  --bs-navbar-hover-color: rgba(255, 80, 70, 1);
+  --bs-navbar-disabled-color: rgba(0, 0, 0, 0.3);
+  --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
+  --bs-navbar-brand-padding-y: 0.3125rem;
+  --bs-navbar-brand-margin-end: 1rem;
+  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-color: #ff7e36;
+  --bs-navbar-brand-hover-color: rgba(255, 80, 70, 1);
+  --bs-navbar-nav-link-padding-x: 0.5rem;
+  --bs-navbar-toggler-padding-y: 0.25rem;
+  --bs-navbar-toggler-padding-x: 0.75rem;
+  --bs-navbar-toggler-font-size: 1.25rem;
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --bs-navbar-toggler-border-color: rgba(0, 0, 0, 0.1);
+  --bs-navbar-toggler-border-radius: 0.375rem;
+  --bs-navbar-toggler-focus-width: 0.25rem;
+  --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+}
+
+.nav-link {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.navbar-brand {
+  font-size: var(--bs-navbar-brand-font-size);
+  color: var(--bs-navbar-brand-color);
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+}
+
+.nav-pills .nav-link {
+  background: none;
+  border: 0;
+  border-radius: var(--bs-nav-pills-border-radius);
+}
+
+.nav-tabs .nav-link .active .nav-tabs .nav-item.show .nav-link {
+  color: var(--bs-nav-tabs-link-active-color);
+  background-color: var(--bs-nav-tabs-link-active-bg);
+  border-color: var(--bs-nav-tabs-link-active-border-color);
+}
+
+.nav-tabs .nav-link {
+  margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
+  background: none;
+  border: var(--bs-nav-tabs-border-width) solid transparent;
+  border-top-left-radius: var(--bs-nav-tabs-border-radius);
+  border-top-right-radius: var(--bs-nav-tabs-border-radius);
+}
+
+.nav-link {
+  color: #ff7e36;
+}
+
+.profile-head .nav-tabs .nav-link.active {
+  border: none;
+  border-bottom: 2px solid #ff7e36;
+}
+
+.fw-bolder.text-primary {
+color : #FF7E36;
+}
