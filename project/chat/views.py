@@ -244,9 +244,12 @@ def fetch_gift_requests(request):
 def chatbot(request):
     if request.method == 'POST':
         message = request.POST.get('message')
-
-        response = chatbot_machine(message)
-        
+        receiver=AccountUser.objects.filter(id = request.user.id)[0]
+        gender=receiver.gender
+        gift_requests=GiftRequest.objects.filter(receiver=request.user.id)
+        data={'gender':gender,'min':gift_requests[0].minamount, 'max':gift_requests[0].maxamount, 'receiver':request.user.id}
+        response = chatbot_machine(message, data)
+       
         return JsonResponse({'message': message, 'response': response})
 
     return render(request, 'receive_chat')
@@ -274,7 +277,7 @@ conversation = [
     }   
 ]
 
-def chatbot_machine(message):
+def chatbot_machine(message, userdata):
   #  user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
 
     # # 성별 입력
@@ -296,9 +299,9 @@ def chatbot_machine(message):
         data=pd.read_sql_table(table_name, engine.connect())
 
         matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
-        sex = '남성'
-        min_price = 0
-        max_price = 1000000
+        sex = userdata['gender']
+        min_price = userdata['min']
+        max_price = userdata['max']
 
         def product_result(data, sex, min_price, max_price):
             # DataFrame에 함수 적용
@@ -315,12 +318,17 @@ def chatbot_machine(message):
             three_products_str = str(three_products_str)
             print(three_products_str)
             
-            my_model_instance = Conversation(items=three_products_str)
-            my_model_instance.save()
+            # my_model_instance = Conversation(items=three_products_str)
+            # my_model_instance.save()
             
             return three_products_str
-
-        product_result(data, sex, min_price, max_price)
+        
+        
+        gift_requests=GiftRequest.objects.filter(receiver=userdata['receiver'])
+        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=product_result(data, sex, min_price, max_price))
+        product.save()
+        gift_requests.first().is_completed=True
+        gift_requests.first().save()
         # 디비에 저장을 시키고 status 바꾸면 됨
         return "대화가 종료되었습니다. "
     
@@ -344,7 +352,6 @@ def chatbot_machine(message):
     print('conversation ',conversation)
     print('==========================================')
     return assistant_response
-
 
 # 재남's 머리를 터뜨리는 코드..
 def item_in(three_products_str, sender_id, receiver_id):

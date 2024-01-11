@@ -308,7 +308,7 @@ function fetchGiftRequests() {
         if (data.gift_requests.length > 0) {
             // document.getElementById("friendRequestAlert").classList.remove("hidden");
             // populateFriendRequestsModal(data.gift_requests);
-            //alert(data.gift_requests[0].id);
+            alert("누군가가 선물을 보내고 싶어 합니다. 챗봇과 대화해 보세요!");
         }
     })
     .catch((error) => console.error("Error:", error));
