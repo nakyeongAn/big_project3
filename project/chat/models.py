@@ -49,12 +49,12 @@ class Message(models.Model):
 
 class GiftRequest(models.Model):
     id = models.AutoField(primary_key=True)
-    sender = models.CharField(max_length=10, blank=True, null=True)
-    receiver = models.CharField(max_length=10, blank=True, null=True)
+    sender = models.BigIntegerField(blank=True, null=True)
+    receiver = models.BigIntegerField(blank=True, null=True)
     additionalinfo = models.TextField(null=True, blank=True)
     minamount = models.BigIntegerField(null=True, blank=True)
     maxamount = models.BigIntegerField(null=True, blank=True)
-    relationship = models.CharField(max_length=10, blank=True, null=True)
-    occasion = models.CharField(max_length=10, blank=True, null=True)
+    relationship = models.CharField(max_length=30, blank=True, null=True)
+    occasion = models.CharField(max_length=30, blank=True, null=True)
     is_completed = models.BooleanField(default=False)
  
