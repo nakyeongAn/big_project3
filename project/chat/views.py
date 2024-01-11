@@ -327,14 +327,8 @@ def chatbot_machine(message, userdata):
     print('conversation ',conversation)
     print('==========================================')
     return assistant_response
-
-
-# 재남's 머리를 터뜨리는 코드..
-def item_in(three_products_str, sender_id, receiver_id):
-    pass    
     
 from django.contrib.auth.forms import UserChangeForm
-
 
 def account_settings(request):
     return render(request, "chat/account_settings.html")
