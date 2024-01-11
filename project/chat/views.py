@@ -218,9 +218,13 @@ def fetch_gift_requests(request):
 def chatbot(request):
     if request.method == 'POST':
         message = request.POST.get('message')
-
-        response = chatbot_machine(message)
-        
+        receiver=AccountUser.objects.filter(id = request.user.id)[0]
+        gender=receiver.gender
+        gift_requests=GiftRequest.objects.filter(receiver=request.user.id)
+        data={'gender':gender,'min':gift_requests[0].minamount, 'max':gift_requests[0].maxamount}
+        response = chatbot_machine(message, data)
+        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=response)
+        product.save()
         return JsonResponse({'message': message, 'response': response})
 
     return render(request, 'receive_chat')
@@ -248,7 +252,7 @@ conversation = [
     }   
 ]
 
-def chatbot_machine(message):
+def chatbot_machine(message, data):
   #  user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
 
     # # 성별 입력
@@ -270,9 +274,9 @@ def chatbot_machine(message):
         data=pd.read_sql_table(table_name, engine.connect())
 
         matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
-        sex = '남성'
-        min_price = 0
-        max_price = 1000000
+        sex = data['gender']
+        min_price = data['min']
+        max_price = data['max']
 
         def product_result(data, sex, min_price, max_price):
             # DataFrame에 함수 적용
@@ -297,28 +301,28 @@ def chatbot_machine(message):
         product_result(data, sex, min_price, max_price)
         # 디비에 저장을 시키고 status 바꾸면 됨
         # summarization.summarizations('dddddddd===============')
-        return "대화가 종료되었습니다. "
+    #     return "대화가 종료되었습니다. "
     
-    conversation.append({"role": "user", "content": user_input})
-    # 챗봇에게 대화 전달 및 응답 받기
-    response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-1106:personal::8c5qJUIG",
-        messages=conversation,
-        max_tokens=150,
-        temperature=0.4,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
-    )
+    # conversation.append({"role": "user", "content": user_input})
+    # # 챗봇에게 대화 전달 및 응답 받기
+    # response = client.chat.completions.create(
+    #     model="ft:gpt-3.5-turbo-1106:personal::8c5qJUIG",
+    #     messages=conversation,
+    #     max_tokens=150,
+    #     temperature=0.4,
+    #     top_p=1,
+    #     frequency_penalty=0,
+    #     presence_penalty=0
+    # )
     
-    # 챗봇의 응답을 대화 기록에 추가 및 출력
-    assistant_response = response.choices[0].message.content
-    conversation.append({"role": "assistant", "content": assistant_response})
-    print('response ', response)
-    print('assistant_response ',assistant_response)
-    print('conversation ',conversation)
-    print('==========================================')
-    return assistant_response
+    # # 챗봇의 응답을 대화 기록에 추가 및 출력
+    # assistant_response = response.choices[0].message.content
+    # conversation.append({"role": "assistant", "content": assistant_response})
+    # print('response ', response)
+    # print('assistant_response ',assistant_response)
+    # print('conversation ',conversation)
+    # print('==========================================')
+    # return assistant_response
 
 
 # 재남's 머리를 터뜨리는 코드..
