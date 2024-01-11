@@ -18,9 +18,6 @@ from .summarization import summary, calculate_score_improved
 import pymysql
 import pandas as pd
 
-
-#from summarization import three_products_str
-
 from openai import OpenAI
 import os
 import json
