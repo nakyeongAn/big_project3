@@ -221,10 +221,9 @@ def chatbot(request):
         receiver=AccountUser.objects.filter(id = request.user.id)[0]
         gender=receiver.gender
         gift_requests=GiftRequest.objects.filter(receiver=request.user.id)
-        data={'gender':gender,'min':gift_requests[0].minamount, 'max':gift_requests[0].maxamount}
+        data={'gender':gender,'min':gift_requests[0].minamount, 'max':gift_requests[0].maxamount, 'receiver':request.user.id}
         response = chatbot_machine(message, data)
-        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=response)
-        product.save()
+       
         return JsonResponse({'message': message, 'response': response})
 
     return render(request, 'receive_chat')
@@ -252,7 +251,7 @@ conversation = [
     }   
 ]
 
-def chatbot_machine(message, data):
+def chatbot_machine(message, userdata):
   #  user_name = input("이름 : ")  # 여기에 실제 친구 이름 입력
 
     # # 성별 입력
@@ -274,9 +273,9 @@ def chatbot_machine(message, data):
         data=pd.read_sql_table(table_name, engine.connect())
 
         matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
-        sex = data['gender']
-        min_price = data['min']
-        max_price = data['max']
+        sex = userdata['gender']
+        min_price = userdata['min']
+        max_price = userdata['max']
 
         def product_result(data, sex, min_price, max_price):
             # DataFrame에 함수 적용
@@ -299,6 +298,9 @@ def chatbot_machine(message, data):
             return three_products_str
         
         product_result(data, sex, min_price, max_price)
+        gift_requests=GiftRequest.objects.filter(userdata['receiver'])
+        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=response)
+        product.save()
         # 디비에 저장을 시키고 status 바꾸면 됨
         # summarization.summarizations('dddddddd===============')
         return "대화가 종료되었습니다. "
