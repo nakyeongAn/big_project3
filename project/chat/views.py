@@ -237,6 +237,39 @@ def chatbot_machine(message):
     user_input = message
 
     if user_input.lower() == 'exit':
+        engine = create_engine(f"mysql+pymysql://{db_settings['USER']}:{db_settings['PASSWORD']}@{db_settings['HOST']}:{db_settings['PORT']}/{db_settings['NAME']}")
+        table_name = "products_product"
+        # engine.connect()
+        # df = pd.read_sql_table(table_name, engine)
+        # data3 = pd.read_json('all_data_embed.json')
+        data=pd.read_sql_table(table_name, engine.connect())
+
+        matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
+        sex = '남성'
+        min_price = 0
+        max_price = 1000000
+
+        def product_result(data, sex, min_price, max_price):
+            # DataFrame에 함수 적용
+            data['score'] = data.apply(lambda row: calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price), axis=1)
+
+            # 결과 정렬 및 출력
+            data_sorted = data.sort_values(by='score', ascending=False)
+            three_product = data_sorted[['img_url', 'product_url', 'name', 'price']][0:3]
+
+            three_products_str = []
+            for index, row in three_product.iterrows():
+                three_products_str.append((row['img_url'], row['product_url'], row['name'], row['price']))
+                
+            three_products_str = str(three_products_str)
+            print(three_products_str)
+            
+            my_model_instance = Conversation(items=three_products_str)
+            my_model_instance.save()
+            
+            return three_products_str
+
+        product_result(data, sex, min_price, max_price)
         # 디비에 저장을 시키고 status 바꾸면 됨
         return "대화가 종료되었습니다. "
     
@@ -295,30 +328,3 @@ def password_change(request):
         form =PasswordChangeForm(request.POST)
     content = {'form' : form}
     return render(request, 'chat/password_change.html', content)
-
-engine = create_engine(f"mysql+pymysql://{db_settings['USER']}:{db_settings['PASSWORD']}@{db_settings['HOST']}:{db_settings['PORT']}/{db_settings['NAME']}")
-table_name = "products_product"
-# engine.connect()
-# df = pd.read_sql_table(table_name, engine)
-# data3 = pd.read_json('all_data_embed.json')
-df=pd.read_sql_table(table_name, engine.connect())
-
-
-matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
-
-def product_result(data, sex, min_price, max_price):
-    # DataFrame에 함수 적용
-    data['score'] = data.apply(lambda row: calculate_score_improved(row, matching, matching_embed, negative, positive_colors, negative_colors, sex, min_price, max_price), axis=1)
-
-    # 결과 정렬 및 출력
-    data_sorted = data.sort_values(by='score', ascending=False)
-    three_product = data_sorted[['Img_URL', 'Product URL', 'name', 'price']][0:3]
-    print(data_sorted[['category', 'name', 'grade', 'score', 'Img_URL', 'Product URL']].head(10))
-
-    three_products_str = []
-    for index, row in three_product.iterrows():
-        three_products_str.append((row['Img_URL'], row['Product URL'], row['name'], row['price']))
-        
-    three_products_str = str(three_products_str)
-    print(three_products_str)
-    return three_products_str

@@ -120,8 +120,8 @@ def summary(conversation):
         elif type(i) == tuple:
             negative_colors.append(i)
 
-    # 자신의 드라이브 형식에 맞게 파일 읽
-    with open('sentencetransformer.pkl', 'rb') as file:
+    # 자신의 드라이브 형식에 맞게 파일 읽기
+    with open('C:\\Users\\hjn\\Desktop\\bigproject\\big_project3\\project\\chat\\sentencetransformer.pkl', 'rb') as file:
         loaded_model = pickle.load(file)
     
     matching_embed = []
