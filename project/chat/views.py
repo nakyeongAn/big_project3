@@ -301,7 +301,7 @@ table_name = "products_product"
 # engine.connect()
 # df = pd.read_sql_table(table_name, engine)
 # data3 = pd.read_json('all_data_embed.json')
-df=pd.read_sql_table(table_name, engine)
+df=pd.read_sql_table(table_name, engine.connect())
 
 
 matching, matching_embed, negative, positive_colors, negative_colors = summary(conversation)
