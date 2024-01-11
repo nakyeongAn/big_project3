@@ -57,11 +57,13 @@
                   id="navbarDropdownProfile"
                   aria-expanded="false"
                 >
+                {% if request.user.is_authenticated %}
                   <img
-                    src="{% static 'assets\profile.jpg' %}"
+                    src="{{ request.user.profile_image.url }}"
                     alt="Profile"
                     class="profile-image"
                   />
+                {% endif %}
                   <!-- Replace with the path to the user's profile image -->
                 </a>
                 <ul
