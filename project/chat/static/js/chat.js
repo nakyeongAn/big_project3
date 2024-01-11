@@ -70,7 +70,7 @@ function updatePeopleList(data) {
         li.setAttribute("data-chat", `person${person.id}`);
         li.setAttribute("data-userid", `${person.id}`);
         li.innerHTML = `
-            <img src="${person.profile_image}" alt="" onclick="goToProfile(this)" />
+            <img src="/static/assets/profile.jpg" alt="" onclick="goToProfile(this)" />
             <span class="name">${person.username}</span>
             <span class="name">${person.id}</span>
         `;
