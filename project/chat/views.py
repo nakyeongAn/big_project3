@@ -297,9 +297,9 @@ def chatbot_machine(message, userdata):
             
             return three_products_str
         
-        product_result(data, sex, min_price, max_price)
-        gift_requests=GiftRequest.objects.filter(userdata['receiver'])
-        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=response)
+        
+        gift_requests=GiftRequest.objects.filter(receiver=userdata['receiver'])
+        product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=product_result(data, sex, min_price, max_price))
         product.save()
         # 디비에 저장을 시키고 status 바꾸면 됨
         # summarization.summarizations('dddddddd===============')
