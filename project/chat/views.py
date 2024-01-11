@@ -289,14 +289,14 @@ def chatbot_machine(message):
             three_products_str = str(three_products_str)
             print(three_products_str)
             
-            my_model_instance = Conversation(items=three_products_str)
-            my_model_instance.save()
+            # my_model_instance = Conversation(items=three_products_str)
+            # my_model_instance.save()
             
             return three_products_str
 
         product_result(data, sex, min_price, max_price)
         # 디비에 저장을 시키고 status 바꾸면 됨
-        summarization.summarizations('dddddddd===============')
+        # summarization.summarizations('dddddddd===============')
         return "대화가 종료되었습니다. "
     
     conversation.append({"role": "user", "content": user_input})

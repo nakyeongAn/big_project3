@@ -58,3 +58,13 @@ class GiftRequest(models.Model):
     occasion = models.CharField(max_length=30, blank=True, null=True)
     is_completed = models.BooleanField(default=False)
  
+ # 대화가 끝나서 결과 -> 확인
+class Three(models.Model):
+    # 대화 id
+    id = models.AutoField(primary_key=True)
+    # 주는 사람(로그인한사람)
+    sender = models.BigIntegerField(blank=True, null=True)
+    # 받는 사람
+    receiver = models.BigIntegerField(blank=True, null=True)
+    # 추천된 3개의 상품
+    three_products = models.CharField(max_length=200, blank=True, default='')
