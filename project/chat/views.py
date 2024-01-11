@@ -6,13 +6,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import FriendRequest, Friendship, Conversation, GiftRequest
+from accounts.models import AccountUser
 from django.db.models import Q
 from .forms import CustomedUserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import update_session_auth_hash
-#from summarization import three_products_str
 
+#from summarization import three_products_str
+#from . import summarization
 
 
 from openai import OpenAI
@@ -22,7 +24,7 @@ from .models import *
 from accounts.models import AccountUser
 
 
-# 챗봇 사용자 대답 db에 저장
+# 챗봇 사용자 대답 저장
 @require_POST
 def send_message(request):
     data = json.loads(request.body)
@@ -34,8 +36,23 @@ def send_message(request):
     else:
         return JsonResponse({'success': False, 'error': 'No message text provided'})
 
+# def receive_chat(request):
+#     return render(request, 'chat/receive_chat.html')
+
+
 def receive_chat(request):
-    return render(request, 'chat/receive_chat.html')
+    context = {}
+
+    # 사용자가 로그인한 경우에만 gift_requests 정보를 가져옵니다.
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        gift_requests = GiftRequest.objects.filter(receiver=user_id)
+        context['gift_requests'] = gift_requests
+        context['has_chat_gift_request'] = gift_requests.exists()
+
+    return render(request, 'chat/receive_chat.html', context)
+
+
 
 def give_chat(request):
     return render(request, 'chat/give_chat.html')
@@ -86,6 +103,7 @@ def wishlist(request):
 def detail(request):
     return render(request, "chat/detail.html")
 
+# 친구 등록되어있는지 확인 같은데
 @login_required
 def friend_profile(request, user_id):
     user = get_object_or_404(AccountUser, id=user_id)
@@ -174,8 +192,10 @@ def manage_friend_request(request, request_id, action):
 # 선물정보데이터 보내버리기
 def fetch_gift_requests(request):
     gift_requests=GiftRequest.objects.filter(receiver=request.user.id)
+    receiver_user = AccountUser.objects.filter(id = request.user.id)
     requests_data = [{
         'id' : gr.id,
+        'gender' : receiver_user[0].gender,
         'additionalinfo' : gr.additionalinfo,
         'minamount' : gr.minamount,
         'maxamount' : gr.maxamount,
@@ -233,6 +253,7 @@ def chatbot_machine(message):
 
     if user_input.lower() == 'exit':
         # 디비에 저장을 시키고 status 바꾸면 됨
+        summarization.summarizations('dddddddd===============')
         return "대화가 종료되었습니다. "
     
     conversation.append({"role": "user", "content": user_input})
@@ -291,3 +312,16 @@ def password_change(request):
     content = {'form' : form}
     return render(request, 'chat/password_change.html', content)
 
+
+
+# @login_required
+# def check_chatbot(request):
+#     user_id = request.user.id
+#     gift_requests = GiftRequest.objects.filter(receiver=user_id)
+#     print(user_id)
+#     print("Gift Requests:", gift_requests)
+#     context = {
+#         'gift_requests': gift_requests,
+#         'has_chat_gift_request': gift_requests.exists(),
+#     }
+#     return render(request, 'chat/receive_chat.html', context)

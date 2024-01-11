@@ -13,8 +13,10 @@ urlpatterns = [
     path('friend_profile/<int:user_id>/', views.friend_profile, name='friend_profile'),
     path('wishlist/', views.wishlist, name='wishlist'),
     path('accounts/', include('accounts.urls')),
-    # 친구한테 챗봇 보내버리기 모달 url
+    # 친구한테 챗봇관련 선물 보내버리기
     path('giftform/', views.giftform, name='giftform'),
+    # 선물챗봇을 받아버린 친구놈 화면 
+    #path('check_chatbot/', views.check_chatbot, name='check_chatbot'), 
     # 사용자 이름으로 친구 목록을 검색하여 데이터베이스에서 조회
     path('search_user/', views.search_user, name='search_user'),
     # 이미지 업로드 처리:

@@ -260,7 +260,7 @@ document.querySelectorAll(".person").forEach(function(person) {
         });
 
         // 선택한 사람의 채팅 보여주기
-        var chatId = person.getAttribute("data-chat-id");
+        var chatId = person.getAttribute("data-chat");
         var chatToShow = document.querySelector(`.chat[data-chat="${chatId}"]`);
         if (chatToShow) {
             chatToShow.style.display = "block";
@@ -297,7 +297,7 @@ function fetchFriendRequests() {
 }
 
 function fetchGiftRequests() {
-    fetch("/fetch_gift_requests/", { // 서버에서 친구 요청을 가져오는 URL
+    fetch("/fetch_gift_requests/", { // 서버에서 선물 요청을 가져오는 URL
         method: "GET",
         headers: {
             "X-Requested-With": "XMLHttpRequest",

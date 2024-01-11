@@ -48,6 +48,8 @@
         <div class="top">
           <input class='search' type="text" id="searchInput" placeholder="친구 검색" onkeyup="searchFriends()">
         </div>
+        
+        
         <ul class="people">
           <li class="person" data-chat="person1">
             <img
@@ -58,7 +60,16 @@
             <span class="time">2:58 PM</span>
             <span class="preview"> 당신을 위한 선물 추천 서비스!  </span>
           </li>
-
+          {% if has_chat_gift_request  %}
+            {% for gift_request in gift_requests  %}
+              <li class="person" data-chat="person{{ gift_request.id }}">
+                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" alt=""/>
+                  <span class="name">테스터</span> <!-- 예시: 선물 요청자 이름 -->
+                  <span class="time">ㅁㅁㄴ</span> <!-- 예시: 요청 시간 -->
+                  <span class="preview">ㅇ</span> <!-- 예시: 요청 메시지 -->
+              </li>
+            {% endfor %}
+          {% endif %}
         </ul>
       </div>
 
@@ -71,13 +82,24 @@
           <p>채팅을 시작해보세요!</p>
         </div>
         <!-- 챗봇 확인 용 -->
-        <div class="chat" data-chat="person1">
+        <div class="chat" data-chat="gift_request.id">
           <div class="conversation-start">
             <span>Today, 2:58 PM</span>
           </div>
           <div class="bubble you">안녕하세요! 너님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!</div>
         </div>
         <!-- 챗봇 확인 용 -->
+        {% if has_chat_gift_request  %}
+        {% for gift_request in gift_requests  %}
+        <div class="chat" data-chat="person1">
+          <div class="conversation-start">
+            <span>Today, 2:58 PM</span>
+          </div>
+          <div class="bubble you">안녕하세요! 너님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!</div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
         <form>
           {%csrf_token%}
         <div class="write">
@@ -86,8 +108,9 @@
           <a class="write-link send"></a>
         </div>
       </form> 
-      </div>
     </div>
+  </div>
+    
   </div>
 
   <!-- Bootstrap core JS-->
