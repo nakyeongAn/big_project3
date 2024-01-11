@@ -58,3 +58,6 @@ target/
 
 secrets.json
 db.sqlite3
+
+# pickle 파일
+*.pkl
