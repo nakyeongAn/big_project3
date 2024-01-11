@@ -301,6 +301,8 @@ def chatbot_machine(message, userdata):
         gift_requests=GiftRequest.objects.filter(receiver=userdata['receiver'])
         product=Three(sender=gift_requests[0].sender, receiver=gift_requests[0].receiver, three_products=product_result(data, sex, min_price, max_price))
         product.save()
+        gift_requests[0].is_completed=True
+        gift_requests[0].save()
         # 디비에 저장을 시키고 status 바꾸면 됨
         # summarization.summarizations('dddddddd===============')
         return "대화가 종료되었습니다. "
