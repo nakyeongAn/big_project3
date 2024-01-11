@@ -18,7 +18,7 @@ from django.conf import settings
 from .summarization import summary, calculate_score_improved
 import pymysql
 import pandas as pd
-
+import ast
 
 #from summarization import three_products_str
 #from . import summarization
@@ -80,7 +80,7 @@ def give_chat(request):
             receiver_id = str(gr.receiver)  # receiver_id를 문자열로 변환
             receiver_user = AccountUser.objects.get(id=receiver_id)
             gift_receiver_usernames[receiver_id] = receiver_user.username
-        print(type(gift_receiver_usernames))
+       
         context['gift_requests'] = gift_requests
         context['has_chat_gift_request'] = gift_requests.exists()
         context['gift_receiver_usernames'] = gift_receiver_usernames
@@ -88,9 +88,17 @@ def give_chat(request):
         
         # sender화면에서 receiver의 상품결과를 봐야한다 
         #
-        gift_list = Three.objects.filter(sender = user_id).values_list('three_products', flat=True)
-        context['three_list'] = gift_list
         
+        gift_list = Three.objects.filter(sender=user_id).values_list('three_products')
+        parsed_list = []
+
+        for item in gift_list:
+            # 튜플의 첫 번째 요소를 사용하여 문자열을 실제 튜플 리스트로 변환
+            product_tuples = ast.literal_eval(item[0])
+            parsed_list.extend(product_tuples)
+
+        context['three_list'] = parsed_list
+        print(type(parsed_list))
     return render(request, 'chat/give_chat.html', context)
 
 

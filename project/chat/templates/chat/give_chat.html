@@ -68,49 +68,25 @@
               
               안녕하세요!  친구 {{ gift_receiver_usernames.1 }}님을 위한 선물 추천 리스트 입니다. 
             </div>
-            <div class="bubble you">
-              
-              {{three_list}}
-            </div>
+
             {% endfor %}
             {% endif %}
-           
+
             <div id="product-container">
-          
-          <!-- Product 1 -->
+              {% for item in three_list %}
+
             <div class="product">
               <div class = "up_area">
-                <img src="https://sitem.ssgcdn.com/47/05/22/item/1000569220547_i1_1100.jpg">
+                <img src="{{ item.0 }}" >
               </div>
               <div class = "bottom_area">
-                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000569220547&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>도톰하고 부드러운 페이크퍼 원형 러그 베이지</p></a> 
-                <p class="price">37,430원</p>
+                <a href = '{{ item.1 }}'><p>{{item.2}}</p></a> 
+                <p class="price">{{item.3}}원</p>
               </div>
             </div>
-            
-             <!-- Product 2 -->
-             <div class="product">
-              <div class = "up_area">
-                <img src="https://sitem.ssgcdn.com/35/27/69/item/1000019692735_i1_1100.jpg">
-              </div>
-              <div class = "bottom_area">
-                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000019692735&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>루블린 샤기 러그 베이지(한평)</p></a> 
-                <p class="price">95,400원</p>
-              </div>
-            </div>
+            {% endfor %}
+            <div>
 
-             <!-- Product 3 -->
-             <div class="product">
-              <div class = "up_area">
-                <img src="https://sitem.ssgcdn.com/53/74/55/item/1000059557453_i1_1100.jpg">
-              </div>
-              <div class = "bottom_area">
-                <a href = 'https://emart.ssg.com/item/itemView.ssg?itemId=1000059557453&siteNo=6001&salestrNo=6005&tlidSrchWd=%EB%B2%A0%EC%9D%B4%EC%A7%80%20%EB%9F%AC%EA%B7%B8&srchPgNo=1'><p>모로코 사이잘룩 러그[아이보리/베이지] 반평</p></a> 
-                <p class="price">62,300원</p>
-              </div>
-            </div>
-
-          
           </div>
           </div>
 
