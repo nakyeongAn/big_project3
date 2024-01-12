@@ -107,6 +107,7 @@ def summary(conversation):
 
     # 부정적인 명사를 색상 RGB 코드로 변환
     converted_negative = [colors_rgb[noun] if noun in colors_rgb else noun for noun in negative_nouns]
+    print(converted_positive, converted_negative)
 
     matching = []
     negative = []
