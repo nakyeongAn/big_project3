@@ -43,9 +43,9 @@
             {% for gift_request in gift_requests  %}
               <li class="person" data-chat="person{{ gift_request.id }}">
                   <img src="/media/profile_images/president.png" alt=""/>
-                  <span class="name"> {{ gift_receiver_usernames.1 }}에 대한 결과 윤석열 </span> <!-- 예시: 선물 요청자 이름 -->
-                  <span class="time"> 용산의 시간 </span> <!-- 예시: 요청 시간 -->
-                  <span class="preview"> 대통령 대국민 담화 </span> <!-- 예시: 요청 메시지 -->
+                  <span class="name"> {{ gift_receiver_usernames.1 }}에 대한 결과 챗봇 </span> <!-- 예시: 선물 요청자 이름 -->
+                  <!--<span class="time">  </span>  예시: 요청 시간 -->
+                  <span class="preview"> {{ gift_receiver_usernames.1 }}에 대한 결과를 확인하세요!! </span> <!-- 예시: 요청 메시지 -->
               </li>
             {% endfor %}
           {% endif %}

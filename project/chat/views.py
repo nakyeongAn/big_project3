@@ -301,7 +301,7 @@ def chatbot_machine(message, userdata):
 
     user_input = message
 
-    if user_input.lower() == 'exit':
+    if user_input.lower() == '고마워!':
         engine = create_engine(f"mysql+pymysql://{db_settings['USER']}:{db_settings['PASSWORD']}@{db_settings['HOST']}:{db_settings['PORT']}/{db_settings['NAME']}")
         table_name = "products_product"
         # engine.connect()
