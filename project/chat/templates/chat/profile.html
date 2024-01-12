@@ -92,7 +92,7 @@
   <div class="profile">
     <div class="profile-image">
       <!-- profile.html 내 -->
-      <img src="{{ user.profile_image.url }}" alt="Profile Image" id="currentImage" onclick="document.getElementById('profilePictureInput').click()" style="cursor:pointer;">
+      <img src="{{ user.profile_image_url }}" alt="Profile Image" id="currentImage" onclick="document.getElementById('profilePictureInput').click()" style="cursor:pointer;">
       <!-- 파일 선택을 위한 숨겨진 input 필드 -->
       <input type="file" name="profile_picture" id="profilePictureInput" style="display: none;" onchange="uploadImage()">
     </div>
