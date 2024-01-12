@@ -72,7 +72,7 @@ def give_chat(request):
     
     if request.user.is_authenticated:
         user_id = request.user.id
-        gift_requests = GiftRequest.objects.filter(sender=user_id, is_completed=1)
+        gift_requests = GiftRequest.objects.filter(sender=user_id)
         
         # receiver id를 사용하여 각 AccountUser를 조회하고 이름을 저장
         gift_receiver_usernames = {}
@@ -83,7 +83,7 @@ def give_chat(request):
        
         context['gift_requests'] = gift_requests
         context['has_chat_gift_request'] = gift_requests.exists()
-        context['gift_receiver_usernames'] = gift_receiver_usernames
+        context['gift_receiver'] = receiver_user
         
         
         # sender화면에서 receiver의 상품결과를 봐야한다 
