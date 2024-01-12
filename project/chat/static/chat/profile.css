@@ -585,3 +585,7 @@ dl {
     margin-top: 0;
     margin-bottom: 1.2rem;
 }
+
+.gallery-item:hover {
+    cursor: pointer; /* 마우스 포인터를 손 모양으로 변경 */
+}

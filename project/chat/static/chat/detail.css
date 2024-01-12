@@ -67,7 +67,7 @@
 }
 
 .introduce p {
-  font-size: 1.3em; /* 글씨 크기 증가 */
+  font-size: 1.5em; /* 글씨 크기 증가 */
   line-height: 2;
   margin: 0; /* 필요하다면 여백 조정 */
 }

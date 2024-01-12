@@ -30,7 +30,7 @@ def chatbot_machine(friend_id, user_id):
         # 기존의 내용들
     ]
     # 첫 번째 메시지 정의
-    initial_message = f"안녕하세요! {user_name}님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요!"
+    initial_message = f"안녕하세요! {user_name}님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요! 그리고 대화를 끝내고 싶으시면 'exit'라고 적어주세요."
 
     # initial_message를 Message 객체로 생성하고 현재 대화에 추가
     Message.objects.create(conversation=current_conversation, bot_content=initial_message)
