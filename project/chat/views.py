@@ -161,6 +161,7 @@ def friend_profile(request, user_id):
     context = {
         "user": user,
         "is_friend": is_friend,
+        "username" : user.username
         # 기타 필요한 컨텍스트 변수들...
     }
 
