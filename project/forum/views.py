@@ -60,7 +60,7 @@ def create(request):
             article = form.save(commit=False)
             article.user = request.user
             article.save()
-            return redirect('forum:index', pk = article.pk)
+            return redirect('forum:index')
     else:
         form = ArticleForm()
     content = {'form':form}
