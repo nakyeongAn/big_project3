@@ -73,7 +73,6 @@ function updatePeopleList(data) {
         li.innerHTML = `
             <img src= "${person.profile_image_url}" alt="" onclick="goToProfile(this)" />
             <span class="name">${person.username}</span>
-            <span class="name">${person.id}</span>
         `;
         peopleList.appendChild(li);
     });
@@ -119,25 +118,25 @@ function initMessageSending() {
 
             // 챗봇에 메시지 보내기
             fetch('/fetch_chatbot_message/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                    'message': messageText
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'message': messageText
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const response = data.response;
-                const messageItem = createMessageBubble(response, 'you');
-                if (activeChat) {
-                    activeChat.appendChild(messageItem);
-                    activeChat.scrollTop = activeChat.scrollHeight;
-                }
-            })
-            .catch(error => {
-                console.log('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const response = data.response;
+                    const messageItem = createMessageBubble(response, 'you');
+                    if (activeChat) {
+                        activeChat.appendChild(messageItem);
+                        activeChat.scrollTop = activeChat.scrollHeight;
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
         }
     }
 
@@ -320,14 +319,18 @@ function populateFriendRequestsModal(friendRequests) {
     friendRequests.forEach((request) => {
         const div = document.createElement("div");
         div.innerHTML = `
-            <img style="width:100px; height:100px;" src="${request.sender_profile_image}" alt="${request.sender_name}" />
-            <p>${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
-            <button data-request-id="${request.id}" data-action="accept">수락</button>
-            <button data-request-id="${request.id}" data-action="decline">거절</button>
+                <p style="font-weight:bold;">새로운 친구요청이 있습니다!</p>
+                
+                <p style="font-weight:bold;"><img style="margin-right:5px; width:50px; height:50px; border-radius:50px;" src="${request.sender_profile_image}" alt="${request.sender_name}" /> ${request.sender_name} 님이 친구 요청을 보냈습니다.</p>
+                <div class="button-container">
+                    <button style="font-weight:bold;" data-request-id="${request.id}" data-action="accept">수락</button>
+                    <button style="font-weight:bold;" data-request-id="${request.id}" data-action="decline">거절</button>
+                </div>
         `;
         list.appendChild(div);
     });
 }
+
 
 // 페이지 로드 시 친구 요청을 가져옵니다.
 document.addEventListener("DOMContentLoaded", fetchFriendRequests);
@@ -371,16 +374,6 @@ function manageFriendRequest(requestId, action) {
             location.reload(); // 오류 발생시 페이지 새로고침
         });
 }
-
-
-// 친구 요청 드롭다운을 표시하거나 숨기는 기능
-document.getElementById("friendRequestAlert").addEventListener("mouseover", function() {
-    document.getElementById("friendRequestsDropdown").classList.remove("hidden");
-});
-
-document.getElementById("friendRequestAlertContainer").addEventListener("mouseleave", function() {
-    document.getElementById("friendRequestsDropdown").classList.add("hidden");
-});
 
 // CSRF 토큰 값을 가져오는 함수
 function getCookie(name) {
