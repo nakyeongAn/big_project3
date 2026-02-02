@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.conf import settings
 from openai import OpenAI
-import json
-# Create your views here.
 
 def chatbot(request):
     if request.method == 'POST':
@@ -23,12 +22,8 @@ def chatbot(request):
 
 def chatbot_machine(message):
 
-    with open('secrets.json', 'r') as secrets_file:
-        secrets = json.load(secrets_file)
-    openai_key = secrets["openai_key"]
-
     # OpenAI 클라이언트 설정
-    client = OpenAI(api_key=openai_key)
+    client = OpenAI(api_key=settings.SECRET_OPENAI)
     
     conversation_history = [
         # 기존의 내용들

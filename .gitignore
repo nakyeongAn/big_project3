@@ -6,16 +6,66 @@ CLAUDE.md
 .env
 .env.prod
 
-# Secrets
-secrets.json
-
 # Python
 __pycache__/
 *.py[cod]
 *.pyc
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Translations
+*.mo
+*.pot
+
+# Django
+*.log
+db.sqlite3
+media/
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
 
 # ML models
 *.pkl
+
+# Data
+all_data_embed.json
 
 # Docker
 docker-compose.override.yml
