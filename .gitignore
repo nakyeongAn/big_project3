@@ -1,3 +1,21 @@
 # Claude Code
 CLAUDE.md
 .claude/
+
+# Environment
+.env
+.env.prod
+
+# Secrets
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+
+# ML models
+*.pkl
+
+# Docker
+docker-compose.override.yml

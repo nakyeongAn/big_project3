@@ -1,43 +1,27 @@
-import json
 from openai import OpenAI
+from django.conf import settings
 from accounts.models import AccountUser
 from .models import *
 from django.utils import timezone
-
 
 
 def chatbot_machine(friend_id, user_id):
     user = AccountUser.objects.get(id=friend_id)
     user_name = user.username
     sender = AccountUser.objects.get(id=user_id)
-    
-# 챗봇
-# secrets.json 파일에서 API 키 읽어오기
-    with open('secrets.json', 'r') as secrets_file:
-        secrets = json.load(secrets_file)
-    openai_key = secrets["openai_key"]
 
-    # OpenAI 클라이언트 설정
-    client = OpenAI(api_key=openai_key)
+    client = OpenAI(api_key=settings.SECRET_OPENAI)
 
-    # 사용자 이름 설정
-    user_name = user_name  # 여기에 실제 친구 이름 입력
+    current_conversation = Conversation.objects.create(sender=sender, receiver=user)
 
+    conversation_history = []
 
-    current_conversation = Conversation.objects.create(sender = sender, receiver = user)
-    
-    conversation_history = [
-        # 기존의 내용들
-    ]
-    # 첫 번째 메시지 정의
     initial_message = f"안녕하세요! {user_name}님을 위한 선물을 준비하고 있는 사람이 있어요. 어떤 종류의 선물을 원하시나요? 예를 들어 음악, 여행, 요리 등 다양한 분야가 있으니까요. 어떤 물건이 가장 원하시는지 알려주세요! 그리고 대화를 끝내고 싶으시면 'exit'라고 적어주세요."
 
-    # initial_message를 Message 객체로 생성하고 현재 대화에 추가
     Message.objects.create(conversation=current_conversation, bot_content=initial_message)
 
     print(f"Assistant: {initial_message}")
 
-    # 대화 기록을 저장할 리스트 초기화
     conversation = [
         {
             "role": "system",
@@ -50,7 +34,6 @@ def chatbot_machine(friend_id, user_id):
     ]
 
     while True:
-        # 사용자의 입력 받기
         user_input = input("질문을 입력하세요 (종료하려면 'exit' 입력): ")
 
         if user_input.lower() == 'exit':
@@ -58,11 +41,10 @@ def chatbot_machine(friend_id, user_id):
             current_conversation.end_status = True
             current_conversation.save()
             break
-        # 대화 기록에 사용자의 입력 추가
+
         conversation.append({"role": "user", "content": user_input})
         conversation_history.append({"role": "user", "content": user_input})
 
-        # 챗봇에게 대화 전달 및 응답 받기
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=conversation,
@@ -73,15 +55,9 @@ def chatbot_machine(friend_id, user_id):
             presence_penalty=0
         )
 
-
-        # 챗봇의 응답을 대화 기록에 추가 및 출력
         assistant_response = response.choices[0].message.content
         print(f"Assistant: {assistant_response}")
         conversation_history.append({"role": "assistant", "content": assistant_response})
-        
-        # Message 객체 생성
+
         Message.objects.create(conversation=current_conversation, user_content=user_input)
         Message.objects.create(conversation=current_conversation, bot_content=assistant_response)
-
-
-

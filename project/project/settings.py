@@ -12,36 +12,28 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import json
-from django.core.exceptions import ImproperlyConfigured
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# api key 관련
-with open(BASE_DIR / "secrets.json") as f:
-    secrets = json.loads(f.read())
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-import os, json
-from django.core.exceptions import ImproperlyConfigured
-
-
-secret_file = os.path.join(BASE_DIR, "secrets.json")  # secrets.json 파일 위치를 명시
-
+# .env 파일 로드 (python-dotenv 없이 직접 파싱)
+env_path = BASE_DIR.parent / '.env'
+if env_path.exists():
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                os.environ.setdefault(key.strip(), value.strip())
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets["secret_key"]
-SECRET_OPENAI = secrets["openai_key"]
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-dev-key')
+SECRET_OPENAI = os.environ.get('OPENAI_API_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -64,9 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'phonenumber_field',
     'products',
-
- 
-]   
+]
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -112,12 +102,12 @@ AUTH_USER_MODEL = "accounts.AccountUser"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "icis3",
-        "USER": "admin",
-        "PASSWORD": secrets["rds_pass"],
-        "HOST": secrets["rds_host"],
-        "PORT": "3306",
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.mysql"),
+        "NAME": os.environ.get("DB_NAME", "icis3"),
+        "USER": os.environ.get("DB_USER", "admin"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", ""),
+        "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
+        "PORT": os.environ.get("DB_PORT", "3306"),
     }
 }
 
@@ -144,11 +134,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = "Asia/Seoul"
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -158,7 +150,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/")]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # for deployment
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -171,23 +163,6 @@ LOGIN_REDIRECT_URL = "chat:chat"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-# 유저 프로필 사진 업로드 / 기본이미지 설정을 위해서
-# 미디어 파일을 위한 기본 URL
+# Media files
 MEDIA_URL = '/media/'
-
-# 미디어 파일이 저장될 경로
-import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-# settings.py
-
-LANGUAGE_CODE = 'ko-kr'
-
-TIME_ZONE = 'Asia/Seoul'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True

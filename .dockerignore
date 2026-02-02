@@ -1,0 +1,14 @@
+.git
+.gitignore
+CLAUDE.md
+.claude/
+*.pkl
+__pycache__
+*.pyc
+.env
+crawler/
+all_data_embed.json
+db_in.py
+README.md
+project/secrets.json
+project/ai_requirements.txt
