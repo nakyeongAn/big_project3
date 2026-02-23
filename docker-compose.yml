@@ -33,6 +33,7 @@ services:
       db:
         condition: service_healthy
     volumes:
+      - ./project:/app
       - static_files:/app/staticfiles
       - media_files:/app/media
 

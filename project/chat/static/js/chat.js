@@ -391,7 +391,3 @@ function getCookie(name) {
     return cookieValue;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    // 예를 들어, 서버에서 전달받은 is_friend 값을 이용하여 버튼 상태 설정
-    updateButtonVisibility(isFriend); // isFriend는 서버로부터 전달받은 값
-});
